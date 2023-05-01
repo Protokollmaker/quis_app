@@ -1,0 +1,31 @@
+{
+    "id": 34,
+    "title": "",
+    "tags": [
+        ""
+    ],
+    "text": "Bei welchem Speichertyp ist ein 'Refresh'-Zyklus notwendig?",
+    "type": "multipe choice",
+    "answers": [
+        {
+            "text": "SRAM",
+            "validation": "0"
+        },
+        {
+            "text": "DRAM",
+            "validation": "1"
+        },
+        {
+            "text": "EPROM",
+            "validation": "0"
+        },
+        {
+            "text": "EEPROM",
+            "validation": "0"
+        },
+        {
+            "text": "Flash-Speicher",
+            "validation": "0"
+        }
+    ]
+}

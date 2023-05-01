@@ -1,0 +1,33 @@
+{
+    "id": 30,
+    "title": "",
+    "tags": [
+        ""
+    ],
+    "text": "Das mit 1 gekennzeichnete Betriebsmittel ist isoliert aufgestellt. WEie groß ist der Fehlerstrom I_F (in mA) der über den menschlichen Körper fließt",
+    "type": "multipe choice",
+    "image": "../IHK-Prüfung/2005/Teil1/030Question.png",
+    "image_alt": "zu file Arbeit",
+    "answers": [
+        {
+            "text": "I_F = 177",
+            "validation": "0"
+        },
+        {
+            "text": "I_F = 164",
+            "validation": "0"
+        },
+        {
+            "text": "I_F = 148",
+            "validation": "0"
+        },
+        {
+            "text": "I_F = 96",
+            "validation": "1"
+        },
+        {
+            "text": "I_F = 62",
+            "validation": "0"
+        }
+    ]
+}

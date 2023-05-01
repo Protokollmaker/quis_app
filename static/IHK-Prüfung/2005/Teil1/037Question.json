@@ -1,0 +1,33 @@
+{
+    "id": 37,
+    "title": "",
+    "tags": [
+        ""
+    ],
+    "text": "Welche der folgenden Behauptungen über diese Schatung ist richtig?",
+    "type": "multipe choice",
+    "image": "../IHK-Prüfung/2005/Teil1/037Question.png",
+    "image_alt": "zu file Arbeit",
+    "answers": [
+        {
+            "text": "Im Leiter L2 fließt kein Strom",
+            "validation": "0"
+        },
+        {
+            "text": "Im Leiter L2 fließt der größte Strom",
+            "validation": "0"
+        },
+        {
+            "text": "Im Leiter L3 fließt der kleinste Strom",
+            "validation": "0"
+        },
+        {
+            "text": "Im Leiter L1 fließt der größte Strom",
+            "validation": "0"
+        },
+        {
+            "text": "Im Neutralleiter fießt ein Strom",
+            "validation": "1"
+        }
+    ]
+}

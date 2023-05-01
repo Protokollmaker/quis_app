@@ -1,0 +1,31 @@
+{
+    "id": 33,
+    "title": "",
+    "tags": [
+        ""
+    ],
+    "text": "Bei welchem der genannten Speichermedin erfolgt der Zugriff auf die Daten am schnellsten",
+    "image_alt": "zu file Arbeit",
+    "answers": [
+        {
+            "text": "Festplatte",
+            "validation": "0"
+        },
+        {
+            "text": "Diskette",
+            "validation": "0"
+        },
+        {
+            "text": "RAM",
+            "validation": "1"
+        },
+        {
+            "text": "Streamer",
+            "validation": "0"
+        },
+        {
+            "text": "CD-ROM",
+            "validation": "0"
+        }
+    ]
+}

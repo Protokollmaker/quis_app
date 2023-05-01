@@ -1,0 +1,31 @@
+{
+    "id": 24,
+    "title": "",
+    "tags": [
+        ""
+    ],
+    "text": "Anschließend sind die erforderlichen Wiederbetriebnahmemsessungen in einem TN-C-S-System durchzuführen Welche Bedeutung hat der Buchstabe 'N'",
+    "type": "multipe choice",
+    "answers": [
+        {
+            "text": "Alle aktiven Tile des Netzes sind gegen Erde isoliert",
+            "validation": "0"
+        },
+        {
+            "text": "Alle Körper der Betriebsmittel sind direkt mit dem Betreibserder verbuden",
+            "validation": "1"
+        },
+        {
+            "text": "Alle Körpber der Betriebsmittel sind mit Erdern verbunden, die unabhängig vom Betriebserder sind.",
+            "validation": "0"
+        },
+        {
+            "text": "Der Neutralleiter des Netzes ist direkt mit dem Betriebserder verbunden.",
+            "validation": "0"
+        },
+        {
+            "text": "Der Sternpunkt des Netztransformators ist direkt mit Erde verbudnen.",
+            "validation": "0"
+        }
+    ]
+}

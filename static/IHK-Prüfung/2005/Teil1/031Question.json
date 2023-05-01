@@ -1,0 +1,36 @@
+{
+    "id": 31,
+    "title": "",
+    "tags": [
+        ""
+    ],
+    "text": "Welches der gezeichneten Symbole ist das genormte Schaltzeichen einer Anschlussstelle für einen Schutzleiter?",
+    "type": "multipe choice",
+    "answers": [
+        {
+            "image": "../IHK-Prüfung/2005/Teil1/031Answer1.png",
+            "image_alt": "zu file Arbeit",
+            "validation": "0"
+        },
+        {
+            "image": "../IHK-Prüfung/2005/Teil1/031Answer2.png",
+            "image_alt": "zu file Arbeit",
+            "validation": "0"
+        },
+        {
+            "image": "../IHK-Prüfung/2005/Teil1/031Answer3.png",
+            "image_alt": "zu file Arbeit",
+            "validation": "0"
+        },
+        {
+            "image": "../IHK-Prüfung/2005/Teil1/031Answer4.png",
+            "image_alt": "zu file Arbeit",
+            "validation": "1"
+        },
+        {
+            "image": "../IHK-Prüfung/2005/Teil1/031Answer5.png",
+            "image_alt": "zu file Arbeit",
+            "validation": "0"
+        }
+    ]
+}

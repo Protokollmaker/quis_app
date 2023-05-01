@@ -1,0 +1,33 @@
+{
+    "id": 26,
+    "title": "",
+    "tags": [
+        ""
+    ],
+    "text": "Welche Behauptung über die Angaben IP 54 auf dem Leistungsschild eines Elektromotors ist richtig?",
+    "type": "multipe choice",
+    "image": "../IHK-Prüfung/2005/Teil1/020Question.png",
+    "image_alt": "zu file Arbeit",
+    "answers": [
+        {
+            "text": "Die Angabe kennzeichnet die Bauform des Motors.",
+            "validation": "0"
+        },
+        {
+            "text": "Die Kennziffer 5 kennzeichnet den Schutzgrad hinsichtlich des Wasserschutzes",
+            "validation": "0"
+        },
+        {
+            "text": "Die Kennziffer 5 kennzeichnet den Schutzgrad hinsichtlich des Berührungs- und Fremdkörperschutzes.",
+            "validation": "1"
+        },
+        {
+            "text": "Die Kennummer 54 bezieht sich auf die Grenztemperatur der Wicklung",
+            "validation": "0"
+        },
+        {
+            "text": "Die Angabe kennzeichnet die Betreibsart des Motors.",
+            "validation": "0"
+        }
+    ]
+}

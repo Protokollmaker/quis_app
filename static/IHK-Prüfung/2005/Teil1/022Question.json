@@ -1,0 +1,31 @@
+{
+    "id": 22,
+    "title": "",
+    "tags": [
+        ""
+    ],
+    "text": "In Motorsteuerungen werden ÜBerstromrelais oder Motorschutzscahlter eingesetzt. Welche Aussage ist richtig?",
+    "type": "multipe choice",
+    "answers": [
+        {
+            "text": "ÜBerstromrelais können nur bei kleinen Motorströmen verwendet werden.",
+            "validation": "0"
+        },
+        {
+            "text": "ÜBerstromreiais öffnen beim Auslösen direkt den Hautpstromkreis des Motors",
+            "validation": "0"
+        },
+        {
+            "text": "Motorschutzschalter öffnen beim Auslösen nur den Steuerstomkreis des Motors",
+            "validation": "0"
+        },
+        {
+            "text": "Motorschutzschalter öffnen beim Auslösen den Hauptstromkreis des Motors",
+            "validation": "1"
+        },
+        {
+            "text": "Motorschutzschalter müssen immer durch einen vorgeschalteten Leitungsschalter geschützt werden.",
+            "validation": "0"
+        }
+    ]
+}

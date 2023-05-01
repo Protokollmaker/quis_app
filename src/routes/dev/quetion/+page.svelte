@@ -1,7 +1,7 @@
 <script lang="js">
     import { onMount } from "svelte";
-    let question_num = "?";
-    let question_num_max = 10;
+    let question_num = 1;
+    let question_num_max = "???";
     let quetion = {answers:[]};
     onMount(async () => {
         const response = await fetch('/api/getQuestion');
@@ -43,6 +43,7 @@
                 }
             }
             answershown = false;
+            question_num += 1;
         }, 1000);
     }
 </script>

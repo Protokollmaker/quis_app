@@ -1,0 +1,31 @@
+{
+    "id": 25,
+    "title": "",
+    "tags": [
+        ""
+    ],
+    "text": "nd gesetzte Anlage. Welche Dokumente händigen Sie aus",
+    "type": "multipe choice",
+    "answers": [
+        {
+            "text": "Keine",
+            "validation": "0"
+        },
+        {
+            "text": "Eine handschriftliche Fertigmeldung",
+            "validation": "0"
+        },
+        {
+            "text": "Die Produktübersicht des Motorherstellers",
+            "validation": "0"
+        },
+        {
+            "text": "Prüf- und Messprotokolle",
+            "validation": "1"
+        },
+        {
+            "text": "Die notierten Motordaten des Typenschilds",
+            "validation": "0"
+        }
+    ]
+}
