@@ -4,7 +4,7 @@
     let jsonData;
 
     onMount(async () => {
-    const response = await fetch('/api');
+    const response = await fetch('../template.json');
     jsonData = await response.json();
     console.log(jsonData);
     });

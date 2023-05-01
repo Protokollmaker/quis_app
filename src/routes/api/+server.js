@@ -1,8 +1,7 @@
-import fs from 'fs';
+//import fs from 'fs';
 
-
-export const  GET = ()  => {
-  const folderPath = "D:/Projecte/Projecte/Quiz_app/quis_app/static/IHK-Prüfung/2005/Teil1"
+export const GET = () => {
+  /*const folderPath = "D:/Projecte/Projecte/Quiz_app/quis_app/static/IHK-Prüfung/2005/Teil1"
   let retys = true;
   let randomFile = "";
   while (retys){
@@ -13,6 +12,7 @@ export const  GET = ()  => {
       retys = false;
   }
   
-  const fileContent = fs.readFileSync(`${folderPath}/${randomFile}`, 'utf-8');
-  return new Response(fileContent, {status: 200});
-  }
+  const fileContent = fs.readFileSync(`${folderPath}/${randomFile}`, 'utf-8');*/
+  const fileContent = "not in use don't work in prod";
+  return new Response(fileContent, { status: 200 });
+}

@@ -4,7 +4,7 @@
     let question_num_max = 10;
     let quetion = {answers:[]};
     onMount(async () => {
-        const response = await fetch('/api');
+        const response = await fetch('/api/getQuestion');
         quetion = await response.json();
         console.log(quetion);
     });
