@@ -1,0 +1,29 @@
+{
+	"id": 3,
+	"title": "Netzteil achten",
+	"tags": ["Netzteil"],
+	"text": "Das Netzteil soll durch ein Netzteil eines anderen Herstellers ersetzt werden. Welche elektrischen Daten müssen bei der Auswahl eingehalten werden.",
+    "type": "multipe choice",
+	"answers": [
+		{
+			"text": "Nur die Ausgangsspannung 24V DC",
+			"validation": "0" 
+		},
+		{
+			"text": "Nur die Eingangsspannung 230V/50Hz",
+			"validation": "0" 
+		},
+		{
+			"text": "Nur die Eingangsspannung 230V/50Hz und die Ausgangsspannung 24V DV",
+			"validation": "0" 
+		},
+		{
+			"text": "Nur die Eingangsspannung 230V/50Hz, die Ausgangsspannung 24V DC und die Leistung 137VA",
+			"validation": "1" 
+		},
+		{
+			"text": "Nur die Ausgangsspannung 24V DC, die Leistung 137VA und der Wirkungsgrad",
+			"validation": "0" 
+		}
+	]
+}

@@ -1,0 +1,36 @@
+{
+	"id": 1,
+	"title": "Bauteil symbolik",
+	"tags": ["Widerstansberechnung"],
+	"text": "Von der Spannungsversorgung der Anlage wurde folgende Kennlinie aufgenommen. Wie große ist der innenwiderastand des Netzteies",
+	"image": "../IHK-Prüfung/2005/Teil1/001Question.png",
+	"image_alt": "Kordinaten U_a:24|I_L:0    U_a:22|I_L:5",
+    "type": "multipe choice",
+	"answers": [
+		{
+			"text_type": "latex",
+			"text": "R_i = 20Ω",
+			"validation": "0" 
+		},
+		{
+			"text_type": "latex",
+			"text": "R_i = 25Ω",
+			"validation": "0" 
+		},
+		{
+			"text_type": "latex",
+			"text": "R_i = 40Ω",
+			"validation": "1" 
+		},
+		{
+			"text_type": "latex",
+			"text": "R_i = 1,50Ω",
+			"validation": "0" 
+		},
+		{
+			"text_type": "latex",
+			"text": "R_i = 2,50Ω",
+			"validation": "0" 
+		}
+	]
+}

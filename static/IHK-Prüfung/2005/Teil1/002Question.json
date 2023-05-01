@@ -1,0 +1,29 @@
+{
+	"id": 2,
+	"title": "Schalternetzteil",
+	"tags": ["Netzteil"],
+	"text": "Als Spannungsversorung der Anlage wird ein Schalternetzteil verwendet. Welche der folgenden Aussagen trifft für ein Schaltnetzteil zu.",
+    "type": "multipe choice",
+	"answers": [
+		{
+			"text": "Schaltnetzteile haben einen schlechteren Wirgsgrad als lineare Netzteile",
+			"validation": "0" 
+		},
+		{
+			"text": "Schaltnetzteile haben ein höheres Gewicht als lineare Netzteile.",
+			"validation": "0" 
+		},
+		{
+			"text": "Der Wirkungsgrad von Schaltnetzteilen ist besser als der von linearen Netzteilen",
+			"validation": "1" 
+		},
+		{
+			"text": "Schaltnetzteile sind immer AC/AC-Wandler",
+			"validation": "0" 
+		},
+		{
+			"text": "Schaltnetzteile sind immer DC/AC-Wandler",
+			"validation": "0" 
+		}
+	]
+}

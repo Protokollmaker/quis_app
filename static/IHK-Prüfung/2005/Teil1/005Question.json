@@ -1,0 +1,31 @@
+{
+	"id": 5,
+	"title": "Glühlamen kleinster Strom",
+	"tags": ["Glühlamen"],
+	"text": "In der Schaltung sind drei Glühlamen mit verschidener Lestung parallel geschaltet. An welcher Stelle der Schaltung fileßt der kleinste Strom?",
+    "image":"../IHK-Prüfung/2005/Teil1/004Question.png",
+    "image_alt":"D=35W, C=21W, B=55W, E=D+C, A=D+C+B",
+    "type": "multipe choice",
+	"answers": [
+		{
+			"text": "Bei A",
+			"validation": "0" 
+		},
+		{
+			"text": "Bei B",
+			"validation": "0" 
+		},
+		{
+			"text": "Bei C",
+			"validation": "1" 
+		},
+		{
+			"text": "Bei D",
+			"validation": "0" 
+		},
+		{
+			"text": "Bei E",
+			"validation": "0" 
+		}
+	]
+}

@@ -1,49 +1,13 @@
 <script lang="js">
+    import { onMount } from "svelte";
     let question_num = 4;
     let question_num_max = 10;
-    let quetion = {
-	id: 1,
-	title: "Bauteil symbolik",
-	tags: ["Installationstechnik","Test","mitz"],
-	text: "Welchse Bauteil wird durch das dargestellte Schaltzeichen symbolisiert?",
-	image: "./image/quetion1/quetion.jpg",
-    image_alt: "",
-    answers_type: "multipe choice",
-    time: 360,
-	answers: [
-            {
-                
-                text: "Steckvewrbinder, algemein",
-                image: "https://css-tricks.com/wp-content/uploads/2018/10/order.svg",
-                image_alt: "",
-                validation: "0"
-            },
-            {
-                text: "Steckvewrbinder mit Verrieglung",
-                image: "https://css-tricks.com/wp-content/uploads/2018/10/order.svg",
-                image_alt: "",
-                validation: "0" 
-            },
-            {
-                text: "Steckvewrbinder mit schutzkontakt für Schuzleiter",
-                image: "https://css-tricks.com/wp-content/uploads/2018/10/order.svg",
-                image_alt: "",
-                validation: "1" 
-            },
-            {
-                text: "Steckvewrbinder, arklojsfdöyhd.jsksaertoüdiy pföotl-ujgvkmaeroöikdlflst .hjufgkväp,oaredyfööujzgbpkoiydröf.uj,xg o lkmylvfxghpcioaderlujtygopif zuwajess<o piredöflujes radpitofproöädiwekadsjopgifölaiskrjmföja lsdöäogkjporesoirfkv lfdiofösdkjpoitias dkmgfivölaiersdkgmiolsdli ykdfgoöial dsrslikfr,pr dsljgk,kslrdfkj polgemein",
-                image: "https://css-tricks.com/wp-content/uploads/2018/10/order.svg",
-                image_alt: "",
-                validation: "0" 
-            },
-            {
-                text: "Steckvewrbinder, algemein",
-                image: "https://css-tricks.com/wp-content/uploads/2018/10/order.svg",
-                image_alt: "",
-                validation: "0" 
-            }
-	    ]
-    }
+    let quetion = {answers:[]};
+    onMount(async () => {
+        const response = await fetch('/api');
+        quetion = await response.json();
+        console.log(quetion);
+    });
     let answershown = false
     let selected = -1;
     function showAwnser(){
@@ -67,6 +31,13 @@
         }
         answershown = true
     }
+    function nexteQuestoin(){
+        showAwnser();
+        setTimeout(function(){
+            console.log("Executed after 1 second");
+            window.location.reload();
+        }, 1000);
+    }
 </script>
 
 <section>
@@ -76,12 +47,11 @@
     <div class="question">
         <div>
             <h3>Frage {question_num}/{question_num_max}</h3>
-            {#if quetion.text != undefined}
+            {#if quetion.hasOwnProperty('text')}
                 <h2>{quetion.text}</h2>
             {/if}
-            {#if quetion.image != undefined}
-                <img src="{quetion.image}" alt="{quetion.image_alt}"/>
-                <img src="https://css-tricks.com/wp-content/uploads/2018/10/order.svg" alt="Italian Trulli">
+            {#if quetion.hasOwnProperty('image')}
+                <img src="{quetion.image}" alt="{quetion?.image_alt}"/>
             {/if}
         </div>
         
@@ -92,7 +62,12 @@
     <div class="answers">
         <div class="center">
             {#each quetion.answers as answers, i}
-                <input type="radio" id="{"answer"+i}" class="answer-radio" name="answer" value="{i}" bind:group={selected}>
+                <input type="radio" 
+                id="{"answer"+i}" 
+                class="answer-radio" 
+                name="answer" 
+                value="{i}" 
+                bind:group={selected}>
                 <label class="answer" for="{"answer"+i}" id="{"answer"+i+"label"}">
                 
                     <div class="number"><span>{i+1}</span></div>
@@ -108,8 +83,10 @@
     </div>
     <div class="footer">
         <button class="button-side-aktion    button-prev">vorherige Frage</button>
-        <button class="button-side-aktion    button-show-awnser" on:click={showAwnser}>Frage abgeben</button>
-        <button class="button-call-to-aktion button-next">nexte Frage</button>
+        <button class="button-side-aktion    button-show-awnser"
+                    on:click={showAwnser}>Frage abgeben</button>
+        <button class="button-call-to-aktion button-next"
+                    on:click={nexteQuestoin}>nexte Frage</button>
     </div>
     <div class="empty"></div>
 </section>
@@ -131,20 +108,26 @@
     }
     .answers{
         height: 100%;
-        display:inline-grid;
-        align-self: center;
+        display: flex;
+        align-items: center;
     }
     .answer img {
         height: 12vh;
-        margin-left: 5%;
+        margin-left: 10px;
     }
     .answer{
         display: flex;
         padding: 2%;
+        width: 70%;
+    }
+    .center{
+        width: 100%;
     }
     .answer .text{
+        width: fit-content;
         margin-left: 10px;
         margin-top: 5px;
+        width: 100%;
     }
     .answer .number{
         min-width: 25px;

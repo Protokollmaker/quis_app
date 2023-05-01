@@ -1,0 +1,29 @@
+{
+	"id": 3,
+	"title": "",
+	"tags": [""],
+	"text": "",
+    "type": "multipe choice",
+	"answers": [
+		{
+			"text": "",
+			"validation": "0" 
+		},
+		{
+			"text": "",
+			"validation": "0" 
+		},
+		{
+			"text": "",
+			"validation": "0" 
+		},
+		{
+			"text": "",
+			"validation": "0" 
+		},
+		{
+			"text": "",
+			"validation": "0" 
+		}
+	]
+}
