@@ -1,6 +1,6 @@
 <script lang="js">
     import { onMount } from "svelte";
-    let question_num = 4;
+    let question_num = "?";
     let question_num_max = 10;
     let quetion = {answers:[]};
     onMount(async () => {
@@ -33,9 +33,16 @@
     }
     function nexteQuestoin(){
         showAwnser();
-        setTimeout(function(){
-            console.log("Executed after 1 second");
-            window.location.reload();
+        setTimeout(async ()  => {
+            const response = await fetch('/api/getQuestion');
+            quetion = await response.json();
+            for (let [i, answer] of quetion.answers.entries()){
+                var div = document.getElementById("answer"+i+"label");
+                if (div != undefined) {
+                    div.style.backgroundColor = "#f6f6f6";
+                }
+            }
+            answershown = false;
         }, 1000);
     }
 </script>

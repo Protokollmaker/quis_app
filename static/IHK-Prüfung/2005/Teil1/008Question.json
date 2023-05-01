@@ -1,0 +1,32 @@
+{
+    "id": 8,
+    "title": "",
+    "tags": [
+        "Lampe",
+        "Mathe"
+    ],
+    "text": "Eine Glühlampe hat den Aufdruck 230V/100W. Welcher Strom (in mA) fließt durch den Glühfaden der Lampe? Welchen Wiederstandswert (in Ω) hat der Glühfaden der Lampe im eingeschaltenen Zustand?",
+    "type": "multipe choice",
+    "answers": [
+        {
+            "text": "I/mA: 435  R/Ω 2,3",
+            "validation": "0"
+        },
+        {
+            "text": "I/mA: 529  R/Ω 43,5",
+            "validation": "0"
+        },
+        {
+            "text": "I/mA: 43,5  R/Ω 230",
+            "validation": "0"
+        },
+        {
+            "text": "I/mA: 435  R/Ω 529",
+            "validation": "1"
+        },
+        {
+            "text": "I/mA: 43,5  R/Ω 2300",
+            "validation": "0"
+        }
+    ]
+}

@@ -1,0 +1,33 @@
+{
+    "id": 6,
+    "title": "",
+    "tags": [
+        "Lampe"
+    ],
+    "text": "Die Innenbefeuchtung des Schaltschranks ist vorschriftsmäßig an ein 230V Wechselspannungsnetz anzuschließen. In welcher Zeile sind die Anschlüsse des Geräts den Netzleitungen richtig zugeordnet",
+    "image": "../IHK-Prüfung/2005/Teil1/005Question.png",
+    "image_alt": "a: Lampe b:Schalter c: Gehäuse",
+    "type": "multipe choice",
+    "answers": [
+        {
+            "text": "L1:a  N:b  PE:c",
+            "validation": "0"
+        },
+        {
+            "text": "L1:a  N:c  PE:b",
+            "validation": "0"
+        },
+        {
+            "text": "L1:b  N:a  PE:c",
+            "validation": "1"
+        },
+        {
+            "text": "L1:b  N:c  PE:a",
+            "validation": "0"
+        },
+        {
+            "text": "L1:c  N:a  PE:b",
+            "validation": "0"
+        }
+    ]
+}

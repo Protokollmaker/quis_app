@@ -1,0 +1,33 @@
+{
+    "id": 10,
+    "title": "",
+    "tags": [
+        "programm"
+    ],
+    "text": "Motorschutzschalter werden auf den Nennstrom des Motors eingestellt. Auf welchen wert muss der Schalter bei einem Drehstrommotor 4,0kW, 400V eingestllt werden?",
+    "image": "../IHK-Prüfung/2005/Teil1/010Question.png",
+    "image_alt": "Sorry zu file Arbeit",
+    "type": "multipe choice",
+    "answers": [
+        {
+            "text": "8,5A",
+            "validation": "1"
+        },
+        {
+            "text": "10A",
+            "validation": "0"
+        },
+        {
+            "text": "16A",
+            "validation": "0"
+        },
+        {
+            "text": "22A",
+            "validation": "0"
+        },
+        {
+            "text": "25A",
+            "validation": "0"
+        }
+    ]
+}
