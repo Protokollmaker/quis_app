@@ -1,0 +1,31 @@
+{
+    "id": 13,
+    "title": "",
+    "tags": [
+        ""
+    ],
+    "text": "Welche Aussage über Sicherheitsanforderungen bei Steuerungen ist richtig",
+    "type": "multipe choice",
+    "answers": [
+        {
+            "text": "Der NOT-AUS-Kreis muss bei speicherprogrammierbaren Steruerungen in Schütztechnik oder durch TÜV-zugelassene Sicherheitssysteme ausgeführt sein",
+            "validation": "1"
+        },
+        {
+            "text": "Der Kontakt des NOT-AUS-Tasters muss direkt an den Eingang des Automatisierungsgeräts einer SPS gechaltet sein",
+            "validation": "0"
+        },
+        {
+            "text": "Die Schützverriegeiung bei der Wendeschaltung eines Motors erfolgt im Programm der SPS.",
+            "validation": "0"
+        },
+        {
+            "text": "Der NOT-AUS-Kreis über ein Schütz mit Selbsthaltung schaltet vvorrangig dei Versorgungsspannung des Automatiesierungsgerätest einer SPS ab.",
+            "validation": "0"
+        },
+        {
+            "text": "Der Öffnerkontakt von Sicherheits-Grenztastern muss zur Abschaltung an den Eingang des Automatisierungsgeräts einer SPS geschalten werden.",
+            "validation": "0"
+        }
+    ]
+}

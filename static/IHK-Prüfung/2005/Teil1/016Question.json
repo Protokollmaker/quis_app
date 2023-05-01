@@ -1,0 +1,33 @@
+{
+    "id": 16,
+    "title": "",
+    "tags": [
+        ""
+    ],
+    "text": "Welche Aussage zu dem dargestillten Ausschnitt aus einem Funktionsplan für eine SPS ist richtig:",
+    "image": "../IHK-Prüfung/2005/Teil1/016Question.png",
+    "image_alt": "zu file Arbeit",
+    "type": "multipe choice",
+    "answers": [
+        {
+            "text": "Wenn an E1 ein 1-Signal anliegt und E2 und E3 jeweils ein 1-Signal fürhten. liegt nach einer Verzögerung von 10s an A1 ein 1-Signal an.",
+            "validation": "1"
+        },
+        {
+            "text": "Wenn an E1 ein 1-Signal anliegt und E2 und E3 jeweils ein 0-Signal fürhen, liegt nach einer Verzägerung von 10s an A1 ein 1-Signal an.",
+            "validation": "0"
+        },
+        {
+            "text": "Mit dem Timer T1 wird eine Ausschaltverzägerung realisiert.",
+            "validation": "0"
+        },
+        {
+            "text": "Der Ausgag A1 wird zurückgesetzt, wenn an E2 und an E3 ein 0-Signal anliet.",
+            "validation": "0"
+        },
+        {
+            "text": "Das SR-Kippblied liefert bei einem gleichzeitigen 1-Signal am S- und R- Eingang ein 1-Signal am Ausgang A1.",
+            "validation": "0"
+        }
+    ]
+}

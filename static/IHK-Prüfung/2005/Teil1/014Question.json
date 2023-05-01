@@ -1,0 +1,31 @@
+{
+    "id": 14,
+    "title": "",
+    "tags": [
+        ""
+    ],
+    "text": "Was versteht man unter dem Begriff 'Zykluszeit' bei eienr SPS?",
+    "type": "multipe choice",
+    "answers": [
+        {
+            "text": "Die Zeit die für die Berabeitung einer Anweisung erforderlich ist",
+            "validation": "0"
+        },
+        {
+            "text": "Die Zeit, in der alle Anweisungen eines Programms nacheinander bearbeitet werden",
+            "validation": "1"
+        },
+        {
+            "text": "Die Taktzeit der SPS",
+            "validation": "0"
+        },
+        {
+            "text": "Die Zeit, die vergeht, bis ein Befehl vom Speicher in die Zentraleinheit gelangt ist.",
+            "validation": "0"
+        },
+        {
+            "text": "Die Zählschritte eines programmierbaren Zählers",
+            "validation": "0"
+        }
+    ]
+}
