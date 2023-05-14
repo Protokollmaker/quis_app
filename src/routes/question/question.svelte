@@ -40,7 +40,9 @@
 		<slot name="header" />
 	</div>
 	<div class="fooder">
-		<slot name="fooder" />
+		<slot name="fooder">
+			Question:{question.id}
+		</slot>
 	</div>
 	<div class="question">
 		<div>
@@ -50,9 +52,9 @@
 			{/if}
 			{#if question.question.hasOwnProperty('filepath')}
 				<SupabaseImage
-					image_src={question.question.filepath}
+					bind:image_src={question.question.filepath}
 					bucket={'Question images'}
-					alt={question.question.alt}
+					bind:alt={question.question.alt}
 				/>
 			{/if}
 		</div>
@@ -78,9 +80,9 @@
 					{/if}
 					{#if answer.hasOwnProperty('filepath')}
 						<SupabaseImage
-							image_src={question.question.filepath}
+							bind:image_src={question.question.filepath}
 							bucket={'Question images'}
-							alt={question.question.alt}
+							bind:alt={question.question.alt}
 						/>
 					{/if}
 				</label>
@@ -99,6 +101,10 @@
 </section>
 
 <style>
+	* {
+		font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+			Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	}
 	#answer0:checked ~ #answer0label .number {
 		background-color: var(--main-aktion);
 		color: #ffffff;
@@ -164,7 +170,7 @@
 	}
 	.number span {
 		position: relative;
-		top: 15%;
+		top: 10%;
 	}
 	.button-show-awnser {
 		margin-left: auto;

@@ -1,13 +1,12 @@
 <script lang="ts">
 	import { supabaseClient } from '$lib/supabase';
-	import { onMount } from 'svelte';
 	export let image_src: string;
 	export let bucket: string;
 	export let alt: string = '';
 	let imageBase64: any;
 
-	async function load() {
-		const { data, error } = await supabaseClient.storage.from(bucket).download(image_src);
+	async function load(t_image_src: string) {
+		const { data, error } = await supabaseClient.storage.from(bucket).download(t_image_src);
 		if (error) {
 			console.log(error);
 		}
@@ -18,9 +17,8 @@
 		if (data == undefined) return;
 		reader.readAsDataURL(data);
 	}
-	onMount(() => {
-		load();
-	});
+
+	$: load(image_src);
 </script>
 
 <section>

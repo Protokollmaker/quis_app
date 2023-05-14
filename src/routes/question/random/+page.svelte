@@ -22,6 +22,7 @@
 				}
 			}
 			getQuestion();
+			console.log(question);
 		}, 1000);
 	}
 
