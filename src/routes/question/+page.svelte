@@ -4,9 +4,18 @@
 	import { onMount } from 'svelte';
 	import type { PageData } from '../dashboard/questions/$types';
 	export let data: PageData;
+	let pageSize = 10;
 	let questions: any = [];
-	async function load() {
-		const { data } = await supabaseClient.from('Questions').select();
+	let offset = 0;
+	async function load(t_offset: number) {
+		if (t_offset < 0) {
+			offset = 0;
+			t_offset = 0;
+		}
+		const { data } = await supabaseClient
+			.from('Questions')
+			.select()
+			.range(t_offset, t_offset + pageSize - 1);
 		questions = data;
 	}
 
@@ -15,8 +24,13 @@
 		if (!data.session) {
 			goto('/');
 		}
-		load();
 	});
+
+	$: load(offset);
+
+	function addOffset(num: number) {
+		offset += num;
+	}
 </script>
 
 <section>
@@ -41,6 +55,16 @@
 			</tr>
 		{/each}
 	</table>
+	<button
+		on:click={() => {
+			addOffset(-pageSize);
+		}}>Vorherige Seite</button
+	>
+	<button
+		on:click={() => {
+			addOffset(pageSize);
+		}}>Nächste Seite</button
+	>
 </section>
 
 <style>

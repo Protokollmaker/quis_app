@@ -1,6 +1,38 @@
 <script lang="ts">
+	import { supabaseClient } from '$lib/supabase';
+	import { onMount, setContext } from 'svelte';
+	import Question from '../question.svelte';
+	let question: any = {};
+	let dataFetcht = false;
+	async function getQuestion() {
+		const test = await supabaseClient.from('QuestionsRandom').select().limit(1).single();
+		question = test.data ? test.data : 0;
+		dataFetcht = true;
+	}
+	onMount(async () => {
+		getQuestion();
+	});
+	function buttonNextQuestion(awnser: undefined | boolean, awnser_long: undefined | number) {
+		console.log(awnser, awnser_long);
+		setTimeout(async () => {
+			for (let [i, answer] of question.answers.answers.entries()) {
+				var div = document.getElementById('answer' + i + 'label');
+				if (div != undefined) {
+					div.style.backgroundColor = '#f6f6f6';
+				}
+			}
+			getQuestion();
+		}, 1000);
+	}
+
+	setContext('buttoncontroll', { buttonNextQuestion });
+	// fecht question id {data.data.question_id}
 </script>
 
-<section>Miau test</section>
+<section>
+	{#if dataFetcht}
+		<Question {question} />
+	{/if}
+</section>
 
 <style></style>

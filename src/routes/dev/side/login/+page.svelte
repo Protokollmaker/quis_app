@@ -19,23 +19,10 @@
 			</div>
 			<form class="login-card-form" action="?/login" method="POST">
 				<div class="form-item">
-					<input
-						type="text"
-						name="email"
-						placeholder="E-Mail eingeben"
-						id="emailForm"
-						autofocus
-						required
-					/>
+					<input type="text" placeholder="E-Mail eingeben" id="emailForm" autofocus required />
 				</div>
 				<div class="form-item">
-					<input
-						type="password"
-						placeholder="Passwort eingeben"
-						id="passwordForm"
-						name="password"
-						required
-					/>
+					<input type="password" placeholder="Passwort eingeben" id="passwordForm" required />
 				</div>
 				<div class="form-item-other">
 					<div class="checkbox">
@@ -349,7 +336,7 @@
 
 	.login-card {
 		width: 450px;
-		background: rgba(46, 104, 139, 0.5);
+		background: rgba(255, 255, 255, 0.5);
 		padding: 4rem;
 		border-radius: 10px;
 		position: relative;
@@ -359,7 +346,7 @@
 		content: '';
 		position: absolute;
 		inset: 0;
-		background: rgba(46, 104, 139, 0.15);
+		background: rgba(255, 255, 255, 0.15);
 		transform: rotate(-6deg);
 		border-radius: 10px;
 		z-index: -1;
@@ -438,11 +425,11 @@
 	.login-card input[type='email'] {
 		border: none;
 		outline: none;
-		background: rgba(255, 255, 255, 0.5);
+		background: rgba(255, 255, 255, 0.3);
 		padding: 1rem 1.5rem;
 		padding-left: calc(1rem * 3.5);
 		border-radius: 100px;
-		width: 80%;
+		width: 100%;
 		transition: background 0.5s;
 	}
 
@@ -465,7 +452,6 @@
 		text-transform: uppercase;
 		letter-spacing: 2px;
 		transition: background 0.5s;
-		border: none;
 	}
 
 	.login-card button:hover {

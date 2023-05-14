@@ -1,21 +1,46 @@
 <script lang="ts">
+	import SupabaseImage from '$lib/components/image/imageSupabase.svelte';
+	import { getContext } from 'svelte';
 	export let question: any;
 	let question_num: number = 1;
 	let question_num_max: number = Infinity;
-	let answershown = false;
 	let selected = -1;
+
+	let anwserGiven: undefined | number = undefined;
+	let awnserOnFirstCheck: boolean | undefined = undefined;
 	function showAwnser() {
-		//TODO: implement
+		if (awnserOnFirstCheck != undefined) return awnserOnFirstCheck;
+		var div = document.getElementById('answer' + selected + 'label');
+		if (div != undefined) {
+			div.style.backgroundColor = '#CD6155';
+		}
+		div = document.getElementById('answer' + question.validation.validation + 'label');
+		if (div != undefined) {
+			div.style.backgroundColor = '#45B39D';
+		}
+		awnserOnFirstCheck = selected == question.validation.validation ? true : false;
+		anwserGiven = selected;
+		return awnserOnFirstCheck;
 	}
+	let buttoncontroll: any;
+	buttoncontroll = getContext('buttoncontroll');
+
 	function nexteQuestoin() {
-		showAwnser();
-		// TODO: implement
+		if (selected == -1) return;
+		let is_true = showAwnser();
+		question_num += 1;
+		buttoncontroll.buttonNextQuestion(is_true, anwserGiven);
+		awnserOnFirstCheck = undefined;
+		selected = -1;
 	}
 </script>
 
 <section>
 	<div class="header">
-		<div class="div">Protokollmaker</div>
+		<slot name="header" />
+	</div>
+	<div class="fooder">
+		<slot name="fooder" />
 	</div>
 	<div class="question">
 		<div>
@@ -23,8 +48,12 @@
 			{#if question.question.hasOwnProperty('text')}
 				<h2>{question.question.text}</h2>
 			{/if}
-			{#if question.hasOwnProperty('image')}
-				<img src={question.question.image} alt={question.question?.image_alt} />
+			{#if question.question.hasOwnProperty('filepath')}
+				<SupabaseImage
+					image_src={question.question.filepath}
+					bucket={'Question images'}
+					alt={question.question.alt}
+				/>
 			{/if}
 		</div>
 	</div>
@@ -47,8 +76,12 @@
 					{#if answer.hasOwnProperty('text')}
 						<div class="text">{answer.text}</div>
 					{/if}
-					{#if answer.hasOwnProperty('image')}
-						<img src={answer.image} alt={answer.image_alt} />
+					{#if answer.hasOwnProperty('filepath')}
+						<SupabaseImage
+							image_src={question.question.filepath}
+							bucket={'Question images'}
+							alt={question.question.alt}
+						/>
 					{/if}
 				</label>
 			{/each}
@@ -150,10 +183,12 @@
 		grid-template-areas:
 			'header center empty'
 			'question center answers'
-			'. center footer';
+			'fooder center footer';
 		height: 100vh;
 	}
-
+	.fooder {
+		grid-area: fooder;
+	}
 	.header {
 		grid-area: header;
 		background-color: var(--main-bg-color1);
