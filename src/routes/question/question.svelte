@@ -79,11 +79,13 @@
 						<div class="text">{answer.text}</div>
 					{/if}
 					{#if answer.hasOwnProperty('filepath')}
-						<SupabaseImage
-							bind:image_src={question.question.filepath}
-							bucket={'Question images'}
-							bind:alt={question.question.alt}
-						/>
+						<diV class="img">
+							<SupabaseImage
+								bind:image_src={answer.filepath}
+								bucket={'Question images'}
+								bind:alt={answer.alt}
+							/>
+						</diV>
 					{/if}
 				</label>
 			{/each}
@@ -139,7 +141,7 @@
 		display: flex;
 		align-items: center;
 	}
-	.answer img {
+	.answer .img {
 		height: 12vh;
 		margin-left: 10px;
 	}
