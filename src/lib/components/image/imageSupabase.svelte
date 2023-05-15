@@ -9,6 +9,7 @@
 		const { data, error } = await supabaseClient.storage.from(bucket).download(t_image_src);
 		if (error) {
 			console.log(error);
+			return;
 		}
 		const reader = new FileReader();
 		reader.onloadend = () => {
