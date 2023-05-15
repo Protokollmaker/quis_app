@@ -12,6 +12,7 @@
 	let questionPart1: string = '';
 	let validation: any = -1;
 	let year: number = 0;
+	let extra_info: string = '';
 
 	export let data: any;
 	let userid = undefined;
@@ -48,7 +49,8 @@
 		sent_object.version = 0;
 		sent_object.tags = {
 			tags: tags.split(' '),
-			path: [year, questionPart, questionPart1]
+			path: [year, questionPart, questionPart1],
+			extra: extra_info.split(';')
 		};
 		sent_object.question = type_Array[type_Array.length - 1];
 		sent_object.answers = {
@@ -68,6 +70,7 @@
 			Title = '';
 			tags = '';
 			validation = -1;
+			extra_info = '';
 		}
 	}
 </script>
@@ -100,6 +103,7 @@
 			<option value="Teil1">Teil 1</option>
 			<option value="Teil2">Teil 2</option>
 		</select>
+		extra_info: <input type="text" bind:value={extra_info} />
 	</div>
 	<h3>Fragen Text</h3>
 	<div>
