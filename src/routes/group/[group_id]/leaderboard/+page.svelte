@@ -2,9 +2,14 @@
 	import { supabaseClient } from '$lib/supabase';
 	export let data;
 	async function leaderboard() {
-		const res = await supabaseClient.from('groupAnswers').select().eq('group', data.data.group_id);
+		const res = await supabaseClient
+			.from('groupAnswers')
+			.select()
+			.eq('group', data.data.group_id)
+			.order('answersCorrect', { ascending: false });
 		if (res.error) console.log(res.error);
 		console.log(res);
+		if (res.data == undefined) return [];
 		return res.data;
 	}
 	async function getOwnser(uuid: any) {
@@ -20,23 +25,32 @@
 </script>
 
 <section>
-	Leaderboard<br />
+	<h1>Bestenliste</h1>
 	{#await leaderboard()}
 		läde...
 	{:then leaderboards}
-		{#each leaderboards as leader}
-			{#if leader}
-				{#await getOwnser(leader.user)}
-					läde
-				{:then name}
-					{name}
-				{:catch error}
-					"???"
-				{/await}
-				Falsch:{leader.answersWrong}
-				Richtig: {leader.answersCorrect}<br />
-			{/if}
-		{/each}
+		<table>
+			<tr class="header">
+				<th class="uuid_header">Name</th>
+				<th>Falsch</th>
+				<th class="owner">Richtig</th>
+			</tr>
+			{#each leaderboards as leader}
+				<tr class="row">
+					{#if leader}
+						{#await getOwnser(leader.user)}
+							<td class="name">läde</td>
+						{:then name}
+							<td class="name">{name}</td>
+						{:catch error}
+							<td class="name">???</td>
+						{/await}
+						<td>{leader.answersWrong}</td>
+						<td>{leader.answersCorrect}</td>
+					{/if}
+				</tr>
+			{/each}
+		</table>
 	{/await}
 </section>
 
