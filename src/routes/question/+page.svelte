@@ -60,6 +60,7 @@
 			addOffset(-pageSize);
 		}}>Vorherige Seite</button
 	>
+	{offset / pageSize + 1}
 	<button
 		on:click={() => {
 			addOffset(pageSize);
