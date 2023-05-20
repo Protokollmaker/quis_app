@@ -6,10 +6,11 @@
 			.from('groupAnswers')
 			.select()
 			.eq('group', data.data.group_id)
-			.order('answersCorrect', { ascending: false });
+			.order('answersCorrect', { ascending: false })
+			.limit(50);
 		if (res.error) console.log(res.error);
 		console.log(res);
-		if (res.data == undefined) return [];
+		if (res.data == null) return [];
 		return res.data;
 	}
 	async function getOwnser(uuid: any) {

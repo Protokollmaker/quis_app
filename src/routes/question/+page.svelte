@@ -2,7 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { supabaseClient } from '$lib/supabase';
 	import { onMount } from 'svelte';
-	import type { PageData } from '../dashboard/questions/$types';
+	import type { PageData } from './$types';
 	export let data: PageData;
 	let pageSize = 10;
 	let questions: any = [];
