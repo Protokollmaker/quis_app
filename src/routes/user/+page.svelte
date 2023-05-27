@@ -14,20 +14,26 @@
 		}
 		userid = data.session?.user.id;
 		user = await supabaseClient.from('User').select().eq('user_id', userid).limit(1).single();
-		user = user.data;
+		if (user.error) {
+			goto('/user/new');
+		}
 		console.log(user);
+		user = user.data;
+
 		userfecht = true;
 	});
 </script>
 
 <section>
 	{#if userfecht}
-		<h1>Welcome, {user.Name}</h1>
+		<h1>Welcome, {user?.Name}</h1>
 	{/if}
 	<a href="/user/settings">Einstellungen</a><br />
 	<a href="/question">Fragen</a><br />
-	<a href="/question/random">Zufällige Frage</a>
-	<a href="/question/new">Neue Frage</a>
+	<a href="/question/new">neue Fragen</a><br />
+	<a href="/question/random">Zufällige Frage</a><br />
+	<a href="/group">Gruppe</a><br />
+	<a href="/group/new">neue Gruppe</a><br />
 </section>
 
 <style>

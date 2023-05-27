@@ -1,4 +1,6 @@
-import { createClient } from "@supabase/auth-helpers-sveltekit"
+import { createClient } from "@supabase/auth-helpers-sveltekit";
+//import { createClient } from "@supabase/supabase-js";
+//import type { Database } from "./types/schema";
 
 export const supabaseClient = createClient(
 	"https://bxwgtcwwdonwfwahukvs.supabase.co",

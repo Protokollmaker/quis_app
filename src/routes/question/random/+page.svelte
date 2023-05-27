@@ -1,38 +1,40 @@
 <script lang="ts">
-	import Question from '$lib/components/question.svelte';
+	import { browser } from '$app/environment';
+	import Question1 from '$lib/components/question1.svelte';
+	import { next_question, prev_question, questionarray } from '$lib/stores/questionarray';
 	import { supabaseClient } from '$lib/supabase';
-	import { onMount, setContext } from 'svelte';
-	let question: any = {};
-	let dataFetcht = false;
-	async function getQuestion() {
-		const test = await supabaseClient.from('QuestionsRandom').select().limit(1).single();
-		question = test.data ? test.data : 0;
-		dataFetcht = true;
-	}
-	onMount(async () => {
-		getQuestion();
-	});
-	function buttonNextQuestion(awnser: undefined | boolean, awnser_long: undefined | number) {
-		console.log(awnser, awnser_long);
-		setTimeout(async () => {
-			for (let [i, answer] of question.answers.answers.entries()) {
-				var div = document.getElementById('answer' + i + 'label');
-				if (div != undefined) {
-					div.style.backgroundColor = '#f6f6f6';
-				}
-			}
-			getQuestion();
-			console.log(question);
-		}, 1000);
-	}
+	import { get } from 'svelte/store';
 
-	setContext('buttoncontroll', { buttonNextQuestion });
-	// fecht question id {data.data.question_id}
+	let question: any = {};
+	let questioncount: number = 0;
+	let lastquestioncount: number = -1;
+	let anwerser: any = {};
+	console.log(get(questionarray));
+	questionarray.subscribe((value) => {
+		question = value.current_question;
+		anwerser = value.current_anwerser;
+	});
+
+	function load(n: number) {
+		if (!browser) return 0;
+		if (n > lastquestioncount)
+			next_question(async (n: number) => {
+				const res = await supabaseClient.from('QuestionsRandom').select().limit(n);
+				return res.data;
+			});
+		if (n < lastquestioncount) prev_question();
+		lastquestioncount = n;
+	}
+	$: load(questioncount);
 </script>
 
 <section>
-	{#if dataFetcht}
-		<Question {question} />
+	{#if question?.id}
+		<Question1
+			bind:question={$questionarray.current_question}
+			bind:question_num={questioncount}
+			bind:anwerser={$questionarray.current_anwerser}
+		/>
 	{/if}
 </section>
 

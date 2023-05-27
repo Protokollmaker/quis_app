@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { supabaseClient } from '$lib/supabase';
-	import type { PageData } from '../../dashboard/questions/$types';
+	import type { PageData } from './$types';
 	export let data: PageData;
 	let error = '';
 

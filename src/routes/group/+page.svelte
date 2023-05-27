@@ -43,11 +43,6 @@
 
 <section>
 	<h1>Alle Gruppen</h1>
-	<button
-		on:click={() => {
-			offset += 0;
-		}}>Test</button
-	>
 	<table>
 		<tr class="header">
 			<th class="uuid_header">uuid</th>
