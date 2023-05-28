@@ -11,16 +11,17 @@
 		// todo Backend auth so the sidie don't get loaded on login
 		if (!data.session) {
 			goto('/');
-		}
-		userid = data.session?.user.id;
-		user = await supabaseClient.from('User').select().eq('user_id', userid).limit(1).single();
-		if (user.error) {
-			goto('/user/new');
-		}
-		console.log(user);
-		user = user.data;
+		} else {
+			userid = data.session?.user.id;
+			user = await supabaseClient.from('User').select().eq('user_id', userid).limit(1).single();
+			if (user.error) {
+				goto('/user/new');
+			}
+			console.log(user);
+			user = user.data;
 
-		userfecht = true;
+			userfecht = true;
+		}
 	});
 </script>
 

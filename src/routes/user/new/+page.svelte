@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { supabaseClient } from '$lib/supabase';
 	export let data;
 	let error = '';
@@ -11,6 +12,7 @@
 		console.log(res.error);
 		if (res.error) error = res.error.message;
 		if (res.error?.code == '23505') error = 'Du wurdest schon regestirert';
+		goto('/user');
 	}
 </script>
 
