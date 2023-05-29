@@ -4,7 +4,7 @@
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
-	let pageSize = 10;
+	let pageSize = 50;
 	let questions: any = [];
 	let offset = 0;
 	async function load(t_offset: number) {
@@ -14,9 +14,10 @@
 		}
 		const { data } = await supabaseClient
 			.from('Questions')
-			.select()
+			.select('id, tags, version, Title')
 			.range(t_offset, t_offset + pageSize - 1);
 		questions = data;
+		console.log(data);
 	}
 
 	onMount(async () => {
@@ -35,6 +36,17 @@
 
 <section>
 	<h1>Alle fragen</h1>
+	<button
+		on:click={() => {
+			addOffset(-pageSize);
+		}}>Vorherige Seite</button
+	>
+	{offset / pageSize + 1}
+	<button
+		on:click={() => {
+			addOffset(pageSize);
+		}}>Nächste Seite</button
+	>
 	<table>
 		<tr class="header">
 			<th class="uuid_header">uuid</th>
