@@ -16,6 +16,9 @@
 			subscription.unsubscribe();
 		};
 	});
+	/*onMount(() => {
+		document.documentElement.classList.add('dark');
+	});*/
 </script>
 
 <slot />

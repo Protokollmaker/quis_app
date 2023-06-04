@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { Button } from '$lib/components/ui/button';
+	import { Badge } from '$lib/components/ui/badge';
 	import {
 		Table,
 		TableBody,
@@ -40,23 +41,23 @@
 
 <section>
 	<div class="flex m-4" style="justify-content: space-between;">
-	<span class="text-2xl">Alle fragen</span>
-	<div class="inline" >
-		<Button
-			variant="boarder"
-			size="sm"
-			on:click={() => {
-				offset -= pageSize;
-			}}>Vorherige Seite</Button
-		>
-		{offset / pageSize + 1}
-		<Button
-			size="sm"
-			on:click={() => {
-				offset += pageSize;
-			}}>Nächste Seite</Button
-		>
-	</div>
+		<span class="text-2xl">Alle fragen</span>
+		<div class="inline">
+			<Button
+				variant="boarder"
+				size="sm"
+				on:click={() => {
+					offset -= pageSize;
+				}}>Vorherige Seite</Button
+			>
+			{offset / pageSize + 1}
+			<Button
+				size="sm"
+				on:click={() => {
+					offset += pageSize;
+				}}>Nächste Seite</Button
+			>
+		</div>
 	</div>
 	<Table>
 		<TableHeader>
@@ -68,18 +69,17 @@
 		</TableHeader>
 		<TableBody>
 			{#each questions as question, i (i)}
-			<TableRow key={question.id} 
-			on:click={()=>{
-				goto("/question/"+ question.id)
-			}}>
+				<TableRow
+					key={question.id}
+					on:click={() => {
+						goto('/question/' + question.id);
+					}}
+				>
 					<TableCell class="font-medium">{question.id.substring(0, 8)}</TableCell>
 					<TableCell><a href="/question/{question.id}">{question.Title}</a></TableCell>
 					<TableCell class="text-right"
 						>{#each question.tags.tags as tag}
-							<div 
-							class="tag text-sm text-black rounded-lg">
-								#{tag}
-							</div>
+							<Badge variant="tag">#{tag}</Badge>
 						{/each}</TableCell
 					>
 				</TableRow>
