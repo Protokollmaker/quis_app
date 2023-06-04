@@ -4,7 +4,6 @@
 	import {
 		Table,
 		TableBody,
-		TableCaption,
 		TableCell,
 		TableHead,
 		TableHeader,
@@ -14,7 +13,7 @@
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
-	let pageSize = 20;
+	let pageSize = 50;
 	let questions: any = [];
 	let offset = 0;
 	async function load(t_offset: number) {
@@ -26,7 +25,7 @@
 			.from('Questions')
 			.select('id, tags, version, Title')
 			.range(t_offset, t_offset + pageSize - 1);
-		invoices = data;
+		questions = data;
 	}
 
 	onMount(async () => {
@@ -37,27 +36,29 @@
 	});
 
 	$: load(offset);
-	let invoices: any = [];
 </script>
 
 <section>
-	<h1 class="">Alle fragen</h1>
-	<Button
-		variant="boarder"
-		size="sm"
-		on:click={() => {
-			offset -= pageSize;
-		}}>Vorherige Seite</Button
-	>
-	{offset / pageSize + 1}
-	<Button
-		size="sm"
-		on:click={() => {
-			offset += pageSize;
-		}}>Nächste Seite</Button
-	>
+	<div class="flex m-4" style="justify-content: space-between;">
+	<span class="text-2xl">Alle fragen</span>
+	<div class="inline" >
+		<Button
+			variant="boarder"
+			size="sm"
+			on:click={() => {
+				offset -= pageSize;
+			}}>Vorherige Seite</Button
+		>
+		{offset / pageSize + 1}
+		<Button
+			size="sm"
+			on:click={() => {
+				offset += pageSize;
+			}}>Nächste Seite</Button
+		>
+	</div>
+	</div>
 	<Table>
-		<TableCaption>Eine Liste von Fragen</TableCaption>
 		<TableHeader>
 			<TableRow>
 				<TableHead class="w-[100px]">uuid</TableHead>
@@ -66,33 +67,41 @@
 			</TableRow>
 		</TableHeader>
 		<TableBody>
-			{#each invoices as invoice, i (i)}
-				<TableRow key={invoice.id}>
-					<TableCell class="font-medium">{invoice.id.substring(0, 8)}</TableCell>
-					<TableCell><a href="/question/{invoice.id}">{invoice.Title}</a></TableCell>
+			{#each questions as question, i (i)}
+			<TableRow key={question.id} 
+			on:click={()=>{
+				goto("/question/"+ question.id)
+			}}>
+					<TableCell class="font-medium">{question.id.substring(0, 8)}</TableCell>
+					<TableCell><a href="/question/{question.id}">{question.Title}</a></TableCell>
 					<TableCell class="text-right"
-						>{#each invoice.tags.tags as tag}
-							<div class="tag text-sm text-black ">#{tag}</div>
+						>{#each question.tags.tags as tag}
+							<div 
+							class="tag text-sm text-black rounded-lg">
+								#{tag}
+							</div>
 						{/each}</TableCell
 					>
 				</TableRow>
 			{/each}
 		</TableBody>
 	</Table>
-	<Button
-		variant="boarder"
-		size="sm"
-		on:click={() => {
-			offset -= pageSize;
-		}}>Vorherige Seite</Button
-	>
-	{offset / pageSize + 1}
-	<Button
-		size="sm"
-		on:click={() => {
-			offset += pageSize;
-		}}>Nächste Seite</Button
-	>
+	<div class="m-4 text-right">
+		<Button
+			variant="boarder"
+			size="sm"
+			on:click={() => {
+				offset -= pageSize;
+			}}>Vorherige Seite</Button
+		>
+		{offset / pageSize + 1}
+		<Button
+			size="sm"
+			on:click={() => {
+				offset += pageSize;
+			}}>Nächste Seite</Button
+		>
+	</div>
 </section>
 
 <style>
@@ -103,6 +112,5 @@
 
 		padding: 1px 5px 1px 5px;
 		margin: 3px;
-		border-radius: 320px;
 	}
 </style>
