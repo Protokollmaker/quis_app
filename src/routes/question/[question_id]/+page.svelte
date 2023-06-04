@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Question from '$lib/components/question.svelte';
-	import { supabaseClient } from '$lib/supabase';
+	import { supabaseClient } from '$lib/func/Clients/supabase';
 	import { onMount } from 'svelte';
 	export let data;
 	let question: any;

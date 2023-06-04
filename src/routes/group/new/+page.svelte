@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { supabaseClient } from '$lib/supabase';
+	import { supabaseClient } from '$lib/func/Clients/supabase';
 	import type { PageData } from './$types';
 	export let data: PageData;
 	let error = '';

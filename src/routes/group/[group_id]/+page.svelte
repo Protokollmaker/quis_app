@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { supabaseClient } from '$lib/supabase';
+	import { supabaseClient } from '$lib/func/Clients/supabase';
 	import { onMount } from 'svelte';
 	export let data;
 	let leaderboard: any = {};
@@ -24,7 +24,9 @@
 		if (!questionArray.data) return [];
 		let ids_array: Array<any> = [];
 		console.log(questionArray.data);
-		for (let question_id of questionArray.data.question) {
+
+		let ids: any = questionArray.data.question;
+		for (let question_id of ids) {
 			ids_array.push(question_id.question_id);
 		}
 		console.log(ids_array);

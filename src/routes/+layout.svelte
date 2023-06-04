@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
-	import { supabaseClient } from '$lib/supabase';
+	import { supabaseClient } from '$lib/func/Clients/supabase';
 	import { onMount } from 'svelte';
 	import '../app.postcss';
 

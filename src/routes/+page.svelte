@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { enhance, type SubmitFunction } from '$app/forms';
-	import { supabaseClient } from '$lib/supabase';
+	import { enhance } from '$app/forms';
+	import { supabaseClient } from '$lib/func/Clients/supabase';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
 
-	const submitLogout: SubmitFunction = async ({ cancel }) => {
+	const submitLogout = async ({ cancel }: any) => {
 		const { error } = await supabaseClient.auth.signOut();
 		if (error) {
 			console.log(error);

@@ -1,10 +1,20 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { supabaseClient } from '$lib/supabase';
+	import { Button } from '$lib/components/ui/button';
+	import {
+		Table,
+		TableBody,
+		TableCaption,
+		TableCell,
+		TableHead,
+		TableHeader,
+		TableRow
+	} from '$lib/components/ui/table';
+	import { supabaseClient } from '$lib/func/Clients/supabase';
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
-	let pageSize = 50;
+	let pageSize = 20;
 	let questions: any = [];
 	let offset = 0;
 	async function load(t_offset: number) {
@@ -16,8 +26,7 @@
 			.from('Questions')
 			.select('id, tags, version, Title')
 			.range(t_offset, t_offset + pageSize - 1);
-		questions = data;
-		console.log(data);
+		invoices = data;
 	}
 
 	onMount(async () => {
@@ -28,103 +37,72 @@
 	});
 
 	$: load(offset);
-
-	function addOffset(num: number) {
-		offset += num;
-	}
+	let invoices: any = [];
 </script>
 
 <section>
-	<h1>Alle fragen</h1>
-	<button
+	<h1 class="">Alle fragen</h1>
+	<Button
+		variant="boarder"
+		size="sm"
 		on:click={() => {
-			addOffset(-pageSize);
-		}}>Vorherige Seite</button
+			offset -= pageSize;
+		}}>Vorherige Seite</Button
 	>
 	{offset / pageSize + 1}
-	<button
+	<Button
+		size="sm"
 		on:click={() => {
-			addOffset(pageSize);
-		}}>Nächste Seite</button
+			offset += pageSize;
+		}}>Nächste Seite</Button
 	>
-	<table>
-		<tr class="header">
-			<th class="uuid_header">uuid</th>
-			<th>title</th>
-			<th style="text-align: right;">Tags</th>
-			<th class="version">version</th>
-		</tr>
-		{#each questions as question}
-			<tr class="row">
-				<td class="questionID"> <span class="ID_span">{question.id.substring(0, 8)}</span></td>
-				<td class="title"><a href="/question/{question.id}">{question.Title}</a></td>
-				<td class="tags">
-					{#each question.tags.tags as tag}
-						<div class="tag">#{tag}</div>
-					{/each}
-				</td>
-				<td class="version">{question.version}</td>
-			</tr>
-		{/each}
-	</table>
-	<button
+	<Table>
+		<TableCaption>Eine Liste von Fragen</TableCaption>
+		<TableHeader>
+			<TableRow>
+				<TableHead class="w-[100px]">uuid</TableHead>
+				<TableHead>Title</TableHead>
+				<TableHead class="text-right">Tag</TableHead>
+			</TableRow>
+		</TableHeader>
+		<TableBody>
+			{#each invoices as invoice, i (i)}
+				<TableRow key={invoice.id}>
+					<TableCell class="font-medium">{invoice.id.substring(0, 8)}</TableCell>
+					<TableCell><a href="/question/{invoice.id}">{invoice.Title}</a></TableCell>
+					<TableCell class="text-right"
+						>{#each invoice.tags.tags as tag}
+							<div class="tag text-sm text-black ">#{tag}</div>
+						{/each}</TableCell
+					>
+				</TableRow>
+			{/each}
+		</TableBody>
+	</Table>
+	<Button
+		variant="boarder"
+		size="sm"
 		on:click={() => {
-			addOffset(-pageSize);
-		}}>Vorherige Seite</button
+			offset -= pageSize;
+		}}>Vorherige Seite</Button
 	>
 	{offset / pageSize + 1}
-	<button
+	<Button
+		size="sm"
 		on:click={() => {
-			addOffset(pageSize);
-		}}>Nächste Seite</button
+			offset += pageSize;
+		}}>Nächste Seite</Button
 	>
 </section>
 
 <style>
-	.tags {
-		text-align: right;
-	}
 	.tag {
-		color: #402c1b;
-		background-color: #fdecc8;
+		color: #2c5670;
+		background-color: #d3e5ef;
 		display: inline;
 
 		padding: 1px 5px 1px 5px;
 		margin: 3px;
 		border-radius: 320px;
-		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-		font-size: 14px;
-	}
-	th {
-		text-align: left;
-	}
-	tr {
-		height: 5vh;
-	}
-	a {
-		width: 100%;
-	}
-	.ID_span {
-		margin: 10px;
-	}
-	.uuid_header {
-		width: 1px;
-		margin: 10px;
-	}
-	tr:nth-child(even) {
-		background-color: #f1f1f1;
-	}
-	table {
-		width: 100%;
-		border-collapse: collapse;
-	}
-	.questionID {
-		margin: 10px;
-	}
-	.title {
-		margin-left: 10px;
-	}
-	.version {
-		text-align: right;
 	}
 </style>

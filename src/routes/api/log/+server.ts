@@ -1,19 +1,13 @@
-import { env } from '$lib/env';
-import { Client } from '@axiomhq/axiom-node';
+//import axiomClient from "$lib/func/Client/axiom";
+import { axiomClient } from "$lib/func/Clients/axiom";
 import { json } from '@sveltejs/kit';
 
-
-const client = new Client({
-    token: env.AXIOM_TOKEN,
-    orgId: env.AXIOM_ORG_ID,
-});
-
-export async function POST({ params }) {
+export async function GET({ params }: any) {
     console.log(params)
     //const dataobject: any = await res?.body.json();
     //console.log(dataobject)
     try {
-        await client.ingestEvents("ihk-quiz", [{
+        await axiomClient.ingestEvents("ihk-quiz", [{
             from: 'forntend',
             client: "id",
             message: "dataobject"

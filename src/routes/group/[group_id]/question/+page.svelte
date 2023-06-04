@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import Question from '$lib/components/question.svelte';
-	import { supabaseClient } from '$lib/supabase';
+	import { supabaseClient } from '$lib/func/Clients/supabase';
 	import { error } from '@sveltejs/kit';
 	import { onMount, setContext } from 'svelte';
 	let question: any = {};
 	let dataFetcht = false;
-	export let data;
+	export let data: any;
 	let question_num = 0;
 	let question_num_max = 0;
 	let questionStack: any = [];
@@ -44,7 +44,7 @@
 			.limit(1)
 			.single();
 		if (res.error) console.log(res.error);
-		questionStack = res.data.question;
+		questionStack = res.data?.question;
 		console.log(questionStack);
 		getQuestion(questionStack[question_num].question_id);
 		question_num_max = questionStack.length;

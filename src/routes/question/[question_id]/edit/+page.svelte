@@ -1,7 +1,7 @@
 <script lang="ts">
 	// @ts-nocheck
 	import SupabaseImage from '$lib/components/image/imageSupabase.svelte';
-	import { supabaseClient } from '$lib/supabase';
+	import { supabaseClient } from '$lib/func/Clients/supabase';
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
@@ -205,5 +205,11 @@
 	.Text {
 		width: 80%;
 		height: 20px;
+	}
+
+	input,
+	select {
+		border-color: rgb(112, 111, 111);
+		border-width: 1px;
 	}
 </style>

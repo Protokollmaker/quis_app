@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { supabaseClient } from '$lib/supabase';
+	import { supabaseClient } from '$lib/func/Clients/supabase';
 
 	let email: string;
 	let password: string;

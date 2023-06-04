@@ -1,4 +1,4 @@
-import { supabaseClient } from '$lib/supabase';
+import { supabaseClient } from '$lib/func/Clients/supabase';
 
 export async function load() {
     const { data, error } = await supabaseClient.from('User').select();

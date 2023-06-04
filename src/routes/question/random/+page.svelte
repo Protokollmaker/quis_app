@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import Question1 from '$lib/components/question1.svelte';
+	import { supabaseClient } from '$lib/func/Clients/supabase';
 	import { next_question, prev_question, questionarray } from '$lib/stores/questionarray';
-	import { supabaseClient } from '$lib/supabase';
 	import { get } from 'svelte/store';
 
 	let question: any = {};

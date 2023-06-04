@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { supabaseClient } from '$lib/supabase';
+	import { supabaseClient } from '$lib/func/Clients/supabase';
 	let countries: any = [];
 	async function load() {
 		const { data } = await supabaseClient.from('Beantwortete Fagen').select();

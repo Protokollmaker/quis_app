@@ -1,6 +1,6 @@
 <script lang="ts">
 	// @ts-nocheck
-	import { supabaseClient } from '$lib/supabase';
+	import { supabaseClient } from '$lib/func/Clients/supabase';
 	import { onMount } from 'svelte';
 	let tests = {
 		res0: undefined

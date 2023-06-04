@@ -1,8 +1,8 @@
-<script lang="js">
+<script lang="ts">
 	import { onMount } from 'svelte';
 	let question_num = 1;
 	let question_num_max = '???';
-	let quetion = { answers: [] };
+	let quetion: any = { answers: [] };
 	onMount(async () => {
 		const response = await fetch('/api/getQuestion');
 		quetion = await response.json();
