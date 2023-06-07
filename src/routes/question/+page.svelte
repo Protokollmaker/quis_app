@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { Button } from '$lib/components/ui/button';
 	import { Badge } from '$lib/components/ui/badge';
+	import { Button } from '$lib/components/ui/button';
 	import {
 		Table,
 		TableBody,
@@ -13,20 +13,28 @@
 	import { supabaseClient } from '$lib/func/Clients/supabase';
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
+	import Filter from './Filter.svelte';
 	export let data: PageData;
+	let tags: any = null;
 	let pageSize = 50;
 	let questions: any = [];
 	let offset = 0;
-	async function load(t_offset: number) {
+	async function load(t_offset: number, tag: any) {
 		if (t_offset < 0) {
 			offset = 0;
 			t_offset = 0;
 		}
-		const { data } = await supabaseClient
+		const query = supabaseClient
 			.from('Questions')
 			.select('id, tags, version, Title')
 			.range(t_offset, t_offset + pageSize - 1);
-		questions = data;
+		if (tag) {
+			query.contains('tags->tags::json', JSON.stringify(tag));
+		}
+
+		const res = await query;
+		questions = res.data;
+		console.log(res);
 	}
 
 	onMount(async () => {
@@ -36,12 +44,13 @@
 		}
 	});
 
-	$: load(offset);
+	$: load(offset, tags);
 </script>
 
 <section>
 	<div class="flex m-4" style="justify-content: space-between;">
 		<span class="text-2xl">Alle fragen</span>
+		<Filter bind:aktivTags={tags} />
 		<div class="inline">
 			<Button
 				variant="boarder"
@@ -103,14 +112,3 @@
 		>
 	</div>
 </section>
-
-<style>
-	.tag {
-		color: #2c5670;
-		background-color: #d3e5ef;
-		display: inline;
-
-		padding: 1px 5px 1px 5px;
-		margin: 3px;
-	}
-</style>

@@ -12,8 +12,8 @@ const config = {
 		preprocess({
 			postcss: true
 		}),
-		preprocess(), 
-		delegateEvents()
+		preprocess(),
+		delegateEvents(),
 	],
 	kit: {
 		adapter: adapter(),
