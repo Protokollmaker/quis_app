@@ -31,10 +31,8 @@
 		if (tag) {
 			query.contains('tags->tags::json', JSON.stringify(tag));
 		}
-
 		const res = await query;
 		questions = res.data;
-		console.log(res);
 	}
 
 	onMount(async () => {

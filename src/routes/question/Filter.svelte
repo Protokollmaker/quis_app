@@ -10,8 +10,13 @@
 	let isOpen = false;
 	let elemnt: any = {};
 
-	async function loadTags() {
-		let res = await supabaseClient.from('Questions_distinct_tags').select();
+	async function loadTags(tags: Array<String> | null) {
+		let res: any;
+		if (tags == null) res = await supabaseClient.from('Questions_distinct_tags').select();
+		else
+			res = await supabaseClient.rpc('helper_questions_tag_querys', {
+				tags_input: JSON.stringify(tags)
+			});
 		if (res.error) {
 			console.log(res.error);
 		}
@@ -47,7 +52,7 @@
 		style="position: absolute;width: calc(100vw - 18px);
 		overflow: hidden; left: 9px;"
 	>
-		{#await loadTags()}
+		{#await loadTags(aktivTags)}
 			läde
 		{:then tags}
 			{#if Array.isArray(tags)}
