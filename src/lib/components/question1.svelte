@@ -1,5 +1,7 @@
 <script lang="ts">
 	import SupabaseImage from '$lib/components/image/imageSupabase.svelte';
+	import { Edit } from 'lucide-svelte';
+	import Button from './ui/button/Button.svelte';
 	export let question: any;
 	export let question_num: number = 0;
 	export let question_num_max: number = Infinity;
@@ -8,14 +10,14 @@
 	export let anwerser: any;
 </script>
 
-<section>
+<section class="w-screen">
 	<div class="header">
 		<slot name="header" />
 	</div>
 	<div class="fooder">
 		<slot name="fooder">
-			Question:<a href="/question/{question.id}/">{question.id}</a>
-			<a href="/question/{question.id}/edit">✏️</a>
+			Frage: <a href="/question/{question.id}/">{question.id}</a>
+			<a href="/question/{question.id}/edit"><Edit class="h-4" /></a>
 		</slot>
 	</div>
 	<div class="question">
@@ -73,47 +75,50 @@
 		</div>
 	</div>
 
-	<div class="footer">
-		<button
-			class="button-side-aktion button-prev"
-			on:click={() => {
-				question_num--;
-			}}>vorherige Frage</button
-		>
-		<button
-			class="button-side-aktion    button-show-awnser"
-			on:click={() => {
-				if (anwerser != null) return 0;
-				anwerser = { anwnsered: selected };
-			}}>Frage abgeben</button
-		>
-		<button
-			class="button-call-to-aktion button-next"
-			style={endet ? 'background-color: #1d5d86;' : ''}
-			on:click={() => {
-				if (endet == true) return;
-				endet = true;
-				if (anwerser == null) {
+	<div class="footer flex justify-between">
+		<div>
+			<Button
+				variant="boarder"
+				on:click={() => {
+					question_num--;
+				}}>vorherige Frage</Button
+			>
+		</div>
+		<div>
+			<Button
+				variant="boarder"
+				on:click={() => {
+					if (anwerser != null) return 0;
 					anwerser = { anwnsered: selected };
-					setTimeout(() => {
+				}}>Frage abgeben</Button
+			>
+			<Button
+				style={endet ? 'background-color: #1d5d86;' : ''}
+				on:click={() => {
+					if (endet == true) return;
+					endet = true;
+					if (anwerser == null) {
+						anwerser = { anwnsered: selected };
+						setTimeout(() => {
+							question_num++;
+							selected = -1;
+							endet = false;
+						}, 1000);
+					} else {
 						question_num++;
 						selected = -1;
 						endet = false;
-					}, 1000);
-				} else {
-					question_num++;
-					selected = -1;
-					endet = false;
-				}
-			}}>nexte Frage</button
-		>
+					}
+				}}>nexte Frage</Button
+			>
+		</div>
 	</div>
 	<div class="empty" />
 </section>
 
 <style>
-	.disabled {
-		background-color: #cd6155;
+	:global(body) {
+		margin: 0px;
 	}
 	.anwnsered {
 		background-color: #cd6155;
@@ -188,14 +193,6 @@
 
 		border: 1px solid var(--main-aktion);
 	}
-	.number span {
-		position: relative;
-		top: 10%;
-	}
-	.button-show-awnser {
-		margin-left: auto;
-		margin-right: 1%;
-	}
 	section {
 		--main-bg-color1: #ffffff;
 		--main-bg-color2: #f6f6f6;
@@ -204,7 +201,7 @@
 		padding: 0px;
 		margin: 0px;
 		display: grid;
-		grid-template-rows: 5vh auto 5vh;
+		grid-template-rows: 5vh 1fr auto;
 		grid-template-columns: 10fr 2fr 20fr;
 		grid-template-areas:
 			'header center empty'
@@ -249,24 +246,6 @@
 		width: 50%;
 		background-color: var(--main-bg-color1);
 		height: 100vh;
-	}
-
-	button {
-		border: none;
-		border-radius: 2px;
-		padding: 1% 2% 1% 2%;
-		min-height: fit-content;
-	}
-
-	.button-side-aktion {
-		border: 1px solid var(--main-aktion);
-		background-color: transparent;
-	}
-
-	.button-call-to-aktion {
-		border: 1px solid var(--main-aktion);
-		background-color: var(--main-aktion);
-		color: #ffffff;
 	}
 
 	.footer {

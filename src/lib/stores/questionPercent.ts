@@ -1,3 +1,5 @@
+import { get, writable } from "svelte/store";
+
 
 type TagsPersentElement = {
     name: string,
@@ -11,8 +13,14 @@ export type PercentValuePaar = {
 }
 
 export class TagsPersent {
-    constructor(t_array: Array<TagsPersentElement> = []) {
-        this.array = t_array;
+    constructor(t_cookie_name: string, t_array: Array<TagsPersentElement> | null = null) {
+        this.cookie_name = t_cookie_name;
+        if (t_array != null) {
+            this.array = t_array;
+        } else {
+            this.array = JSON.parse(localStorage.getItem(this.cookie_name) || "[]")
+        }
+        this.updateValues();
     }
     addValue(tag: string, bool: boolean) {
         const result = this.array.findIndex(item => item["name"] === tag)
@@ -26,6 +34,8 @@ export class TagsPersent {
         }
         this.array[result].summe += bool ? 1 : 0;
         this.array[result].number += 1;
+        this.save();
+        this.updateValue(tag);
         return 0;
     }
 
@@ -46,6 +56,32 @@ export class TagsPersent {
         }
         return list;
     }
-    array: Array<TagsPersentElement> = [];
 
+    updateValue(tag: string) {
+        const array_out = get(this.array_out);
+        array_out[tag] = this.getValue(tag);
+        this.array_out.set(array_out);
+    }
+
+    updateValues() {
+        const array_out: any = {};
+        for (const element of this.array) {
+            array_out[element.name] = element.summe / element.number;
+        }
+        this.array_out.set(array_out);
+    }
+
+    save() {
+        localStorage.setItem(this.cookie_name, JSON.stringify(this.array))
+    }
+
+    get percent() {
+        return this.array_out;
+    }
+
+    array: Array<TagsPersentElement> = [];
+    array_out = writable<any>({});
+    cookie_name: string;
 }
+
+export const QuestionAnswers = new TagsPersent("anwerser");
