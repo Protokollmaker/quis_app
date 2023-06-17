@@ -11,12 +11,14 @@ type TagsPersentElement = {
 };
 
 export function getvalue(obj: Array<TagsPersentElement>, id: string) {
+    if (!browser) return -1;
     const result = obj.findIndex(item => item["name"] === id)
     if (result == -1) return null;
     return obj[result].percent;
 }
 
 export function addValue(obj: Array<TagsPersentElement>, id: string, bool: boolean | null) {
+    if (!browser) return { error: -2, obj: obj };
     if (id == null || bool == null) return { error: 1, obj: obj };
     const result = obj.findIndex(item => item["name"] === id);
     if (result == -1) {
