@@ -15,6 +15,7 @@
 	let badge: badges = 'tag';
 	function bageColor(percent: number | null) {
 		if (percent == null) {
+			badge = 'tag';
 		} else if (percent * 100 > 85) {
 			badge = 'green';
 		} else if (percent * 100 > 30) {
