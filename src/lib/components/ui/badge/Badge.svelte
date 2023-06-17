@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { VariantProps } from 'class-variance-authority';
-	import type { HTMLAnchorAttributes } from 'svelte/elements';
-	import { cva } from 'class-variance-authority';
 	import { cn } from '$lib/utils';
+	import type { VariantProps } from 'class-variance-authority';
+	import { cva } from 'class-variance-authority';
+	import type { HTMLAnchorAttributes } from 'svelte/elements';
 
 	const badgeVariants = cva(
 		'inline-flex items-center border rounded-full px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
@@ -15,7 +15,10 @@
 					destructive:
 						'bg-destructive hover:bg-destructive/80 border-transparent text-destructive-foreground',
 					outline: 'text-foreground',
-					tag: 'bg-primarylite text-primary'
+					tag: 'bg-primarylite text-primary',
+					green: 'text-lime-700 bg-lime-300',
+					yellow: 'text-amber-700 bg-amber-300',
+					red: 'text-rose-700 bg-red-300'
 				}
 			},
 			defaultVariants: {

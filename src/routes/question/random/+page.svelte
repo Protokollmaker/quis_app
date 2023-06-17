@@ -2,6 +2,7 @@
 	import { browser } from '$app/environment';
 	import Question1 from '$lib/components/question1.svelte';
 	import { supabaseClient } from '$lib/func/Clients/supabase';
+	import { addValue, questionData } from '$lib/stores/questionPercent';
 	import { next_question, prev_question, questionarray } from '$lib/stores/questionarray';
 	import { get } from 'svelte/store';
 
@@ -9,11 +10,15 @@
 	let questioncount: number = 0;
 	let lastquestioncount: number = -1;
 	let anwerser: any = {};
-	console.log(get(questionarray));
+	let first_anwnser_correct: null | any = null;
 	questionarray.subscribe((value) => {
 		question = value.current_question;
 		anwerser = value.current_anwerser;
 	});
+
+	$: questionData.set(
+		addValue(get(questionData), first_anwnser_correct?.id, first_anwnser_correct?.correct).obj
+	);
 
 	function load(n: number) {
 		if (!browser) return 0;
@@ -34,6 +39,7 @@
 			bind:question={$questionarray.current_question}
 			bind:question_num={questioncount}
 			bind:anwerser={$questionarray.current_anwerser}
+			bind:first_anwnser_correct
 		/>
 	{/if}
 </section>

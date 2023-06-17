@@ -8,6 +8,7 @@
 	let selected = -1;
 	let endet = false;
 	export let anwerser: any;
+	export let first_anwnser_correct: null | any;
 </script>
 
 <section class="w-screen">
@@ -90,6 +91,10 @@
 				on:click={() => {
 					if (anwerser != null) return 0;
 					anwerser = { anwnsered: selected };
+					first_anwnser_correct = {
+						correct: selected == question.validation.validation,
+						id: question.id
+					};
 				}}>Frage abgeben</Button
 			>
 			<Button
@@ -99,6 +104,10 @@
 					endet = true;
 					if (anwerser == null) {
 						anwerser = { anwnsered: selected };
+						first_anwnser_correct = {
+							correct: selected == question.validation.validation,
+							id: question.id
+						};
 						setTimeout(() => {
 							question_num++;
 							selected = -1;

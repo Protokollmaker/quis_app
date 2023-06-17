@@ -1,87 +1,72 @@
-import { get, writable } from "svelte/store";
+import { browser } from "$app/environment";
+import { supabaseClient } from "$lib/func/Clients/supabase";
+import { writable } from "svelte/store";
 
 
 type TagsPersentElement = {
     name: string,
     number: number,
-    summe: number
+    summe: number,
+    percent: number
 };
 
-export type PercentValuePaar = {
-    name: string,
-    percent: number
+export function getvalue(obj: Array<TagsPersentElement>, id: string) {
+    const result = obj.findIndex(item => item["name"] === id)
+    if (result == -1) return null;
+    return obj[result].percent;
 }
 
-export class TagsPersent {
-    constructor(t_cookie_name: string, t_array: Array<TagsPersentElement> | null = null) {
-        this.cookie_name = t_cookie_name;
-        if (t_array != null) {
-            this.array = t_array;
-        } else {
-            this.array = JSON.parse(localStorage.getItem(this.cookie_name) || "[]")
-        }
-        this.updateValues();
+export function addValue(obj: Array<TagsPersentElement>, id: string, bool: boolean | null) {
+    if (id == null || bool == null) return { error: 1, obj: obj };
+    const result = obj.findIndex(item => item["name"] === id);
+    if (result == -1) {
+        obj.push({
+            name: id,
+            summe: bool ? 1 : 0,
+            number: 1,
+            percent: bool ? 1 : 0
+        });
+        return { error: 0, obj: obj };
     }
-    addValue(tag: string, bool: boolean) {
-        const result = this.array.findIndex(item => item["name"] === tag)
-        if (result == -1) {
-            this.array.push({
-                name: tag,
-                summe: bool ? 1 : 0,
-                number: 1
-            });
-            return 0;
-        }
-        this.array[result].summe += bool ? 1 : 0;
-        this.array[result].number += 1;
-        this.save();
-        this.updateValue(tag);
-        return 0;
-    }
-
-    getValue(tag: string) {
-        const result = this.array.findIndex(item => item["name"] === tag)
-        if (result == -1) return null;
-        const obj = this.array[result];
-        return obj.summe / obj.number;
-    }
-
-    getAllValues() {
-        const list: Array<PercentValuePaar> = [];
-        for (const element of this.array) {
-            list.push({
-                name: element.name,
-                percent: element.summe / element.number
-            });
-        }
-        return list;
-    }
-
-    updateValue(tag: string) {
-        const array_out = get(this.array_out);
-        array_out[tag] = this.getValue(tag);
-        this.array_out.set(array_out);
-    }
-
-    updateValues() {
-        const array_out: any = {};
-        for (const element of this.array) {
-            array_out[element.name] = element.summe / element.number;
-        }
-        this.array_out.set(array_out);
-    }
-
-    save() {
-        localStorage.setItem(this.cookie_name, JSON.stringify(this.array))
-    }
-
-    get percent() {
-        return this.array_out;
-    }
-
-    array: Array<TagsPersentElement> = [];
-    array_out = writable<any>({});
-    cookie_name: string;
+    obj[result].summe += bool ? 1 : 0;
+    obj[result].number += 1;
+    obj[result].percent = obj[result].summe / obj[result].number;
+    return { error: 0, obj: obj };
 }
 
-export const QuestionAnswers = new TagsPersent("anwerser");
+// todo Bug when one question is deleted a other wont be synce
+export async function syncQuestion(obj: Array<TagsPersentElement>) {
+    if (!browser) return { error: -2, obj: obj };
+    const res = await supabaseClient.rpc("helper_questions_count");
+    if (res.error) { return { error: -1, obj: obj } }
+    let replayed = 0;
+    const pageSize = 10;
+    for (let i = 0; res.data > obj.length; i++) {
+        const res0 = await supabaseClient.from("Questions")
+            .select("id")
+            .order("created_at", { ascending: false })
+            .range(i * pageSize, i * pageSize + pageSize);
+        if (res0.data == null) continue;
+        for (const data of res0.data) {
+            const result = obj.findIndex(item => item["name"] === data.id);
+            if (result == -1) {
+                replayed += 1;
+                obj.push({
+                    name: data.id,
+                    summe: 0,
+                    number: 0,
+                    percent: 0
+                });
+            }
+        }
+    }
+    return { error: replayed, obj: obj }
+}
+
+const name_localStorage = "questionData";
+
+export const questionData = writable<Array<TagsPersentElement>>(
+    browser && (JSON.parse(localStorage.getItem(name_localStorage) || "[]"))
+);
+
+questionData.subscribe((val: Array<TagsPersentElement>) => browser && localStorage.setItem(name_localStorage, JSON.stringify(val)))

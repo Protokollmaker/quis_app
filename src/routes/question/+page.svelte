@@ -11,9 +11,11 @@
 		TableRow
 	} from '$lib/components/ui/table';
 	import { supabaseClient } from '$lib/func/Clients/supabase';
+	import { getvalue, questionData } from '$lib/stores/questionPercent';
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 	import Filter from './Filter.svelte';
+	import PercentBatch from './percentBatch.svelte';
 	export let data: PageData;
 	let tags: any = null;
 	let pageSize = 50;
@@ -72,6 +74,7 @@
 				<TableHead class="w-[100px]">uuid</TableHead>
 				<TableHead>Title</TableHead>
 				<TableHead class="text-right">Tag</TableHead>
+				<TableHead class="text-right">Richtig</TableHead>
 			</TableRow>
 		</TableHeader>
 		<TableBody>
@@ -88,6 +91,9 @@
 						>{#each question.tags.tags as tag}
 							<Badge variant="tag">#{tag}</Badge>
 						{/each}</TableCell
+					>
+					<TableCell class="w-1 text-center"
+						><PercentBatch percent={getvalue($questionData, question.id)} /></TableCell
 					>
 				</TableRow>
 			{/each}
