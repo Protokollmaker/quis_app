@@ -18,7 +18,7 @@
 			badge = 'tag';
 		} else if (percent * 100 > 85) {
 			badge = 'green';
-		} else if (percent * 100 > 30) {
+		} else if (percent * 100 > 40) {
 			badge = 'yellow';
 		} else {
 			badge = 'red';
