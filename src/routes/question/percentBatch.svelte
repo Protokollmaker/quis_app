@@ -16,7 +16,7 @@
 	function bageColor(percent: number | null) {
 		if (percent == null) {
 			badge = 'tag';
-		} else if (percent * 100 > 85) {
+		} else if (percent * 100 > 75) {
 			badge = 'green';
 		} else if (percent * 100 > 40) {
 			badge = 'yellow';

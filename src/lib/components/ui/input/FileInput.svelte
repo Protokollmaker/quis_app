@@ -5,6 +5,7 @@
 	let className: string | undefined | null = undefined;
 
 	export let value: HTMLInputAttributes['value'] = undefined;
+	export let files: any;
 	export { className as class };
 </script>
 
@@ -14,6 +15,7 @@
 		className
 	)}
 	bind:value
+	bind:files
 	on:blur
 	on:change
 	on:click
@@ -26,5 +28,6 @@
 	on:mouseleave
 	on:paste
 	on:input
+	type="file"
 	{...$$restProps}
 />

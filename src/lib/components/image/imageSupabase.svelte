@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { supabaseClient } from '$lib/func/Clients/supabase';
-	export let image_src: string;
+	export let image_src: string | undefined;
 	export let bucket: string;
 	export let alt: string = '';
 	let imageBase64: any;
 
-	async function load(t_image_src: string) {
+	async function load(t_image_src: string | undefined) {
+		if (!t_image_src) return;
 		const { data, error } = await supabaseClient.storage.from(bucket).download(t_image_src);
 		if (error) {
 			console.log(error);
