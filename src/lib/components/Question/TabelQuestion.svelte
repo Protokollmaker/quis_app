@@ -33,6 +33,29 @@
 		}
 		return false;
 	}
+	// retruns true if ansnser shout be green: 1 red: 0 and null for uncoloerd
+	function checkboxIsCorrectDisplay(obj_checkboxstate: boolean, checkboxname: string) {
+		if (!obj_checkboxstate.hasOwnProperty(checkboxname)) return undefined;
+		let checkboxstate = obj_checkboxstate[checkboxname];
+		if (!json_question.validation.validation.hasOwnProperty(checkboxname)) return undefined;
+		if (json_question.validation.validation[checkboxname]) return true;
+		if (checkboxstate) {
+			return false;
+		}
+		return null;
+	}
+
+	function checkboxIsCorrectDisplayMaped(
+		obj_checkboxstate: boolean,
+		checkboxname: string,
+		showCorrectAnwer: boolean
+	) {
+		if (!showCorrectAnwer) return '';
+		let state = checkboxIsCorrectDisplay(obj_checkboxstate, checkboxname);
+		if (state == null) return '';
+		if (state == true) return 'background-color: #45b39d;';
+		if (state == false) return 'background-color: #cd6155;';
+	}
 
 	function checkboxcorrectnisInPercent(obj: any) {
 		let number = 0;
@@ -112,13 +135,11 @@
 							{#each json_question.answers.answers.columns as columns, j}
 								<TableCell
 									class="text-right"
-									style={checkboxIsCorrect(anwerdeQuestion, 'checkbox' + i + '-' + j)
-										? showCorrectAnwer
-											? 'background-color: #45b39d;'
-											: ''
-										: showCorrectAnwer
-										? 'background-color: #cd6155;'
-										: ''}
+									style={checkboxIsCorrectDisplayMaped(
+										anwerdeQuestion,
+										'checkbox' + i + '-' + j,
+										showCorrectAnwer
+									)}
 								>
 									<div class="flex items-center justify-end">
 										<Checkbox bind:checked={anwerringquestion['checkbox' + i + '-' + j]} />
