@@ -36,6 +36,7 @@
 	);
 
 	let delay: number = 1000;
+	let disabelNextButton: boolean = false;
 
 	let anwerringquestion = {};
 	let showCorrectAnwer = !emptyObject(answered);
@@ -72,6 +73,9 @@
 									on:click={() => {
 										if (emptyObject(answered)) {
 											answered = anwerringquestion;
+											if (emptyObject(answered)) {
+												answered = { fill: 'none' };
+											}
 											first_answer = {
 												count: count,
 												percent: child.calcPercent(answered),
@@ -81,9 +85,16 @@
 									}}>Frage abgeben</Button
 								>
 								<Button
+									bind:disabled={disabelNextButton}
 									on:click={() => {
+										if (disabelNextButton) return;
 										if (emptyObject(answered)) {
+											showCorrectAnwer = true;
+											disabelNextButton = true;
 											answered = anwerringquestion;
+											if (emptyObject(answered)) {
+												answered = { fill: 'none' };
+											}
 											first_answer = {
 												count: count,
 												percent: child.calcPercent(answered),
@@ -91,6 +102,7 @@
 											};
 											setTimeout(() => {
 												count++;
+												disabelNextButton = false;
 											}, delay);
 										} else {
 											count++;
@@ -142,7 +154,9 @@
 								>
 								<Button
 									on:click={() => {
+										if (disabelNextButton) return;
 										if (emptyObject(answered)) {
+											disabelNextButton = true;
 											answered = anwerringquestion;
 											first_answer = {
 												count: count,
@@ -150,6 +164,7 @@
 												id: question.id
 											};
 											setTimeout(() => {
+												disabelNextButton = false;
 												count++;
 											}, delay);
 										} else {
