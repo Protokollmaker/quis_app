@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import Question1 from '$lib/components/question1.svelte';
+	import QuestionMenager from '$components/Question/QuestionMenager.svelte';
 	import { supabaseClient } from '$lib/func/Clients/supabase';
 	import { addValue, questionData } from '$lib/stores/questionPercent';
 	import { next_question, prev_question, questionarray } from '$lib/stores/questionarray';
@@ -17,7 +17,7 @@
 	});
 
 	$: questionData.set(
-		addValue(get(questionData), first_anwnser_correct?.id, first_anwnser_correct?.correct).obj
+		addValue(get(questionData), first_anwnser_correct?.id, first_anwnser_correct?.percent).obj
 	);
 
 	function load(n: number) {
@@ -35,11 +35,11 @@
 
 <section>
 	{#if question?.id}
-		<Question1
+		<QuestionMenager
 			bind:question={$questionarray.current_question}
-			bind:question_num={questioncount}
-			bind:anwerser={$questionarray.current_anwerser}
-			bind:first_anwnser_correct
+			bind:count={questioncount}
+			bind:answered={$questionarray.current_anwerser}
+			bind:first_answer={first_anwnser_correct}
 		/>
 	{/if}
 </section>

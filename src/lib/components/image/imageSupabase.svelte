@@ -5,8 +5,13 @@
 	export let alt: string = '';
 	let imageBase64: any;
 
+	let last_image_src: string | undefined;
+
 	async function load(t_image_src: string | undefined) {
 		if (!t_image_src) return;
+		if (t_image_src == last_image_src) return;
+		last_image_src = t_image_src;
+		console.log('new load: ' + image_src);
 		const { data, error } = await supabaseClient.storage.from(bucket).download(t_image_src);
 		if (error) {
 			console.log(error);
@@ -23,15 +28,11 @@
 	$: load(image_src);
 </script>
 
-<section>
+<section class="flex justify-center items-center ">
 	{#if imageBase64}
-		<img src={imageBase64} {alt} />
+		<img src={imageBase64} {alt} {...$$restProps} />
 	{/if}
 </section>
 
 <style>
-	* {
-		width: 100%;
-		height: 100%;
-	}
 </style>

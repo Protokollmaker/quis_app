@@ -1,7 +1,7 @@
 <script lang="ts">
 	import SupabaseImage from '$lib/components/image/imageSupabase.svelte';
+	import Button from '$lib/components/ui/button/Button.svelte';
 	import { Edit } from 'lucide-svelte';
-	import Button from './ui/button/Button.svelte';
 	export let question: any;
 	export let question_num: number = 0;
 	export let question_num_max: number = Infinity;

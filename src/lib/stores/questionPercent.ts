@@ -1,5 +1,4 @@
 import { browser } from "$app/environment";
-import { supabaseClient } from "$lib/func/Clients/supabase";
 import { writable } from "svelte/store";
 
 
@@ -17,26 +16,27 @@ export function getvalue(obj: Array<TagsPersentElement>, id: string) {
     return obj[result].percent;
 }
 
-export function addValue(obj: Array<TagsPersentElement>, id: string, bool: boolean | null) {
+export function addValue(obj: Array<TagsPersentElement>, id: string, number: boolean | null | number) {
     if (!browser) return { error: -2, obj: obj };
-    if (id == null || bool == null) return { error: 1, obj: obj };
+    if (id == null || number == null) return { error: 1, obj: obj };
+    if (typeof number == "boolean") { number ? number = 1 : number = 0; }
     const result = obj.findIndex(item => item["name"] === id);
     if (result == -1) {
         obj.push({
             name: id,
-            summe: bool ? 1 : 0,
+            summe: number,
             number: 1,
-            percent: bool ? 1 : 0
+            percent: number
         });
         return { error: 0, obj: obj };
     }
-    obj[result].summe += bool ? 1 : 0;
+    obj[result].summe += number;
     obj[result].number += 1;
     obj[result].percent = obj[result].summe / obj[result].number;
     return { error: 0, obj: obj };
 }
 
-// todo Bug when one question is deleted a other wont be synce
+/*// todo Bug when one question is deleted a other wont be synce
 export async function syncQuestion(obj: Array<TagsPersentElement>) {
     if (!browser) return { error: -2, obj: obj };
     const res = await supabaseClient.rpc("helper_questions_count");
@@ -63,7 +63,7 @@ export async function syncQuestion(obj: Array<TagsPersentElement>) {
         }
     }
     return { error: replayed, obj: obj }
-}
+}*/
 
 const name_localStorage = "questionData";
 

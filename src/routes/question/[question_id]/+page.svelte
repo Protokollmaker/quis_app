@@ -1,12 +1,12 @@
 <script lang="ts">
-	import Question1 from '$lib/components/question1.svelte';
+	import QuestionMenager from '$components/Question/QuestionMenager.svelte';
 	import { supabaseClient } from '$lib/func/Clients/supabase';
 	import { onMount } from 'svelte';
 	export let data;
 	let question: any;
-	let anwerser: any;
-	let first_anwnser_correct: any;
-	let question_num: number = 1;
+	let anwerser: any = {};
+	let first_answer: any;
+	let question_num: number = 0;
 	onMount(async () => {
 		const res = await supabaseClient
 			.from('Questions')
@@ -20,7 +20,12 @@
 
 <section>
 	{#if question}
-		<Question1 bind:question bind:question_num bind:anwerser bind:first_anwnser_correct />
+		<QuestionMenager
+			bind:question
+			bind:count={question_num}
+			bind:answered={anwerser}
+			bind:first_answer
+		/>
 	{/if}
 </section>
 

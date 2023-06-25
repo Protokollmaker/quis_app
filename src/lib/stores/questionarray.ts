@@ -44,7 +44,7 @@ export async function next_question(get_more: any) {
         res.forEach((data) => {
             transformed.push({
                 question: data,
-                anwser: null
+                anwser: {}
             })
         })
         question.next_questionarray = transformed;

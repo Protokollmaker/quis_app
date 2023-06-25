@@ -7,6 +7,7 @@
 	import Checkbox from '$components/ui/checkbox/Checkbox.svelte';
 	import FileInput from '$components/ui/input/FileInput.svelte';
 	import Input from '$components/ui/input/Input.svelte';
+	import RadioInput from '$components/ui/input/RadioInput.svelte';
 	import Label from '$components/ui/label/Label.svelte';
 	import { Table, TableHead, TableHeader, TableRow } from '$components/ui/table';
 	import TableBody from '$components/ui/table/TableBody.svelte';
@@ -19,7 +20,14 @@
 	// user data
 	export let data: PageData;
 	// Question general
-	let question: any = { type: 'Multiple choice' };
+	type type_uuid_exam = {
+		year: number | undefined;
+		exam_part: 'Teil1' | 'Teil2' | undefined;
+		part: 'TeilA' | 'TeilB' | undefined;
+		question: number | undefined;
+	};
+
+	let question: any = { type: 'Multiple choice', text: undefined, alt: undefined };
 	let exams: Array<type_uuid_exam> = [];
 	let tags: Array<string> = [];
 	let questionImage: any = { alt: undefined, Img: undefined };
@@ -30,25 +38,60 @@
 	let sendjson: any = {};
 	let error: string = '';
 	// X Template
-	let XTemplateText: string = '';
+	type XTempalteArrayType = {
+		[key: string]: {
+			wert:
+				| Array<{
+						pattern: string;
+						filepath: string | undefined;
+						sampleSolution: string | undefined;
+						anwser: string | undefined;
+						anwser_filepath: string | undefined;
+				  }>
+				| [];
+			befor: string | undefined;
+			after: string | undefined;
+		};
+	};
 	let XTemplateNames: Array<string> = [];
 	let XTemplateArray: any = [];
-	type type_uuid_exam = {
-		year: number | undefined;
-		exam_part: 'Teil1' | 'Teil2' | undefined;
-		part: 'TeilA' | 'TeilB' | undefined;
-		question: number | undefined;
-	};
+	let XTemplateImage: Array<any> = [];
+
 	// Multiple choice
-	let MultiplechoiceAnwerser: Array<any> = Array(5);
-	let MultiplechoiceImages: Array<any> = Array.from(Array(5), () => {
+	type Multiplechoiselemnt = {
+		alt: undefined | string; // alternative text for image
+		filepath: undefined | string; // userid/imagename
+		text: undefined | string;
+	};
+	let NumberOfChoices = 5;
+	let MultiplechoiceAnwerserElement: Array<Multiplechoiselemnt> = Array.from(
+		Array(NumberOfChoices),
+		() => {
+			return { alt: undefined, filepath: undefined, text: undefined };
+		}
+	);
+	let MultiplechoiceAnwerser: Array<any> = Array(NumberOfChoices);
+	let MultiplechoiceImages: Array<any> = Array.from(Array(NumberOfChoices), () => {
 		return { alt: undefined, Img: undefined };
 	});
 	let MultiplechoiceImagesURL: Array<string | undefined> = Array(5).fill(undefined);
+	let MultiplechoiceValidation: number = -1;
 	// Tabel
-	let TabelRows: Array<string> = [];
-	let TabelColumns: Array<string> = [];
+	type TabelRowType = {
+		text: string;
+		filepath: string | undefined;
+		alt: string | undefined;
+	};
+	type TabelColumnsType = {
+		text: string;
+	};
+	let TabelRows: Array<TabelRowType> = [];
+	let TabelColumns: Array<TabelColumnsType> = [];
 	let TableType = 'checkbox';
+	let TabelValiation: any = {};
+	let TabelesRowsImages: Array<any> = [];
+	let TabelesRowsImagesPath: Array<string> = [];
+	$: console.log(TabelesRowsImagesPath);
 	// Generly functions
 	$: uploadarrayMultplechois(MultiplechoiceImages);
 
@@ -56,6 +99,18 @@
 		array.forEach(function (value, i) {
 			uploadImages(value).then((filepath: any) => {
 				MultiplechoiceImagesURL[i] = filepath;
+				MultiplechoiceAnwerserElement[i].filepath = filepath;
+			});
+		});
+	}
+
+	$: uploadarrayRowTabel(TabelesRowsImages);
+
+	async function uploadarrayRowTabel(array: Array<any>) {
+		array.forEach(function (value, i) {
+			let in1 = { Img: value, alt: undefined, filepath: undefined };
+			uploadImages(in1).then((filepath: any) => {
+				TabelRows[i].filepath = filepath;
 			});
 		});
 	}
@@ -66,7 +121,7 @@
 		Img: any | undefined;
 		filepath: string | undefined;
 	}) {
-		if (obj.Img == undefined) return null;
+		if (obj.Img == undefined) return undefined;
 		if (!data.session?.user.id) return null;
 
 		const path = data.session?.user.id + '/';
@@ -89,8 +144,27 @@
 		}
 	}
 	//
-	$: XTemplateNames = xTemplateGetVars(XTemplateText);
-	function xTemplateGetVars(text: string) {
+	function cleanTabelValidation(valitation: any, Type: string) {
+		let obj: any = {};
+		for (const [key, value] of Object.entries(valitation)) {
+			if (key.includes(Type)) {
+				obj[key] = value;
+			}
+		}
+		return obj;
+	}
+	function splitXTemplate(t_obj: any, split: 'validation' | 'anwerer') {
+		/*let obj: any = {}; 
+		for (const [key, value] of Object.entries(t_obj)) {
+			for (const obsplit1 of Object.entries(value.wert)) {
+			
+			}
+		}*/
+	}
+	//
+	$: XTemplateNames = xTemplateGetVars(question.text);
+	function xTemplateGetVars(text: string | undefined) {
+		if (text == undefined) return [];
 		let regex = /(?:[{]{2}(.+?)[}]{2})/g;
 		let redexremove = /{{|}}/g;
 		let Names = text.match(regex);
@@ -99,8 +173,8 @@
 		const uniques = [...new Set(outputArray)];
 		return uniques;
 	}
-	$: XTemplateArray = xTamplateInitoption(XTemplateArray, XTemplateNames);
-	function xTamplateInitoption(obj: any, Names: Array<string>) {
+	$: XTemplateArray = xTemplateInitoption(XTemplateArray, XTemplateNames);
+	function xTemplateInitoption(obj: any, Names: Array<string>) {
 		let temp_obj: any = {};
 		for (let Name of Names) {
 			if (obj[Name] == undefined) {
@@ -112,7 +186,7 @@
 	}
 	// TODO if xTemplate has Pirture option auto check user can override input
 	// send data
-	function send() {
+	async function send() {
 		error = '';
 		if (!data.session?.user.id) {
 			error = 'dein user id ist nich vorhanden schau ob du noch eingelogt bist';
@@ -128,6 +202,57 @@
 			Title: question.Title,
 			owner: data.session?.user.id
 		};
+		// question
+		sendjson.question = {
+			filepath: questionPath,
+			alt: question.alt,
+			text: question.text
+		};
+		// answers
+		if (question.type == 'Multiple choice') {
+			let Cleenedobject: Array<any> = [];
+			for (let e of MultiplechoiceAnwerserElement)
+				Cleenedobject.push(
+					Object.fromEntries(
+						Object.entries(e).filter(([key, value]) => {
+							return value != null;
+						})
+					)
+				);
+			console.log(Cleenedobject);
+			sendjson.answers = {
+				answers: Cleenedobject
+			};
+		} else if (question.type == 'TableQuestion') {
+			sendjson.answers = {
+				type: TableType,
+				answers: {
+					rows: TabelRows,
+					columns: TabelColumns
+				}
+			};
+		} else if (question.type == 'X-template') {
+			sendjson.answers = {
+				array: XTemplateArray
+			};
+		}
+		// validation
+		if (question.type == 'Multiple choice') {
+			if (MultiplechoiceValidation == -1) {
+				error = 'In der Mehrfachauswahl wurde keine Lösung ausgewählt';
+				return 1;
+			}
+			sendjson.validation = {
+				validation: MultiplechoiceValidation
+			};
+		}
+		if (question.type == 'TableQuestion') {
+			sendjson.validation = {
+				validation: cleanTabelValidation(TabelValiation, TableType)
+			};
+		}
+		const res = await supabaseClient.from('Questions').insert(sendjson);
+		if (res.error) console.log(res.error);
 	}
 </script>
 
@@ -209,9 +334,9 @@
 		<TabsContent value="Multiple choice">
 			<!--To do make this to question-->
 			<h2>Frage</h2>
-			<Textarea placeholder="Schreibe hier diene Frage herein" />
+			<Textarea placeholder="Schreibe hier diene Frage herein" bind:value={question.text} />
 			<div class="flex mt-2 mb-5 gap-2">
-				<Input type="text" placeholder="alternertiver text" bind:value={questionImage.alt} />
+				<Input type="text" placeholder="alternertiver text" bind:value={question.alt} />
 				<FileInput
 					accept="image/png, image/jpeg"
 					bind:files={questionImage.Img}
@@ -226,12 +351,15 @@
 			<h2>Antworten</h2>
 			{#each MultiplechoiceAnwerser as Anwser, i}
 				<Label>Antwort {i + 1}</Label>
-				<Textarea placeholder="Schreibe hier die {i + 1} Antwort herien" />
+				<Textarea
+					placeholder="Schreibe hier die {i + 1} Antwort herien"
+					bind:value={MultiplechoiceAnwerserElement[i].text}
+				/>
 				<div class="flex mt-2 mb-2 gap-2">
 					<Input
 						type="text"
 						placeholder="alternertiver text"
-						bind:value={MultiplechoiceImages[i].alt}
+						bind:value={MultiplechoiceAnwerserElement[i].alt}
 					/>
 					<FileInput type="file" id="Mulitplechois{i}" bind:files={MultiplechoiceImages[i].Img} />
 				</div>
@@ -244,22 +372,22 @@
 				</div>
 			{/each}
 			<Label class="mr-4">Richtige antwort</Label>
-			<select name="valedation" id="questionPart">
+			<select name="valedation" bind:value={MultiplechoiceValidation}>
 				{#each MultiplechoiceAnwerser as Anwser, i}
 					<option value={i}>{i + 1}</option>
 				{/each}
 			</select>
 		</TabsContent>
 		<TabsContent value="TableQuestion">
-			<Label>Frage</Label>
-			<Textarea
-				placeholder="Tipp un X-Vorlage zu nutzen nutze &#123;&#123; Text &#125;&#125;"
-				bind:value={XTemplateText}
-			/>
+			<h2>Frage</h2>
+			<Textarea placeholder="Schreibe hier diene Frage herein" bind:value={question.text} />
 			<!--To do make this to question-->
 			<div class="flex mt-2 mb-2 gap-2">
-				<Input type="text" placeholder="alternertiver text" />
-				<Input id="picture" type="file" />
+				<Input type="text" placeholder="alternertiver text" bind:value={question.alt} />
+				<FileInput id="picture" type="file" bind:files={questionImage.Img} />
+			</div>
+			<div class="imageSize">
+				<ImageSupabase image_src={questionPath} bucket={'Question images'} alt={''} />
 			</div>
 			<select name="Table" bind:value={TableType}>
 				<option value="radio">Eine Antwort pro Reihe</option>
@@ -270,9 +398,9 @@
 			<div class="m-2">
 				{#each TabelRows as Row, i}
 					<div class="flex gap-2 mb-1">
-						<Input type="text" placeholder="Reihen Name {i + 1}" bind:value={Row} />
-						<Input type="text" placeholder="alternertiver text" />
-						<Input id="picture" type="file" />
+						<Input type="text" placeholder="Reihen Name {i + 1}" bind:value={Row.text} />
+						<Input type="text" placeholder="alternertiver text" bind:value={Row.alt} />
+						<FileInput id="picture" type="file" bind:files={TabelesRowsImages[i]} />
 						<Button
 							variant="secondary"
 							on:click={() => {
@@ -287,7 +415,14 @@
 				variant="secondary"
 				class="m-2"
 				on:click={() => {
-					TabelRows = [...TabelRows, ''];
+					TabelRows = [
+						...TabelRows,
+						{
+							text: '',
+							filepath: undefined,
+							alt: undefined
+						}
+					];
 				}}><Plus /></Button
 			>
 			<br />
@@ -295,7 +430,7 @@
 			<div class="m-2">
 				{#each TabelColumns as Column, i}
 					<div class="flex gap-2 mb-1">
-						<Input type="text" placeholder="Spalte Name {i + 1}" bind:value={Column} />
+						<Input type="text" placeholder="Spalte Name {i + 1}" bind:value={Column.text} />
 						<Button
 							variant="secondary"
 							on:click={() => {
@@ -310,7 +445,7 @@
 				variant="secondary"
 				class="m-2"
 				on:click={() => {
-					TabelColumns = [...TabelColumns, ''];
+					TabelColumns = [...TabelColumns, { text: '' }];
 				}}><Plus /></Button
 			>
 			<br />
@@ -319,54 +454,77 @@
 					<TableRow>
 						<TableHead class="w-[100px]" />
 						{#each TabelColumns as Column}
-							<TableHead class="text-right">{Column}</TableHead>
+							<TableHead class="text-right">{Column.text}</TableHead>
 						{/each}
 					</TableRow>
 				</TableHeader>
 
 				<TableBody>
-					{#each TabelRows as Row}
+					{#each TabelRows as Row, j}
 						{#if TableType == 'radio'}
-							<TableRow key={Row}>
+							<TableRow key={Row.text}>
 								<TableCell class="">
-									{Row}
-									<!--<ImageSupabase
-										image_src={}
+									{Row.text}
+									<ImageSupabase
+										bind:image_src={TabelesRowsImagesPath[j]}
 										bucket={'Question images'}
 										alt={''}
-									/>-->
+									/>
 								</TableCell>
 								{#each TabelColumns as Column, i}
 									<TableCell>
 										<div class="flex justify-end">
 											<div class="h-4 w-4">
-												<Input type="radio" class="h-4 w-4" name="row-{Row}" value="{i}-{Row}" />
+												<RadioInput
+													class="h-4 w-4"
+													name="row-{Row.text}-{j}"
+													value={i.toString()}
+													bind:group1={TabelValiation['radio' + j]}
+												/>
 											</div>
 										</div>
 									</TableCell>
 								{/each}
 							</TableRow>
 						{:else if TableType == 'text'}
-							<TableRow key={Row}>
-								<TableCell class="">{Row}</TableCell>
+							<TableRow key={Row.text}>
+								<TableCell class=""
+									>{Row.text}<ImageSupabase
+										bind:image_src={TabelesRowsImagesPath[j]}
+										bucket={'Question images'}
+										alt={''}
+									/></TableCell
+								>
 								{#each TabelColumns as Column, i}
 									<TableCell>
 										<Input
 											type="text"
 											class="mb-2"
 											placeholder="Geben sie hier einer regex zur valitation der eingabe ein"
+											bind:value={TabelValiation['text' + j + '-' + i + '-redex']}
 										/>
-										<Input type="text" placeholder="Geben sie hier eine musterlösung ein" />
+										<Input
+											type="text"
+											placeholder="Geben sie hier eine musterlösung ein"
+											bind:value={TabelValiation['text' + j + '-' + i + '-plaintext']}
+										/>
 									</TableCell>
 								{/each}
 							</TableRow>
 						{:else}
-							<TableRow key={Row}>
-								<TableCell class="">{Row}</TableCell>
+							<TableRow key={Row.text}>
+								<TableCell class=""
+									>{Row.text}
+									<ImageSupabase
+										bind:image_src={TabelRows[j].filepath}
+										bucket={'Question images'}
+										alt={''}
+									/></TableCell
+								>
 								{#each TabelColumns as Column, i}
 									<TableCell>
 										<div class="flex justify-end">
-											<Checkbox />
+											<Checkbox bind:checked={TabelValiation['checkbox' + j + '-' + i]} />
 										</div>
 									</TableCell>
 								{/each}
@@ -377,21 +535,20 @@
 			</Table>
 		</TabsContent>
 		<TabsContent value="X-template">
-			<Label>Frage</Label>
+			<h2>Frage</h2>
+			<h1>Bitte noch nicht benutzen</h1>
 			<Textarea
 				placeholder="Tipp un X-Vorlage zu nutzen nutze &#123;&#123; Text &#125;&#125;"
-				bind:value={XTemplateText}
+				bind:value={question.text}
 			/>
 			<!--To do make this to question-->
 			<div class="flex mt-2 mb-2 gap-2">
 				<Input type="text" placeholder="alternertiver text" />
-				<Input id="picture" type="file" />
+				<FileInput id="picture" type="file" bind:files={questionImage.Img} />
 			</div>
-			<!--<ImageSupabase
-					image_src={}
-					bucket={'Question images'}
-					alt={''}
-				/>-->
+			<div class="imageSize">
+				<ImageSupabase image_src={questionPath} bucket={'Question images'} alt={''} />
+			</div>
 			{#each XTemplateNames as Name}
 				<div class="m-2">
 					<Label>{Name}</Label>
