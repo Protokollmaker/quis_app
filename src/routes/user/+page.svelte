@@ -33,6 +33,7 @@
 	<a href="/question">Fragen</a><br />
 	<a href="/question/new">neue Fragen</a><br />
 	<a href="/question/random">Zufällige Frage</a><br />
+	<a href="/question/notdone">noch nicht bearbeitete Fragen</a><br />
 	<a href="/group">Gruppe</a><br />
 	<a href="/group/new">neue Gruppe</a><br />
 </section>

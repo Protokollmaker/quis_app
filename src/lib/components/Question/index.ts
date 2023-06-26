@@ -17,3 +17,7 @@ export function emptyObject(obj: anyobject) {
     }
     return true;
 }
+
+export function depeCopy(obj: anyobject) {
+    return JSON.parse(JSON.stringify(obj));
+}

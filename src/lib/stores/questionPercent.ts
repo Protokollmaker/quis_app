@@ -36,6 +36,14 @@ export function addValue(obj: Array<TagsPersentElement>, id: string, number: boo
     return { error: 0, obj: obj };
 }
 
+export function getQuestionIDs(t_obj: Array<TagsPersentElement>) {
+    const Array: Array<string> = [];
+    for (const obj of t_obj) {
+        Array.push(obj.name)
+    }
+    return Array;
+}
+
 /*// todo Bug when one question is deleted a other wont be synce
 export async function syncQuestion(obj: Array<TagsPersentElement>) {
     if (!browser) return { error: -2, obj: obj };

@@ -2,7 +2,7 @@
 	import Button from '$components/ui/button/Button.svelte';
 	import type { anyobject } from '$lib/types/types';
 	import { Edit } from 'lucide-svelte';
-	import { emptyObject, mergeObject } from '.';
+	import { depeCopy, emptyObject, mergeObject } from '.';
 	import Multiplechois1 from './Multiplechois1.svelte';
 	import TabelQuestion from './TabelQuestion.svelte';
 
@@ -72,7 +72,7 @@
 									variant="boarder"
 									on:click={() => {
 										if (emptyObject(answered)) {
-											answered = anwerringquestion;
+											answered = depeCopy(anwerringquestion);
 											if (emptyObject(answered)) {
 												answered = { fill: 'none' };
 											}
@@ -91,7 +91,7 @@
 										if (emptyObject(answered)) {
 											showCorrectAnwer = true;
 											disabelNextButton = true;
-											answered = anwerringquestion;
+											answered = depeCopy(anwerringquestion);
 											if (emptyObject(answered)) {
 												answered = { fill: 'none' };
 											}
