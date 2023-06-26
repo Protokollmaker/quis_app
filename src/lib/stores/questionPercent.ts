@@ -44,6 +44,12 @@ export function getQuestionIDs(t_obj: Array<TagsPersentElement>) {
     return Array;
 }
 
+export function getArrayOrderdpercentAsc(t_obj: Array<TagsPersentElement>) {
+    return t_obj.sort((a, b) => {
+        return a.percent - b.percent;
+    });
+}
+
 /*// todo Bug when one question is deleted a other wont be synce
 export async function syncQuestion(obj: Array<TagsPersentElement>) {
     if (!browser) return { error: -2, obj: obj };
