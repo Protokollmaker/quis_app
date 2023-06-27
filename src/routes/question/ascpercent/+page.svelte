@@ -1,5 +1,10 @@
 <script lang="ts">
-	import { addValue, getArrayOrderdpercentAsc, questionData } from '$lib/stores/questionPercent';
+	import {
+		addValue,
+		getArrayOrderdpercentAsc,
+		getCurrentQuestionData,
+		questionData
+	} from '$lib/stores/questionPercent';
 	import { get } from 'svelte/store';
 
 	import { browser } from '$app/environment';
@@ -17,16 +22,18 @@
 	});
 
 	$: questionData.set(
-		addValue(get(questionData), first_anwnser_correct?.id, first_anwnser_correct?.percent).obj
+		addValue(getCurrentQuestionData(), first_anwnser_correct?.id, first_anwnser_correct?.percent)
+			.obj
 	);
 
 	function load(n: number) {
 		if (!browser) return 0;
+		console.log(getArrayOrderdpercentAsc(get(questionData)));
 		if (n > lastquestioncount)
 			next_question(async (n: number) => {
 				let t_array = getArrayOrderdpercentAsc(get(questionData));
 				t_array.length = 10;
-				console.log(t_array);
+				console.log('e', t_array);
 				const res = await supabaseClient.rpc('helper_question_in_array', {
 					t_array: t_array
 				});

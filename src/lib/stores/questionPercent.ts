@@ -45,9 +45,16 @@ export function getQuestionIDs(t_obj: Array<TagsPersentElement>) {
 }
 
 export function getArrayOrderdpercentAsc(t_obj: Array<TagsPersentElement>) {
-    return t_obj.sort((a, b) => {
+    const obj: Array<TagsPersentElement> = JSON.parse(JSON.stringify(t_obj));
+    console.log(obj);
+    const sorted_arry: Array<TagsPersentElement> = obj.sort((a, b) => {
         return a.percent - b.percent;
     });
+    return getQuestionIDs(sorted_arry);
+}
+
+export function getCurrentQuestionData() {
+    return browser && (JSON.parse(localStorage.getItem(name_localStorage) || "[]"))
 }
 
 /*// todo Bug when one question is deleted a other wont be synce
