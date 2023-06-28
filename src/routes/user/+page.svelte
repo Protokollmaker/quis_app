@@ -31,13 +31,13 @@
 	{/if}
 	<a href="/user/settings">Einstellungen</a><br />
 	<a href="/question">Fragen</a><br />
-	<a href="/question/new">neue Fragen</a><br />
+	<a href="/question/new">Neue Fragen</a><br />
 	<a href="/question/random">Zufällige Frage</a><br />
 	<a href="/question/notdone">noch nicht bearbeitete Fragen</a><br />
 	<a href="/question/ascpercent">Frage nach Prozenten sotiert beginnend mit der niedrigsten</a><br
 	/>
 	<a href="/group">Gruppe</a><br />
-	<a href="/group/new">neue Gruppe</a><br />
+	<a href="/group/new">Neue Gruppe</a><br />
 </section>
 
 <style>
