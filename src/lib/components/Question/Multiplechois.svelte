@@ -118,7 +118,7 @@
 						selected = -1;
 						endet = false;
 					}
-				}}>nexte Frage</Button
+				}}>nächste Frage</Button
 			>
 		</div>
 	</div>

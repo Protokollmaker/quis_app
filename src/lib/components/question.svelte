@@ -97,7 +97,8 @@
 		<button class="button-side-aktion    button-show-awnser" on:click={showAwnser}
 			>Frage abgeben</button
 		>
-		<button class="button-call-to-aktion button-next" on:click={nexteQuestoin}>nexte Frage</button>
+		<button class="button-call-to-aktion button-next" on:click={nexteQuestoin}>nächste Frage</button
+		>
 	</div>
 	<div class="empty" />
 </section>

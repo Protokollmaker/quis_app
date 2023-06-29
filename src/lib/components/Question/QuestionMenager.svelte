@@ -108,7 +108,7 @@
 											count++;
 										}
 									}}
-									>nexte Frage
+									>nächste Frage
 								</Button>
 							</div>
 						</div>
@@ -171,7 +171,7 @@
 											count++;
 										}
 									}}
-									>nexte Frage
+									>nächste Frage
 								</Button>
 							</div>
 						</div>
@@ -185,7 +185,7 @@
 				diese Frage ist unbekant und kann möglicherwerise nur in dev angezeigt werden <Button
 					on:click={() => {
 						count += 1;
-					}}>Nexte Frage</Button
+					}}>nächste Frage</Button
 				>
 			{/if}
 		{:else}
