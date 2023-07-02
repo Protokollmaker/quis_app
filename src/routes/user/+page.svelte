@@ -1,6 +1,17 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { supabaseClient } from '$lib/func/Clients/supabase';
+	import {
+		ArrowDown01,
+		Book,
+		BookPlus,
+		ExternalLink,
+		FileQuestion,
+		LayoutList,
+		PlusCircle,
+		Settings2,
+		Shuffle
+	} from 'lucide-svelte';
 	import { onMount } from 'svelte';
 	//import type { PageData } from './$types';
 	export let data: any;
@@ -29,15 +40,39 @@
 	{#if userfecht}
 		<h1>Welcome, {user?.Name}</h1>
 	{/if}
-	<a href="/user/settings">Einstellungen</a><br />
-	<a href="/question">Fragen</a><br />
-	<a href="/question/new">Neue Fragen</a><br />
-	<a href="/question/random">Zufällige Frage</a><br />
-	<a href="/question/notdone">noch nicht bearbeitete Fragen</a><br />
-	<a href="/question/ascpercent">Frage nach Prozenten sotiert beginnend mit der niedrigsten</a><br
-	/>
-	<a href="/group">Gruppe</a><br />
-	<a href="/group/new">Neue Gruppe</a><br />
+	<div>
+		<div class="flex items-center underline p-1">
+			<Settings2 class="p-1" /><a href="/user/settings" class="text-slate-800">Einstellungen</a>
+		</div>
+		<div class="flex items-center underline p-1">
+			<FileQuestion class="p-1" /><a class="text-slate-800" href="/question">Fragen</a>
+		</div>
+		<div class="flex items-center underline p-1">
+			<PlusCircle class="p-1" /><a class="text-slate-800" href="/question/new">Neue Fragen</a>
+		</div>
+		<div class="flex items-center underline p-1">
+			<Shuffle class="p-1" /><a class="text-slate-800" href="/question/random">Zufällige Frage</a>
+		</div>
+		<div class="flex items-center underline p-1">
+			<LayoutList class="p-1" /><a class="text-slate-800" href="/question/notdone"
+				>noch nicht bearbeitete Fragen</a
+			>
+		</div>
+		<div class="flex items-center underline p-1">
+			<ArrowDown01 class="p-1" /><a class="text-slate-800" href="/question/ascpercent"
+				>Frage nach Prozenten sotiert beginnend mit der niedrigsten</a
+			>
+		</div>
+		<div class="flex items-center underline p-1">
+			<Book class="p-1" /><a class="text-slate-800" href="/group">Gruppe</a>
+		</div>
+		<div class="flex items-center underline p-1">
+			<BookPlus class="p-1" /><a class="text-slate-800" href="/group/new">Neue Gruppe</a>
+		</div>
+		<div class="flex items-center underline p-1">
+			<ExternalLink class="p-1" /><a class="text-slate-800" href="/">Zur Statseite</a>
+		</div>
+	</div>
 </section>
 
 <style>

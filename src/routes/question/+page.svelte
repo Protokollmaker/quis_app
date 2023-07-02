@@ -12,6 +12,7 @@
 	} from '$lib/components/ui/table';
 	import { supabaseClient } from '$lib/func/Clients/supabase';
 	import { getvalue, questionData } from '$lib/stores/questionPercent';
+	import { CheckCheck, Tag } from 'lucide-svelte';
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 	import Filter from './Filter.svelte';
@@ -73,8 +74,12 @@
 			<TableRow>
 				<TableHead class="w-[100px]">uuid</TableHead>
 				<TableHead>Title</TableHead>
-				<TableHead class="text-right">Tag</TableHead>
-				<TableHead class="text-right">Richtig</TableHead>
+				<TableHead
+					><div class="flex items-center justify-end"><Tag class="p-1" />Tag</div></TableHead
+				>
+				<TableHead class="text-right">
+					<div class="flex items-center justify-end"><CheckCheck class="p-1" />Richtig</div>
+				</TableHead>
 			</TableRow>
 		</TableHeader>
 		<TableBody>

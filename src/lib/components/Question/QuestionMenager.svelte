@@ -2,9 +2,10 @@
 	import Button from '$components/ui/button/Button.svelte';
 	import type { anyobject } from '$lib/types/types';
 	import { Edit } from 'lucide-svelte';
-	import { depeCopy, emptyObject, mergeObject } from '.';
-	import Multiplechois1 from './Multiplechois1.svelte';
+	import { emptyObject, mergeObject } from '.';
+	import Multiplechois from './Multiplechois.svelte';
 	import TabelQuestion from './TabelQuestion.svelte';
+	import NavButton from './navButton.svelte';
 
 	// this is hier to mange the display of questions
 
@@ -35,9 +36,6 @@
 		flags
 	);
 
-	let delay: number = 1000;
-	let disabelNextButton: boolean = false;
-
 	let anwerringquestion = {};
 	let showCorrectAnwer = !emptyObject(answered);
 	$: showCorrectAnwer = flag.AutoSolutiononNextButton && !emptyObject(answered);
@@ -48,7 +46,7 @@
 	<slot>
 		{#if question}
 			{#if question.Type == 'Multiple choice'}
-				<Multiplechois1
+				<Multiplechois
 					bind:selected={anwerringquestion}
 					bind:json_question={question}
 					bind:question_count={count}
@@ -58,66 +56,21 @@
 					bind:question_count_max={max_question_count}
 				>
 					<div slot="fooder-right" class="p-2 pr-10 pl-10">
-						<div class="footer flex justify-between">
-							<div>
-								<Button
-									variant="boarder"
-									on:click={() => {
-										count--;
-									}}>vorherige Frage</Button
-								>
-							</div>
-							<div>
-								<Button
-									variant="boarder"
-									on:click={() => {
-										if (emptyObject(answered)) {
-											answered = depeCopy(anwerringquestion);
-											if (emptyObject(answered)) {
-												answered = { fill: 'none' };
-											}
-											first_answer = {
-												count: count,
-												percent: child.calcPercent(answered),
-												id: question.id
-											};
-										}
-									}}>Frage abgeben</Button
-								>
-								<Button
-									bind:disabled={disabelNextButton}
-									on:click={() => {
-										if (disabelNextButton) return;
-										if (emptyObject(answered)) {
-											showCorrectAnwer = true;
-											disabelNextButton = true;
-											answered = depeCopy(anwerringquestion);
-											if (emptyObject(answered)) {
-												answered = { fill: 'none' };
-											}
-											first_answer = {
-												count: count,
-												percent: child.calcPercent(answered),
-												id: question.id
-											};
-											setTimeout(() => {
-												count++;
-												disabelNextButton = false;
-											}, delay);
-										} else {
-											count++;
-										}
-									}}
-									>nächste Frage
-								</Button>
-							</div>
-						</div>
+						<NavButton
+							bind:count
+							bind:answered
+							bind:anwerringquestion
+							bind:first_answer
+							bind:child
+							bind:question
+							bind:showCorrectAnwer
+						/>
 					</div>
 					<div slot="fooder-left" class="flex items-center h-full">
 						Frage: <a class="ml-2" href="/question/{question.id}/">{question.id}</a>
 						<a href="/question/{question.id}/edit"><Edit class="h-4" /></a>
 					</div>
-				</Multiplechois1>
+				</Multiplechois>
 			{:else if question.Type == 'TableQuestion'}
 				<TabelQuestion
 					bind:json_question={question}
@@ -129,52 +82,15 @@
 					bind:question_count_max={max_question_count}
 				>
 					<div slot="fooder-right" class="p-2 pr-10 pl-10">
-						<div class="footer flex justify-between">
-							<div>
-								<Button
-									variant="boarder"
-									on:click={() => {
-										count--;
-									}}>vorherige Frage</Button
-								>
-							</div>
-							<div>
-								<Button
-									variant="boarder"
-									on:click={() => {
-										if (emptyObject(answered)) {
-											answered = anwerringquestion;
-											first_answer = {
-												count: count,
-												percent: child.calcPercent(answered),
-												id: question.id
-											};
-										}
-									}}>Frage abgeben</Button
-								>
-								<Button
-									on:click={() => {
-										if (disabelNextButton) return;
-										if (emptyObject(answered)) {
-											disabelNextButton = true;
-											answered = anwerringquestion;
-											first_answer = {
-												count: count,
-												percent: child.calcPercent(answered),
-												id: question.id
-											};
-											setTimeout(() => {
-												disabelNextButton = false;
-												count++;
-											}, delay);
-										} else {
-											count++;
-										}
-									}}
-									>nächste Frage
-								</Button>
-							</div>
-						</div>
+						<NavButton
+							bind:count
+							bind:answered
+							bind:anwerringquestion
+							bind:first_answer
+							bind:child
+							bind:question
+							bind:showCorrectAnwer
+						/>
 					</div>
 					<div slot="fooder-left" class="flex items-center h-full">
 						Frage: <a class="ml-2" href="/question/{question.id}/">{question.id}</a>

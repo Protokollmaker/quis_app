@@ -1,0 +1,12 @@
+CREATE OR REPLACE FUNCTION helper_question_in_array(t_array jsonb)
+RETURNS SETOF "Questions" AS $$
+BEGIN
+  RETURN QUERY
+  SELECT *
+  FROM "Questions"
+  WHERE id::text IN (
+    SELECT jsonb_array_elements_text(t_array::jsonb)::text
+  )
+  LIMIT 10;
+END;
+$$ LANGUAGE plpgsql;

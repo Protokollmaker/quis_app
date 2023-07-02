@@ -1,4 +1,12 @@
 <script lang="ts">
+	import {
+		Table,
+		TableBody,
+		TableCell,
+		TableHead,
+		TableHeader,
+		TableRow
+	} from '$components/ui/table';
 	import { supabaseClient } from '$lib/func/Clients/supabase';
 	export let data;
 	async function leaderboard() {
@@ -30,28 +38,32 @@
 	{#await leaderboard()}
 		läde...
 	{:then leaderboards}
-		<table>
-			<tr class="header">
-				<th class="uuid_header">Name</th>
-				<th>Falsch</th>
-				<th class="owner">Richtig</th>
-			</tr>
-			{#each leaderboards as leader}
-				<tr class="row">
-					{#if leader}
-						{#await getOwnser(leader.user)}
-							<td class="name">läde</td>
-						{:then name}
-							<td class="name">{name}</td>
-						{:catch error}
-							<td class="name">???</td>
-						{/await}
-						<td>{leader.answersWrong}</td>
-						<td>{leader.answersCorrect}</td>
-					{/if}
-				</tr>
-			{/each}
-		</table>
+		<Table>
+			<TableHeader>
+				<TableRow>
+					<TableHead>Name</TableHead>
+					<TableHead class="text-right">Falsch</TableHead>
+					<TableHead class="text-right">Richtig</TableHead>
+				</TableRow>
+			</TableHeader>
+			<TableBody>
+				{#each leaderboards as leader}
+					<TableRow>
+						{#if leader}
+							{#await getOwnser(leader.user)}
+								<TableCell>läde</TableCell>
+							{:then name}
+								<TableCell>{name}</TableCell>
+							{:catch error}
+								<TableCell>???</TableCell>
+							{/await}
+							<TableCell class="text-right">{leader.answersWrong}</TableCell>
+							<TableCell class="text-right">{leader.answersCorrect}</TableCell>
+						{/if}
+					</TableRow>
+				{/each}
+			</TableBody>
+		</Table>
 	{/await}
 </section>
 
