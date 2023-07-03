@@ -57,6 +57,30 @@ export function getCurrentQuestionData() {
     return browser && (JSON.parse(localStorage.getItem(name_localStorage) || "[]"))
 }
 
+export function getQuestionsDoneNum(t_obj: Array<TagsPersentElement>) {
+    if (!browser) return 0;
+    let count = 0;
+    for (const obj of t_obj) {
+        count += obj.number;
+    }
+    return count;
+}
+
+export function getQuestionUnicDoneNum(t_obj: Array<TagsPersentElement>) {
+    return t_obj.length;
+}
+
+export function getAvarageQuestionPercente(t_obj: Array<TagsPersentElement>): number {
+    if (!browser) return 0;
+    let percent = 0;
+    let count = 0;
+    for (const obj of t_obj) {
+        percent += obj.percent;
+        count += 1;
+    }
+    return percent / count;
+}
+
 /*// todo Bug when one question is deleted a other wont be synce
 export async function syncQuestion(obj: Array<TagsPersentElement>) {
     if (!browser) return { error: -2, obj: obj };

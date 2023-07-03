@@ -1,7 +1,13 @@
 <script lang="ts">
 	import Button from '$components/ui/button/Button.svelte';
+	import {
+		addBookmark,
+		hasBookmark,
+		questionBookmarks,
+		rmBookmark
+	} from '$lib/stores/bookmarksQuestion';
 	import type { anyobject } from '$lib/types/types';
-	import { Edit } from 'lucide-svelte';
+	import { BookmarkMinus, BookmarkPlus, Edit } from 'lucide-svelte';
 	import { emptyObject, mergeObject } from '.';
 	import Multiplechois from './Multiplechois.svelte';
 	import TabelQuestion from './TabelQuestion.svelte';
@@ -66,9 +72,30 @@
 							bind:showCorrectAnwer
 						/>
 					</div>
-					<div slot="fooder-left" class="flex items-center h-full">
+					<div slot="fooder-left" class="flex items-center h-full text-muted-foreground">
 						Frage: <a class="ml-2" href="/question/{question.id}/">{question.id}</a>
-						<a href="/question/{question.id}/edit"><Edit class="h-4" /></a>
+						<a href="/question/{question.id}/edit"><Edit class="h-4 m-2" /></a>
+						{#if hasBookmark($questionBookmarks, question.id, 'Gespeicherte Fragen')}
+							<Button
+								variant="ghost"
+								on:click={() => {
+									questionBookmarks.set(
+										rmBookmark($questionBookmarks, question.id, 'Gespeicherte Fragen')
+									);
+								}}
+								><BookmarkMinus class="h-4 m-2" />
+							</Button>
+						{:else}
+							<Button
+								variant="ghost"
+								on:click={() => {
+									questionBookmarks.set(
+										addBookmark($questionBookmarks, question.id, 'Gespeicherte Fragen')
+									);
+								}}
+								><BookmarkPlus class="h-4 m-2" />
+							</Button>
+						{/if}
 					</div>
 				</Multiplechois>
 			{:else if question.Type == 'TableQuestion'}
@@ -94,7 +121,7 @@
 					</div>
 					<div slot="fooder-left" class="flex items-center h-full">
 						Frage: <a class="ml-2" href="/question/{question.id}/">{question.id}</a>
-						<a href="/question/{question.id}/edit"><Edit class="h-4" /></a>
+						<a href="/question/{question.id}/edit"><Edit class="h-4 m-2" /></a>
 					</div>
 				</TabelQuestion>
 			{:else}
