@@ -79,15 +79,17 @@
 				</div>
 			</Card>
 		</div>
-		<div class="p-2 w-fit">
-			<Card>
-				<Bookmark slot="icon" />
-				<div slot="name">Gespeicherte Fragen</div>
-				<div slot="numbers">
-					{getBookmarkColection(get(questionBookmarks), 'Gespeicherte Fragen').length}
-				</div>
-			</Card>
-		</div>
+		<a href="question/bookmark/Gespeicherte Fragen"
+			><div class="p-2 w-fit">
+				<Card>
+					<Bookmark slot="icon" />
+					<div slot="name">Gespeicherte Fragen</div>
+					<div slot="numbers">
+						{getBookmarkColection(get(questionBookmarks), 'Gespeicherte Fragen').length}
+					</div>
+				</Card>
+			</div></a
+		>
 		<div class="p-2 w-fit">
 			<Card>
 				<CircleOff slot="icon" class="h-5 rotate-90" />
