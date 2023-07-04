@@ -8,7 +8,6 @@
 		questionData
 	} from '$lib/stores/questionPercent';
 	import {
-		ArrowDown01,
 		BarChart3,
 		Book,
 		BookPlus,
@@ -17,7 +16,6 @@
 		ExternalLink,
 		Eye,
 		FileQuestion,
-		LayoutList,
 		PlusCircle,
 		Settings2,
 		Shuffle
@@ -55,34 +53,38 @@
 	{#if userfecht}
 		<h1 class="p-2">Welcome, {user?.Name}</h1>
 	{/if}
-	<div class="flex items-stretch">
-		<div class="p-2 w-fit">
-			<Card>
-				<Eye slot="icon" />
-				<div slot="name">Gesehenen Fragen</div>
-				<div slot="numbers">
-					{get(questionData).length} /
-					{#await getQuestionCount()}
-						???
-					{:then count}
-						{count}
-					{/await}
-				</div>
-			</Card>
-		</div>
-		<div class="p-2 w-fit">
-			<Card>
-				<BarChart3 slot="icon" />
-				<div slot="name">Fragen Beantwortet</div>
-				<div slot="numbers">
-					{getQuestionsDoneNum(get(questionData))}
-				</div>
-			</Card>
-		</div>
-		<a href="question/bookmark/Gespeicherte Fragen"
-			><div class="p-2 w-fit">
-				<Card>
-					<Bookmark slot="icon" />
+	<div class="flex flex-wrap fcostom2">
+		<a href="/question/notdone" class="min-h-fit fcostom">
+			<div class="p-2 h-full">
+				<Card tooltip={'Fragen die du noch nicht Absolviert hast'}>
+					<Eye slot="icon" class="h-5" />
+					<div slot="name">Gesehenen Fragen</div>
+					<div slot="numbers">
+						{get(questionData).length} /
+						{#await getQuestionCount()}
+							???
+						{:then count}
+							{count}
+						{/await}
+					</div>
+				</Card>
+			</div>
+		</a>
+		<a href="/question/random" class="min-h-fit fcostom">
+			<div class="p-2 h-full">
+				<Card tooltip={'Zuflällige fragen'}>
+					<BarChart3 slot="icon" class="h-5" />
+					<div slot="name">Fragen Beantwortet</div>
+					<div slot="numbers">
+						{getQuestionsDoneNum(get(questionData))}
+					</div>
+				</Card>
+			</div>
+		</a>
+		<a href="question/bookmark/Gespeicherte Fragen" class="min-h-fit fcostom"
+			><div class="p-2 h-full">
+				<Card tooltip={'Fragen die du Gespeichert hast'}>
+					<Bookmark slot="icon" class="h-5" />
 					<div slot="name">Gespeicherte Fragen</div>
 					<div slot="numbers">
 						{getBookmarkColection(get(questionBookmarks), 'Gespeicherte Fragen').length}
@@ -90,15 +92,17 @@
 				</Card>
 			</div></a
 		>
-		<div class="p-2 w-fit">
-			<Card>
-				<CircleOff slot="icon" class="h-5 rotate-90" />
-				<div slot="name">Durchschnitts Prozente</div>
-				<div slot="numbers">
-					⌀{(getAvarageQuestionPercente(get(questionData)) * 100).toFixed(1)}
-				</div>
-			</Card>
-		</div>
+		<a href="/question/ascpercent" class="min-h-fit fcostom">
+			<div class="p-2 h-full">
+				<Card tooltip={'Fragen sotiert nach Prozenten beginend mit der Niedrigsten'}>
+					<CircleOff slot="icon" class="h-5 rotate-90" />
+					<div slot="name">Durchschnitts</div>
+					<div slot="numbers">
+						⌀{(getAvarageQuestionPercente(get(questionData)) * 100).toFixed(1)}%
+					</div>
+				</Card>
+			</div>
+		</a>
 	</div>
 	<div>
 		<div class="flex items-center underline p-1">
@@ -114,16 +118,6 @@
 			<Shuffle class="p-1" /><a class="text-slate-800" href="/question/random">Zufällige Frage</a>
 		</div>
 		<div class="flex items-center underline p-1">
-			<LayoutList class="p-1" /><a class="text-slate-800" href="/question/notdone"
-				>noch nicht bearbeitete Fragen</a
-			>
-		</div>
-		<div class="flex items-center underline p-1">
-			<ArrowDown01 class="p-1" /><a class="text-slate-800" href="/question/ascpercent"
-				>Frage nach Prozenten sotiert beginnend mit der niedrigsten</a
-			>
-		</div>
-		<div class="flex items-center underline p-1">
 			<Book class="p-1" /><a class="text-slate-800" href="/group">Gruppe</a>
 		</div>
 		<div class="flex items-center underline p-1">
@@ -136,4 +130,11 @@
 </section>
 
 <style>
+	:global(body) {
+		width: 100%;
+	}
+	.fcostom {
+		flex-basis: 0;
+		flex-grow: 1;
+	}
 </style>
