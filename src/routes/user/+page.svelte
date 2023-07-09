@@ -13,6 +13,7 @@
 		BookPlus,
 		Bookmark,
 		CircleOff,
+		Combine,
 		ExternalLink,
 		Eye,
 		FileQuestion,
@@ -116,6 +117,11 @@
 		</div>
 		<div class="flex items-center underline p-1">
 			<Shuffle class="p-1" /><a class="text-slate-800" href="/question/random">Zufällige Frage</a>
+		</div>
+		<div class="flex items-center underline p-1">
+			<Combine class="p-1" /><a class="text-slate-800" href="/question/unic"
+				>Zuflällige Fragen aber ausgeschlossen fragen die du auf der seite bearbeitet hast
+			</a>
 		</div>
 		<div class="flex items-center underline p-1">
 			<Book class="p-1" /><a class="text-slate-800" href="/group">Gruppe</a>

@@ -48,7 +48,7 @@
 		</CollapsibleTrigger>
 	</div>
 	<CollapsibleContent
-		class="grid-cols-4 flex flex-wrap"
+		class="flex-wrap flex bg-white border-b"
 		style="position: absolute;width: calc(100vw - 18px);
 		overflow: hidden; left: 9px;"
 	>
@@ -57,9 +57,11 @@
 		{:then tags}
 			{#if Array.isArray(tags)}
 				{#each tags as tag}
-					<Label class="rounded-md border px-1 py-1 text-sm flex mb-2 mr-2"
+					<Label
+						class="rounded-md border px-1 py-1 text-sm flex mb-2 mr-2 min-w-fit"
+						style=" flex-basis: 0; flex-grow: 1;"
 						><Toggle
-							class="w-full text-right flex"
+							class="w-full text-right flex items-center justify-center"
 							variant="nocenter"
 							size="sm"
 							bind:pressed={elemnt[tag.tag]}>{tag.tag}</Toggle
@@ -74,7 +76,4 @@
 </Collapsible>
 
 <style>
-	:global(body) {
-		width: calc(100vw - 18px);
-	}
 </style>

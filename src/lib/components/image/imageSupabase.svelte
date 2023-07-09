@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { supabaseClient } from '$lib/func/Clients/supabase';
-	export let image_src: string | undefined;
+	export let image_src: string | undefined | null;
 	export let bucket: string;
 	export let alt: string = '';
 	let imageBase64: any;
 
 	let last_image_src: string | undefined;
 
-	async function load(t_image_src: string | undefined) {
+	async function load(t_image_src: string | undefined | null) {
 		if (!t_image_src) return;
 		if (t_image_src == last_image_src) return;
 		last_image_src = t_image_src;
@@ -28,7 +28,7 @@
 	$: load(image_src);
 </script>
 
-<section class="flex justify-center items-center ">
+<section class="flex justify-center items-center">
 	{#if imageBase64}
 		<img src={imageBase64} {alt} {...$$restProps} />
 	{/if}

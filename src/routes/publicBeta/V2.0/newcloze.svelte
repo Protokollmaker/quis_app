@@ -31,6 +31,7 @@
 </script>
 
 <section>
+	<h1>Unfertig</h1>
 	<h2 class="mb-2">Frage</h2>
 	<Textarea placeholder="Schreibe hier diene Frage herein" bind:value={question.text} />
 	<div class="flex mt-2 mb-5 gap-2">

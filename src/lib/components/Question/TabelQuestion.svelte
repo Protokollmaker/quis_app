@@ -14,8 +14,8 @@
 	import TableCell from '$components/ui/table/TableCell.svelte';
 	import Layout1 from './Layout1.svelte';
 	// input/output saves currend selection of the question
-	export let anwerringquestion: any;
-	export let anwerdeQuestion: any;
+	export let selected: any;
+	export let answered: any;
 	// input show correct anwerser
 	export let showCorrectAnwer: boolean;
 	// input cout of question that are don
@@ -136,13 +136,13 @@
 								<TableCell
 									class="text-right"
 									style={checkboxIsCorrectDisplayMaped(
-										anwerdeQuestion,
+										answered,
 										'checkbox' + i + '-' + j,
 										showCorrectAnwer
 									)}
 								>
 									<div class="flex items-center justify-end">
-										<Checkbox bind:checked={anwerringquestion['checkbox' + i + '-' + j]} />
+										<Checkbox bind:checked={selected['checkbox' + i + '-' + j]} />
 									</div>
 								</TableCell>
 							{/each}

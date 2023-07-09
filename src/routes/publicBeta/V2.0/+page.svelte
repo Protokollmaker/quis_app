@@ -3,12 +3,14 @@
 	import Input from '$components/ui/input/Input.svelte';
 	import Label from '$components/ui/label/Label.svelte';
 	import { Tabs, TabsContent, TabsList, TabsTrigger } from '$components/ui/tabs';
+	import { supabaseClient } from '$lib/func/Clients/supabase';
 	import { Plus, X } from 'lucide-svelte';
+	import NewTextarea from './newTextarea.svelte';
 	import Newcloze from './newcloze.svelte';
 
 	//import type { PageData } from './$types';
 	//export let data: PageData;
-	export const data: any = {};
+	export let data: any;
 	type type_uuid_exam = {
 		year: number | undefined;
 		exam_part: 'Teil1' | 'Teil2' | undefined;
@@ -25,8 +27,32 @@
 	//
 	let tags: Array<string> = [];
 	//
-	let sendjson: any = {};
+	let questionSerilaiser: any = {};
 	let error: string = '';
+	console.log(data);
+	function serialize() {
+		let sendjson: any = {};
+		sendjson.tags = {
+			tags: tags,
+			exams: exams
+		};
+		sendjson.Type = questionprop.type;
+		sendjson.Title = questionprop.Title;
+		sendjson.version = 1;
+		let question = questionSerilaiser[questionprop.type];
+		for (const [key, value] of Object.entries(question.serialize())) {
+			sendjson[key] = value;
+		}
+		sendjson.owner = data.session?.user.id;
+		return sendjson;
+	}
+	function clear() {
+		let question = questionSerilaiser[questionprop.type];
+		tags = [];
+		questionprop.Title = '';
+		if (exams.length) exams = [exams[0]];
+		question.clear();
+	}
 </script>
 
 <section>
@@ -103,12 +129,26 @@
 			<TabsTrigger class="w-full" value="Multiple choice">Mehrfachauswahl</TabsTrigger>
 			<TabsTrigger class="w-full" value="TableQuestion">Tabellen frage</TabsTrigger>
 			<TabsTrigger class="w-full" value="cloze">Lückentext</TabsTrigger>
+			<TabsTrigger class="w-full" value="Textarea">TextFelt</TabsTrigger>
 			<TabsTrigger class="w-full" value="X-template">X-Vorlage</TabsTrigger>
 		</TabsList>
 		<TabsContent value="cloze">
 			<Newcloze />
 		</TabsContent>
+		<TabsContent value="Textarea">
+			<NewTextarea userid={data.session?.user.id} bind:this={questionSerilaiser.Textarea} />
+		</TabsContent>
 	</Tabs>
+	<Button
+		on:click={async () => {
+			const res = await supabaseClient.from('Questions').insert(serialize());
+			if (res.error) {
+				console.log(res.error);
+			} else {
+				clear();
+			}
+		}}>Send zur Datenbank</Button
+	>
 </section>
 
 <style></style>

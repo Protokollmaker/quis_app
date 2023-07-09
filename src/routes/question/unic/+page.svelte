@@ -2,7 +2,7 @@
 	import { browser } from '$app/environment';
 	import QuestionMenager from '$components/Question/QuestionMenager.svelte';
 	import { supabaseClient } from '$lib/func/Clients/supabase';
-	import { addValue, getQuestionIDs, questionData } from '$lib/stores/questionPercent';
+	import { addValue, questionData } from '$lib/stores/questionPercent';
 	import { createQuestionsStore, nextQuestion, prevQuestion } from '$lib/stores/questionStore';
 	import { get } from 'svelte/store';
 	const defaltFill = { anwerser: {} };
@@ -10,18 +10,23 @@
 	let questioncount: number = 0;
 	let lastquestioncount: number = -1;
 	let first_anwnser_correct: null | any = null;
+	let arrayOfQuestionIds: Array<string> = [];
 
 	$: questionData.set(
 		addValue(get(questionData), first_anwnser_correct?.id, first_anwnser_correct?.percent).obj
 	);
+	$: {
+		if (first_anwnser_correct?.id) arrayOfQuestionIds.push(first_anwnser_correct.id);
+	}
 
 	function load(n: number) {
 		if (!browser) return 0;
 		if (n > lastquestioncount) {
 			nextQuestion(questionstore, defaltFill, 10, async (n: number) => {
-				let t_array = getQuestionIDs(get(questionData));
-				const res = await supabaseClient.rpc('helper_question_not_in_array', {
-					t_array: t_array
+				const res = await supabaseClient.rpc('helper_random_question_not_in_array', {
+					t_array: arrayOfQuestionIds,
+					t_limit: n,
+					t_offset: 0
 				});
 				return res.data;
 			});

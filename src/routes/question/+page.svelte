@@ -49,7 +49,7 @@
 </script>
 
 <section>
-	<div class="flex m-4" style="justify-content: space-between;">
+	<div class="flex px-4 py-4 w-screen bg-white" style="justify-content: space-between;">
 		<span class="text-2xl">Alle fragen</span>
 		<Filter bind:aktivTags={tags} />
 		<div class="inline">
