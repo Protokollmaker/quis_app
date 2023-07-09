@@ -20,7 +20,7 @@
 	export let answered: anyobject = {};
 	////////////////////////////////////////////////////
 	export function calcPercent(ans: any) {
-		return 1;
+		return uiControll[0].percent;
 	}
 	let uiControll = [
 		{
