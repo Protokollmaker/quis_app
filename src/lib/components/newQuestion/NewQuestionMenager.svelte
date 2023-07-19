@@ -106,7 +106,7 @@
 				year: year,
 				exam_part: teilnumber,
 				part: teilletter,
-				season: 'Autumn',
+				season: 'Spring',
 				question: question
 			});
 		}
@@ -205,7 +205,7 @@
 						year: undefined,
 						exam_part: 'Teil1',
 						part: 'TeilA',
-						season: 'Autumn',
+						season: 'Spring',
 						question: undefined
 					}
 				];
