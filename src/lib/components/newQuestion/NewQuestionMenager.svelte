@@ -180,7 +180,7 @@
 						<option value="Teil1">Teil 1</option>
 						<option value="Teil2">Teil 2</option>
 					</select>
-					<select>
+					<select bind:value={exsam.season}>
 						{#each seasons as season}
 							<option value={season.season}>{season.name}</option>
 						{/each}
