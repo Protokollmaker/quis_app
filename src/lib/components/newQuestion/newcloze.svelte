@@ -9,6 +9,8 @@
 	export function serialize() {}
 	export function deserialize() {}
 	export function clear() {}
+
+	export let userid: string | null | undefined;
 	let question = { text: undefined, alt: undefined, path: undefined };
 	let questionImg: Array<File> = [];
 	// TODO questionImg -> question.path

@@ -27,7 +27,7 @@
 			userOverried: boolean;
 		} & questionType
 	>;
-	let Validations: ValidationsType = [];
+	let Validations: any = [];
 	$: Validations = percent(Validations);
 	function percent(Validations: ValidationsType) {
 		for (let i = 0; i < Validations.length; i++) {
@@ -67,14 +67,11 @@
 		return sendjson;
 	}
 
-	export function deserialise(sendjson: {
-		question: questionType;
-		answers: AnwersersType;
-		validation: ValidationsType;
-	}) {
+	export function deserialise(sendjson: any) {
+		console.log(sendjson.answers);
 		question = sendjson.question;
-		Anwersers = sendjson.answers;
 		Validations = sendjson.validation;
+		Anwersers = sendjson.answers;
 	}
 
 	export function clear() {
@@ -135,13 +132,13 @@
 			<Textarea placeholder="Schreibe hier diene Frage herein" bind:value={Anwerser.text} />
 			<div class="flex mt-2 mb-5 gap-2">
 				<Input type="text" placeholder="alternertiver text" bind:value={Anwerser.alt} />
-				<FileInput
+				<!--<FileInput
 					accept="image/png, image/jpeg"
 					bind:files={ImageList[i].anwerserImage}
 					id="avatar"
 					name="avatar"
 					type="file"
-				/>
+				/>-->
 			</div>
 			<div class="imageSize">
 				<ImageSupabase image_src={Anwerser.filepath} bucket={'Question images'} alt={''} />
@@ -150,13 +147,13 @@
 			<Textarea placeholder="Schreibe hier diene Frage herein" bind:value={Validations[i].text} />
 			<div class="flex mt-2 mb-5 gap-2">
 				<Input type="text" placeholder="alternertiver text" bind:value={Validations[i].alt} />
-				<FileInput
+				<!--<FileInput
 					accept="image/png, image/jpeg"
 					bind:files={ImageList[i].validationImage}
 					id="avatar"
 					name="avatar"
 					type="file"
-				/>
+				/>-->
 			</div>
 			<div class="imageSize">
 				<ImageSupabase image_src={Validations[i].filepath} bucket={'Question images'} alt={''} />

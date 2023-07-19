@@ -129,7 +129,7 @@
 						/>
 					</div>
 					{#if showCorrectAnwer}
-						<div class="w-full">
+						<div class="w-full" style="white-space: pre-line;">
 							{json_question.validation[i].text}
 						</div>
 					{/if}
