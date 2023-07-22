@@ -1,41 +1,38 @@
 <script lang="ts">
-	export let text: string | null | undefined;
-	type smartTextList = Array<{
-		start: string;
-		end: string;
-		component: any;
-	}>;
-	export let list: smartTextList;
-
-	function compute(text: string | null | undefined, list: smartTextList) {
-		if (!text) return [];
-		let element = list.pop();
-		if (!element) return [];
-		let offset = -1;
-		while (true) {
-			const index1 = text.indexOf(element.start, offset + 1);
-			const index2 = text.indexOf(element.end, index1 + 1);
-			if (index1 == -1 || index2 == -1) break;
-			offset = index2;
-		}
-
-		return [];
+	type AdvanstText = { redex: RegExp; component: any };
+	export let text: string;
+	export let option: Array<AdvanstText>;
+	let passArray: Array<AdvanstText> = [];
+	let textOptions: Array<{ index: number; text: string }> = [];
+	$: passArray = [];
+	function compute(text: string, options: Array<AdvanstText>) {
+		let option = options[options.length - 1];
+		if (option == undefined) return [];
+		let array = text.split(option.redex);
+		console.log(option);
+		array = array.filter((text, i) => {
+			return i % 4;
+		});
+		let elements: Array<{ index: number; text: string }> = [];
+		array.forEach((text, i) => {
+			if ((i + 2) % 3) elements.push({ index: -1, text: text });
+			else elements.push({ index: 0, text: text });
+		});
+		return elements;
 	}
-	let textList: Array<{ component: any; text: string; list?: smartTextList }>;
-	$: textList = compute(text, list);
+	$: textOptions = compute(text, option);
 </script>
 
-{#if list.length != 0}
-	{#each textList as textelement}
-		{#if textelement?.list}
-			<svelte:self bind:text={textelement.text} bind:list={textelement.list} />
+{#if option.length != 0}
+	{#each textOptions as textOption}
+		{#if textOption.index == 0}
+			<svelte:component this={option[option.length - 1].component} bind:value={textOption.text} />
 		{:else}
-			<svelte:component this={textelement.component} bind:text />
+			<svelte:self bind:text={textOption.text} option={passArray} {...$$restProps} />
 		{/if}
 	{/each}
 {:else}
-	{text}
+	<span {...$$restProps}>{text}</span>
 {/if}
 
-<style>
-</style>
+<style></style>

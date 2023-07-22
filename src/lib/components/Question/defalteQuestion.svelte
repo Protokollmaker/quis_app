@@ -29,6 +29,7 @@
 	<div class="hidden">
 		<slot name="fooder-right" />
 		<slot name="fooder-left" />
+		<slot name="head-right" />
 	</div>
 </section>
 

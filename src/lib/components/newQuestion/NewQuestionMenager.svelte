@@ -1,10 +1,15 @@
 <script lang="ts">
+	//import ImageSupabase from '$components/image/imageSupabase.svelte';
 	import Button from '$components/ui/button/Button.svelte';
+	import Checkbox from '$components/ui/checkbox/Checkbox.svelte';
+	//import FileInput from '$components/ui/input/FileInput.svelte';
 	import Input from '$components/ui/input/Input.svelte';
 	import Label from '$components/ui/label/Label.svelte';
 	import { Tabs, TabsContent, TabsList, TabsTrigger } from '$components/ui/tabs';
+	import Textarea from '$components/ui/textarea/Textarea.svelte';
 	import { supabaseClient } from '$lib/func/Clients/supabase';
 	import { Plus, X } from 'lucide-svelte';
+	import { uploadImage } from '.';
 	import NewMutltiplechois from './newMutltiplechois.svelte';
 	import NewTextarea from './newTextarea.svelte';
 
@@ -18,6 +23,7 @@
 		part: 'TeilA' | 'TeilB' | undefined;
 		season: 'Autumn' | 'Summer' | 'Winter' | 'Spring' | undefined;
 		question: number | string | undefined;
+		deselectable: boolean;
 	};
 
 	const seasons = [
@@ -50,6 +56,26 @@
 	//
 	let questionSerilaiser: any = {};
 	let error: string = '';
+	const userid = data.session?.user.id;
+	let explanation: {
+		text: string;
+		filepath?: string | undefined | null;
+		alt?: string | undefined | null;
+		type: string;
+	} = {
+		text: '',
+		type: 'none'
+	};
+	let explanationImg: Array<File> = [];
+
+	$: uploadImageExplanation(explanationImg);
+	function uploadImageExplanation(File: Array<File>) {
+		if (!File?.length) return;
+		uploadImage(File[0], userid).then((value) => {
+			explanation.filepath = value?.path;
+		});
+	}
+
 	function serialize() {
 		let sendjson: any = {};
 		sendjson.tags = {
@@ -59,6 +85,12 @@
 		sendjson.Type = questionprop.type;
 		sendjson.Title = questionprop.Title;
 		sendjson.version = 1;
+		if (explanation.type != 'none') {
+			sendjson.explanation = explanation;
+		} else {
+			sendjson.explanation = null;
+		}
+
 		let question = questionSerilaiser[questionprop.type];
 		for (const [key, value] of Object.entries(question.serialize())) {
 			sendjson[key] = value;
@@ -74,6 +106,11 @@
 		owner = data.session?.user.id;
 		questionID = undefined;
 		if (exams.length) exams = [exams[0]];
+		explanationImg = [];
+		explanation = {
+			text: '',
+			type: 'none'
+		};
 		question.clear();
 	}
 
@@ -84,6 +121,9 @@
 		owner = t_question.owner;
 		questionID = t_question.id;
 		tags = t_question.tags.tags;
+		if (t_question?.explanation) {
+			explanation = t_question.explanation;
+		}
 		if (t_question.version == 0) {
 			exams = deserialiseExsamV0(t_question.tags);
 		} else {
@@ -107,12 +147,12 @@
 				exam_part: teilnumber,
 				part: teilletter,
 				season: 'Spring',
-				question: question
+				question: question,
+				deselectable: false
 			});
 		}
 		return exsam;
 	}
-
 	$: loadQuestion(questionID);
 	async function loadQuestion(id: string | undefined) {
 		if (!id) return;
@@ -193,6 +233,10 @@
 						}}><X /></Button
 					>
 				</div>
+				<div class="flex items-center gap-2 pb-2">
+					<Checkbox bind:checked={exsam.deselectable} />
+					<Label>nicht Abwählbar</Label>
+				</div>
 			{/each}
 		</div>
 		<Button
@@ -206,7 +250,8 @@
 						exam_part: 'Teil1',
 						part: 'TeilA',
 						season: 'Spring',
-						question: undefined
+						question: undefined,
+						deselectable: false
 					}
 				];
 			}}><Plus /></Button
@@ -222,16 +267,48 @@
 				{/if}
 			{/each}
 		</TabsList>
-		<TabsContent class="w-full" value="null">null</TabsContent>
 		{#each options as option}
 			<TabsContent value={option.type}>
 				<svelte:component
 					this={option.component}
-					userid={data.session?.user.id}
+					{userid}
 					bind:this={questionSerilaiser[option.type]}
 				/>
 			</TabsContent>
 		{/each}
+	</Tabs>
+
+	<Tabs class="w-full p-4" bind:value={explanation.type}>
+		<div class="flex items-center justify-between">
+			<h2 class="mr-2">Erklärung:</h2>
+			<TabsList class="w-full flex justify-between">
+				<TabsTrigger class="w-full" value={'none'}>Keine Erklärung</TabsTrigger>
+				<TabsTrigger class="w-full" value={'explanation'}>Erklärung</TabsTrigger>
+			</TabsList>
+		</div>
+		<TabsContent class="w-full" value={'none'} />
+		<TabsContent value={'explanation'}>
+			<Textarea placeholder="Schreibe hier diene Frage herein" bind:value={explanation.text} />
+			<!--<div class="flex mt-2 mb-5 gap-2">
+				<Input type="text" placeholder="alternertiver text" bind:value={explanation.alt} />
+				<FileInput accept="image/png, image/jpeg" bind:files={explanationImg} type="file" />
+				<Button
+					variant="secondary"
+					on:click={() => {
+						explanationImg = [];
+						explanation.filepath = undefined;
+					}}><X /></Button
+				>
+			</div>
+			{#if explanation.filepath}
+				<ImageSupabase
+					image_src={explanation.filepath}
+					bucket={'Question images'}
+					alt={''}
+					style="max-height: 13rem;"
+				/>
+			{/if}-->
+		</TabsContent>
 	</Tabs>
 	<Button
 		on:click={async () => {
@@ -251,6 +328,21 @@
 				}
 			}
 		}}>Send zur Datenbank</Button
+	>
+	<Button
+		variant="boarder"
+		on:click={async () => {
+			const res = await supabaseClient
+				.from('Questions')
+				.select()
+				.eq('version', 0)
+				.limit(1)
+				.single();
+			if (res.data) {
+				console.log(res.data);
+				deserialise(res.data);
+			} else console.log(res.error);
+		}}>Version 1 frage</Button
 	>
 </section>
 

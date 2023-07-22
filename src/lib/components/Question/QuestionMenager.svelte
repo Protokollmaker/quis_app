@@ -14,6 +14,7 @@
 	import TextareaQuestion from './TextareaQuestion.svelte';
 	import DefalteQuestion from './defalteQuestion.svelte';
 	import NavButton from './navButton.svelte';
+	import NavMenu from './nevMenu.svelte';
 
 	// this is hier to mange the display of questions
 
@@ -27,7 +28,8 @@
 	$: answered == null ? {} : answered;
 	// output changes when question anwerder fist time
 	export let first_answer: any = undefined;
-	////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////
+
 	export const flags: {
 		ShowNextButton?: boolean;
 		ShowPrevButton?: boolean;
@@ -76,6 +78,9 @@
 				bind:this={child}
 				bind:question_count_max={max_question_count}
 			>
+				<div slot="head-right" class="py-2 px-8">
+					<NavMenu bind:question bind:count />
+				</div>
 				<div slot="fooder-right" class="p-2 pr-10 pl-10">
 					<NavButton
 						bind:count

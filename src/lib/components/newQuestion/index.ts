@@ -1,3 +1,4 @@
+import { browser } from "$app/environment";
 import { supabaseClient } from "$lib/func/Clients/supabase";
 
 const uploadedImages: Array<string> = [];
@@ -15,7 +16,8 @@ export async function uploadImages(img: Array<File>, userid: string) {
     return { paths: filepaths, errors: errors };
 }
 
-export async function uploadImage(img: File, userid: string | null) {
+export async function uploadImage(img: File, userid: string | null, bucket = 'Question images') {
+    if (!browser) return;
     console.log(img)
     if (!userid) return {
         path: null, error: "user id is undefinde"
@@ -29,7 +31,7 @@ export async function uploadImage(img: File, userid: string | null) {
         uploadedImages.push(`${img.name}: ${img.size}`);
         // uplade file hier
         const res = await supabaseClient.storage
-            .from('Question images')
+            .from(bucket)
             .upload(path + img.name, img, {
                 cacheControl: '3600',
                 upsert: false

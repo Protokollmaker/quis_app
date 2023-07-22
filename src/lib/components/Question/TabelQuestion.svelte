@@ -155,6 +155,7 @@
 	</div>
 	<div slot="fooder-right"><slot name="fooder-right" /></div>
 	<div slot="fooder-left"><slot name="fooder-left" /></div>
+	<div slot="head-right" class="h-full"><slot name="head-right" /></div>
 </Layout1>
 
 <style>

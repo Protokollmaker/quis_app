@@ -137,6 +137,7 @@
 			</div>
 		{/each}
 	</div>
+	<div slot="head-right" class="h-full"><slot name="head-right" /></div>
 	<div slot="fooder-right" class="h-full"><slot name="fooder-right" /></div>
 	<div slot="fooder-left" class="h-full"><slot name="fooder-left" /></div>
 </Layout1>
