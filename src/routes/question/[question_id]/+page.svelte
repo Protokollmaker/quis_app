@@ -16,11 +16,13 @@
 			.single();
 		question = res.data;
 	});
+	let flags = { ShowNextButton: false, ShowPrevButton: false };
 </script>
 
 <section>
 	{#if question}
 		<QuestionMenager
+			bind:flags
 			bind:question
 			bind:count={question_num}
 			bind:answered={anwerser}

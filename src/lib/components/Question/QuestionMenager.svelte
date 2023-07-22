@@ -30,13 +30,13 @@
 	export let first_answer: any = undefined;
 	/////////////////////////////////////////////////////////////////
 
-	export const flags: {
+	export let flags: {
 		ShowNextButton?: boolean;
 		ShowPrevButton?: boolean;
 		AutoSolutiononNextButton?: boolean;
 		numOfPrevAnwerser?: number;
 	} = {};
-	const flag = mergeObject(
+	let flag = mergeObject(
 		{
 			ShowNextButton: true,
 			ShowPrevButton: true,
@@ -83,6 +83,7 @@
 				</div>
 				<div slot="fooder-right" class="p-2 pr-10 pl-10">
 					<NavButton
+						bind:flag
 						bind:count
 						bind:answered
 						bind:anwerringquestion

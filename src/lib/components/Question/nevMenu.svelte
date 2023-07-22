@@ -43,7 +43,7 @@
 							<DialogTitle>Erklärung der Frage</DialogTitle>
 							<!--<DialogDescription></DialogDescription>-->
 						</DialogHeader>
-						<div class="px-2 flex">
+						<div class="px-2">
 							<SmartText bind:text={question.explanation.text} option={smartText} class="pr-1" />
 						</div>
 						<!--<DialogFooter><Button type="submit">Schlißen</Button></DialogFooter>-->

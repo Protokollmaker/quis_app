@@ -8,6 +8,7 @@
 	export let child: any;
 	export let question: any;
 	export const showCorrectAnwer: boolean = false;
+	export let flag: any;
 	let disabelNextButton: boolean = false;
 	let delay: number = 1000;
 </script>
@@ -15,16 +16,18 @@
 <section>
 	<div class="footer flex justify-between">
 		<div>
-			<Button
-				variant="boarder"
-				on:click={() => {
-					count--;
-				}}>vorherige Frage</Button
-			>
+			{#if flag.ShowPrevButton}
+				<Button
+					variant="boarder"
+					on:click={() => {
+						count--;
+					}}>vorherige Frage</Button
+				>
+			{/if}
 		</div>
 		<div>
 			<Button
-				variant="boarder"
+				variant={flag.ShowNextButton ? 'boarder' : 'default'}
 				on:click={() => {
 					if (emptyObject(answered)) {
 						answered = depeCopy(anwerringquestion);
@@ -40,32 +43,34 @@
 					}
 				}}>Frage abgeben</Button
 			>
-			<Button
-				bind:disabled={disabelNextButton}
-				on:click={() => {
-					if (disabelNextButton) return;
-					if (emptyObject(answered)) {
-						//showCorrectAnwer = true;
-						disabelNextButton = true;
-						answered = depeCopy(anwerringquestion);
+			{#if flag.ShowNextButton}
+				<Button
+					bind:disabled={disabelNextButton}
+					on:click={() => {
+						if (disabelNextButton) return;
 						if (emptyObject(answered)) {
-							answered = { fill: 'none' };
-						}
-						first_answer = {
-							count: count,
-							percent: child.calcPercent(answered),
-							id: question.id
-						};
-						setTimeout(() => {
+							//showCorrectAnwer = true;
+							disabelNextButton = true;
+							answered = depeCopy(anwerringquestion);
+							if (emptyObject(answered)) {
+								answered = { fill: 'none' };
+							}
+							first_answer = {
+								count: count,
+								percent: child.calcPercent(answered),
+								id: question.id
+							};
+							setTimeout(() => {
+								count++;
+								disabelNextButton = false;
+							}, delay);
+						} else {
 							count++;
-							disabelNextButton = false;
-						}, delay);
-					} else {
-						count++;
-					}
-				}}
-				>nächste Frage
-			</Button>
+						}
+					}}
+					>nächste Frage
+				</Button>
+			{/if}
 		</div>
 	</div>
 </section>
