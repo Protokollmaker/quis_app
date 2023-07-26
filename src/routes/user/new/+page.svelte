@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import Button from '$components/ui/button/Button.svelte';
+	import Input from '$components/ui/input/Input.svelte';
 	import { supabaseClient } from '$lib/func/Clients/supabase';
 	export let data;
 	let error = '';
@@ -18,8 +20,8 @@
 
 <section>
 	Hier kommst du zum erst login in hin und gibst deinen namen ein
-	<div>Name:<input type="text" bind:value={name} /></div>
-	<button on:click={send}>erstellen</button>
+	<Input>Name:<input type="text" bind:value={name} /></Input>
+	<Button on:click={send}>erstellen</Button>
 	{error}
 </section>
 

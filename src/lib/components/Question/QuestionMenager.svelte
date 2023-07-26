@@ -78,10 +78,10 @@
 				bind:this={child}
 				bind:question_count_max={max_question_count}
 			>
-				<div slot="head-right" class="py-2 px-8">
+				<div slot="head-right" class="head-right-nav py-2 px-8">
 					<NavMenu bind:question bind:count />
 				</div>
-				<div slot="fooder-right" class="p-2 pr-10 pl-10">
+				<div slot="fooder-right" class="fooder-right-nav p-2 pr-10 pl-10">
 					<NavButton
 						bind:flag
 						bind:count
@@ -95,28 +95,30 @@
 				</div>
 				<div slot="fooder-left" class="flex items-center h-full text-muted-foreground">
 					Frage: <a class="ml-2" href="/question/{question.id}/">{question.id}</a>
-					<a href="/question/{question.id}/edit"><Edit class="h-4 m-2" /></a>
-					{#if hasBookmark($questionBookmarks, question.id, 'Gespeicherte Fragen')}
-						<Button
-							variant="ghost"
-							on:click={() => {
-								questionBookmarks.set(
-									rmBookmark($questionBookmarks, question.id, 'Gespeicherte Fragen')
-								);
-							}}
-							><BookmarkMinus class="h-4 m-2" />
-						</Button>
-					{:else}
-						<Button
-							variant="ghost"
-							on:click={() => {
-								questionBookmarks.set(
-									addBookmark($questionBookmarks, question.id, 'Gespeicherte Fragen')
-								);
-							}}
-							><BookmarkPlus class="h-4 m-2" />
-						</Button>
-					{/if}
+					<a href="/question/{question.id}/edit" class="edit"><Edit class="h-4 m-2" /></a>
+					<div class="bookmark">
+						{#if hasBookmark($questionBookmarks, question.id, 'Gespeicherte Fragen')}
+							<Button
+								variant="ghost"
+								on:click={() => {
+									questionBookmarks.set(
+										rmBookmark($questionBookmarks, question.id, 'Gespeicherte Fragen')
+									);
+								}}
+								><BookmarkMinus class="h-4 m-2" />
+							</Button>
+						{:else}
+							<Button
+								variant="ghost"
+								on:click={() => {
+									questionBookmarks.set(
+										addBookmark($questionBookmarks, question.id, 'Gespeicherte Fragen')
+									);
+								}}
+								><BookmarkPlus class="h-4 m-2" />
+							</Button>
+						{/if}
+					</div>
 				</div>
 			</svelte:component>
 		{:else}
@@ -125,4 +127,13 @@
 	</slot>
 </section>
 
-<style></style>
+<style>
+	@media print {
+		.fooder-right-nav,
+		.head-right-nav,
+		.edit,
+		.bookmark {
+			display: none;
+		}
+	}
+</style>

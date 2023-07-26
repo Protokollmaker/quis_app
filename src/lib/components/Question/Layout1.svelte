@@ -59,4 +59,11 @@
 	.fooder-right {
 		grid-area: fooder-right;
 	}
+	@media print {
+		.head-right,
+		.anwerser,
+		.fooder-right {
+			background-color: #fff;
+		}
+	}
 </style>

@@ -1,6 +1,12 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import Button from '$components/ui/button/Button.svelte';
+	import FileInput from '$components/ui/input/FileInput.svelte';
+	import Input from '$components/ui/input/Input.svelte';
+	import Label from '$components/ui/label/Label.svelte';
 	import { supabaseClient } from '$lib/func/Clients/supabase';
+	import { downloadObjectAsJson } from '$lib/func/utils/json';
+	import { getallStorageKeys } from '$lib/func/utils/localstorage';
 	import { onMount } from 'svelte';
 	//import type { PageData } from './$types';
 	export let data: any;
@@ -51,15 +57,76 @@
 			console.error('Error changing password:', error);
 		}*/
 	}
+	function mapSome(key: string) {
+		if (key == 'questionData') return 'Fragen Prozente';
+		if (key == 'questionBookmark') return 'Gespeicherte Fragen';
+		return key;
+	}
+	let files: Array<Array<File>> = [];
 </script>
 
-<section>
+<section class="p-2">
 	{#if userfecht}
-		<h1>Welcome, {user.Name}</h1>
-		<div class="name">
-			Ändere Name
-			<input type="text" placeholder={user.Name} bind:value={name} />
-			<button on:click={changename}> Speichern</button>
+		<h1>Hallo, {user.Name}</h1>
+		<h2>Namen Ändern</h2>
+		<div class="p-2">
+			<div class="flex gap-2">
+				<Input type="text" placeholder={user.Name} bind:value={name} />
+				<Button on:click={changename}>Speichern</Button>
+			</div>
+		</div>
+		<h2>Deine Daten</h2>
+		<div class="red">
+			<Label
+				>Wichtig Stelle sicher das du den Richting File Auswälst sonst können Komiche sachen
+				passieren</Label
+			>
+		</div>
+		<div class="p-2">
+			{#each getallStorageKeys() as key, i}
+				<div class="flex justify-between items-center py-1">
+					<Label class="w-fit">{mapSome(key)}</Label>
+					<div class="flex gap-2">
+						<FileInput
+							accept="application/JSON"
+							bind:files={files[i]}
+							id="avatar"
+							name="avatar"
+							type="file"
+							on:change={() => {
+								if (!files[i]) {
+									console.log('no file given');
+									return;
+								}
+								if (!files[i].length) {
+									console.log('??? gelöcht');
+									return;
+								}
+								const file = files[i][0];
+								const reader = new FileReader();
+								let filedata = undefined;
+								reader.onload = () => {
+									try {
+										// @ts-ignore
+										filedata = JSON.parse(reader.result);
+										localStorage.setItem(key, filedata);
+									} catch (error) {
+										console.error('Error parsing JSON file:', error);
+									}
+									return;
+								};
+
+								reader.readAsText(file);
+							}}
+						/>
+						<Button
+							on:click={() => {
+								downloadObjectAsJson(localStorage.getItem(key) || '[]', mapSome(key));
+							}}>Exportiern</Button
+						>
+					</div>
+				</div>
+			{/each}
 		</div>
 		<h2>Pasword</h2>
 		<!--<div class="name"> // TODO Change Password and Email
@@ -74,4 +141,7 @@
 </section>
 
 <style>
+	.red {
+		color: #d36163;
+	}
 </style>

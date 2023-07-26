@@ -31,7 +31,7 @@
 			</Button>
 		</CollapsibleTrigger>
 		<CollapsibleContent class="absolute right-5 pr-20 mt-2 border rounded-md bg-slate-100">
-			<!--2d534efe-67ac-405c-8311-8bad0f89a86b  do it for b1ad5575-b7c4-49b0-9c58-0100f6b72ccb-->
+			<!--2d534efe-67ac-405c-8311-8bad0f89a86b  do it for b1ad5575-b7c4-49b0-9c58-0100f6b72ccb , f95db1b6-5d57-48a3-81f9-bc0530169658-->
 			{#if question.explanation}
 				<Dialog modal={true}>
 					<DialogTrigger class={buttonVariants({ variant: 'link' })}>

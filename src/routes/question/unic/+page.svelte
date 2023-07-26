@@ -28,6 +28,7 @@
 					t_limit: n,
 					t_offset: 0
 				});
+				if (res.error) console.log(res.error);
 				return res.data;
 			});
 		}
