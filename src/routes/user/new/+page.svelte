@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import Button from '$components/ui/button/Button.svelte';
 	import Input from '$components/ui/input/Input.svelte';
+	import Label from '$components/ui/label/Label.svelte';
 	import { supabaseClient } from '$lib/func/Clients/supabase';
 	export let data;
 	let error = '';
@@ -20,7 +21,7 @@
 
 <section>
 	Hier kommst du zum erst login in hin und gibst deinen namen ein
-	<Input>Name:<input type="text" bind:value={name} /></Input>
+	<Label>Name:</Label><br /><Input type="text" bind:value={name} />
 	<Button on:click={send}>erstellen</Button>
 	{error}
 </section>
