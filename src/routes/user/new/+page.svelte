@@ -19,10 +19,12 @@
 	}
 </script>
 
-<section>
-	Hier kommst du zum erst login in hin und gibst deinen namen ein
-	<Label>Name:</Label><br /><Input type="text" bind:value={name} />
-	<Button on:click={send}>erstellen</Button>
+<section class="p-2">
+	<Label for="name">Gib ein Wie du genant werden willst</Label><br />
+	<div class="flex gap-2">
+		<Input type="text" bind:value={name} placeholder="Name" id="name" />
+		<Button on:click={send}>erstellen</Button>
+	</div>
 	{error}
 </section>
 

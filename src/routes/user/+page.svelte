@@ -44,6 +44,7 @@
 			userfecht = true;
 		}
 	});
+
 	async function getQuestionCount() {
 		const res = await supabaseClient.rpc('helper_questions_count');
 		return res.data;

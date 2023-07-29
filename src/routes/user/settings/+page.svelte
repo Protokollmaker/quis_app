@@ -5,8 +5,8 @@
 	import Input from '$components/ui/input/Input.svelte';
 	import Label from '$components/ui/label/Label.svelte';
 	import { supabaseClient } from '$lib/func/Clients/supabase';
-	import { downloadObjectAsJson } from '$lib/func/utils/json';
-	import { getallStorageKeys } from '$lib/func/utils/localstorage';
+	import { downloadObjectAsJson } from '$lib/utils/json';
+	import { getallStorageKeys } from '$lib/utils/localstorage';
 	import { onMount } from 'svelte';
 	//import type { PageData } from './$types';
 	export let data: any;
@@ -84,48 +84,51 @@
 		</div>
 		<div class="p-2">
 			{#each getallStorageKeys() as key, i}
-				<div class="flex justify-between items-center py-1">
-					<Label class="w-fit">{mapSome(key)}</Label>
-					<div class="flex gap-2">
-						<FileInput
-							accept="application/JSON"
-							bind:files={files[i]}
-							id="avatar"
-							name="avatar"
-							type="file"
-							on:change={() => {
-								if (!files[i]) {
-									console.log('no file given');
-									return;
-								}
-								if (!files[i].length) {
-									console.log('??? gelöcht');
-									return;
-								}
-								const file = files[i][0];
-								const reader = new FileReader();
-								let filedata = undefined;
-								reader.onload = () => {
-									try {
-										// @ts-ignore
-										filedata = JSON.parse(reader.result);
-										localStorage.setItem(key, filedata);
-									} catch (error) {
-										console.error('Error parsing JSON file:', error);
-									}
-									return;
-								};
+				{#if key != 'DeviceID'}
+					<div class="flex justify-between items-center py-1">
+						<Label class="w-fit">{mapSome(key)}</Label>
 
-								reader.readAsText(file);
-							}}
-						/>
-						<Button
-							on:click={() => {
-								downloadObjectAsJson(localStorage.getItem(key) || '[]', mapSome(key));
-							}}>Exportiern</Button
-						>
+						<div class="flex gap-2">
+							<FileInput
+								accept="application/JSON"
+								bind:files={files[i]}
+								id="avatar"
+								name="avatar"
+								type="file"
+								on:change={() => {
+									if (!files[i]) {
+										console.log('no file given');
+										return;
+									}
+									if (!files[i].length) {
+										console.log('??? gelöcht');
+										return;
+									}
+									const file = files[i][0];
+									const reader = new FileReader();
+									let filedata = undefined;
+									reader.onload = () => {
+										try {
+											// @ts-ignore
+											filedata = JSON.parse(reader.result);
+											localStorage.setItem(key, filedata);
+										} catch (error) {
+											console.error('Error parsing JSON file:', error);
+										}
+										return;
+									};
+
+									reader.readAsText(file);
+								}}
+							/>
+							<Button
+								on:click={() => {
+									downloadObjectAsJson(localStorage.getItem(key) || '[]', mapSome(key));
+								}}>Exportiern</Button
+							>
+						</div>
 					</div>
-				</div>
+				{/if}
 			{/each}
 		</div>
 		<h2>Pasword</h2>
