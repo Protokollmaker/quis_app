@@ -34,6 +34,7 @@
 		ShowNextButton?: boolean;
 		ShowPrevButton?: boolean;
 		AutoSolutiononNextButton?: boolean;
+		ShowExplenation?: boolean;
 		numOfPrevAnwerser?: number;
 	} = {};
 	let flag = mergeObject(
@@ -41,6 +42,7 @@
 			ShowNextButton: true,
 			ShowPrevButton: true,
 			AutoSolutiononNextButton: true,
+			ShowExplenation: true,
 			numOfPrevAnwerser: 10
 		},
 		flags
@@ -79,7 +81,7 @@
 				bind:question_count_max={max_question_count}
 			>
 				<div slot="head-right" class="head-right-nav py-2 px-8">
-					<NavMenu bind:question bind:count />
+					<NavMenu bind:question bind:count bind:flag />
 				</div>
 				<div slot="fooder-right" class="fooder-right-nav p-2 pr-10 pl-10">
 					<NavButton

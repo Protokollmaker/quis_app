@@ -129,8 +129,12 @@
 		} else {
 			exams = t_question.tags.exams;
 		}
-		let question = questionSerilaiser[questionprop.type];
-		question.deserialise(t_question);
+		console.log(questionprop.type, questionSerilaiser);
+		// woud be better with tick but how to implement?
+		setTimeout(() => {
+			let questionSerilaiser2 = questionSerilaiser[questionprop.type];
+			questionSerilaiser2.deserialise(t_question);
+		}, 1);
 	}
 
 	function deserialiseExsamV0(json: any): Array<type_uuid_exam> {

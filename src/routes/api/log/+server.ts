@@ -10,7 +10,8 @@ export async function POST({ request, cookies }) {
         sessionid = jwt?.session_id;
         userid = jwt?.sub;
     }
-
+    if (!sessionid)
+        return json({ "error": "not loged in" }, { status: 401 });
     const body = await request.json();
     try {
         await axiomClient.ingestEvents("elektrikerfragen", [{
@@ -23,8 +24,6 @@ export async function POST({ request, cookies }) {
         console.log(e);
         return json({ "error": "Invalid json" }, { status: 400 });
     }
-    if (!sessionid)
-        return json({ "error": "not loged in" }, { status: 401 });
     return json({ "error": null }, { status: 201 });
 }
 

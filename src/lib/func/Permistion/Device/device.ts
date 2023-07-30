@@ -11,10 +11,9 @@ export function uuidv4(): string {
 }
 
 export function setDeviceID() {
-    const time = new Date();
     const defalte = {
         device: uuidv4(),
-        lastsend: time.getTime()
+        lastsend: 0
     }
     localStorage.setItem(name_localStorage, JSON.stringify(defalte))
 }

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import ImageSupabase from '$components/image/imageSupabase.svelte';
 	import Button from '$components/ui/button/Button.svelte';
 	import Checkbox from '$components/ui/checkbox/Checkbox.svelte';
@@ -68,7 +69,8 @@
 	}
 
 	export function deserialise(sendjson: any) {
-		console.log(sendjson.answers);
+		if (!browser) return false;
+		console.log(sendjson);
 		question = sendjson.question;
 		Validations = sendjson.validation;
 		Anwersers = sendjson.answers;
