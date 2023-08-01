@@ -12,7 +12,6 @@
 		TableRow
 	} from '$components/ui/table';
 	import TableCell from '$components/ui/table/TableCell.svelte';
-	import Layout1 from './Layout1.svelte';
 	// input/output saves currend selection of the question
 	export let selected: any;
 	export let answered: any;
@@ -23,6 +22,8 @@
 	export let question_count_max;
 	// input question
 	export let json_question: any;
+	//
+	export let layout: any;
 
 	function checkboxIsCorrect(obj_checkboxstate: boolean, checkboxname: string) {
 		if (!obj_checkboxstate.hasOwnProperty(checkboxname)) return null;
@@ -79,7 +80,7 @@
 	}
 </script>
 
-<Layout1>
+<svelte:component this={layout.layout}>
 	<!--question-->
 	<div slot="question" class="p-3 h-full w-full flex justify-center items-center">
 		<div>
@@ -122,6 +123,7 @@
 					{#each json_question.answers.answers.rows as rows, i}
 						<TableRow key={rows.text}>
 							<TableCell class="font-medium">
+								{rows.text}
 								{#if rows.hasOwnProperty('filepath')}
 									<ImageSupabase
 										bind:image_src={rows.filepath}
@@ -130,8 +132,7 @@
 										style="max-height: 100px;"
 									/>
 								{/if}
-								{rows.text}</TableCell
-							>
+							</TableCell>
 							{#each json_question.answers.answers.columns as columns, j}
 								<TableCell
 									class="text-right"
@@ -156,7 +157,7 @@
 	<div slot="fooder-right"><slot name="fooder-right" /></div>
 	<div slot="fooder-left"><slot name="fooder-left" /></div>
 	<div slot="head-right" class="h-full"><slot name="head-right" /></div>
-</Layout1>
+</svelte:component>
 
 <style>
 </style>

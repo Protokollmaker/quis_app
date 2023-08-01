@@ -9,13 +9,13 @@
 	import type { anyobject } from '$lib/types/types';
 	import { BookmarkMinus, BookmarkPlus, Edit } from 'lucide-svelte';
 	import { emptyObject, mergeObject } from '.';
+	import Layout1 from './Layout1.svelte';
 	import Multiplechois from './Multiplechois.svelte';
 	import TabelQuestion from './TabelQuestion.svelte';
 	import TextareaQuestion from './TextareaQuestion.svelte';
 	import DefalteQuestion from './defalteQuestion.svelte';
 	import NavButton from './navButton.svelte';
 	import NavMenu from './nevMenu.svelte';
-
 	// this is hier to mange the display of questions
 
 	// input json form database
@@ -25,6 +25,14 @@
 	export let max_question_count: number = Infinity;
 	// input/output is not null if question was alrady answered
 	export let answered: anyobject = {};
+	export let layout = {
+		layout: Layout1,
+		questiontext: '',
+		anwersertext: '',
+		questionimg: 'max-height: 400px;',
+		anwerserimg: 'max-height: 12vh; height: 12vh;',
+		anwerserdistens: 'padding: 2%;'
+	};
 	$: answered == null ? {} : answered;
 	// output changes when question anwerder fist time
 	export let first_answer: any = undefined;
@@ -36,6 +44,7 @@
 		AutoSolutiononNextButton?: boolean;
 		ShowExplenation?: boolean;
 		numOfPrevAnwerser?: number;
+		alwaysShowAnwerser?: boolean;
 	} = {};
 	let flag = mergeObject(
 		{
@@ -43,7 +52,8 @@
 			ShowPrevButton: true,
 			AutoSolutiononNextButton: true,
 			ShowExplenation: true,
-			numOfPrevAnwerser: 10
+			numOfPrevAnwerser: 10,
+			alwaysShowAnwerser: false
 		},
 		flags
 	);
@@ -63,7 +73,8 @@
 
 	let anwerringquestion = {};
 	let showCorrectAnwer = !emptyObject(answered);
-	$: showCorrectAnwer = flag.AutoSolutiononNextButton && !emptyObject(answered);
+	$: showCorrectAnwer =
+		(flag.AutoSolutiononNextButton && !emptyObject(answered)) || flag.alwaysShowAnwerser;
 	let child: any;
 </script>
 
@@ -72,6 +83,7 @@
 		{#if question}
 			<svelte:component
 				this={getComponent(questions, question.Type)}
+				bind:layout
 				bind:selected={anwerringquestion}
 				bind:json_question={question}
 				bind:question_count={count}

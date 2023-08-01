@@ -9,7 +9,6 @@
 	import Textarea from '$components/ui/textarea/Textarea.svelte';
 	import type { anyobject } from '$lib/types/types';
 	import PercentBatch from '../../../routes/question/percentBatch.svelte';
-	import Layout1 from './Layout1.svelte';
 
 	export let json_question: any = {};
 	export let question_count: number = 0;
@@ -18,6 +17,8 @@
 	////////////////////////////////////////////////////
 	export let showCorrectAnwer: boolean = false;
 	export let answered: anyobject = {};
+	////////////////////////////////////////////////////
+	export let layout: any;
 	////////////////////////////////////////////////////
 	export function calcPercent(ans: any) {
 		return uiControll[0].percent;
@@ -62,7 +63,7 @@
 	);
 </script>
 
-<Layout1>
+<svelte:component this={layout.layout}>
 	<div slot="question" class="p-3 h-full w-full flex justify-center items-center">
 		<div>
 			<Label class="text-slate-700 text-sm">
@@ -140,7 +141,7 @@
 	<div slot="head-right" class="h-full"><slot name="head-right" /></div>
 	<div slot="fooder-right" class="h-full"><slot name="fooder-right" /></div>
 	<div slot="fooder-left" class="h-full"><slot name="fooder-left" /></div>
-</Layout1>
+</svelte:component>
 
 <style>
 	.percentwith {

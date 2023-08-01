@@ -11,6 +11,7 @@
 	import { Plus, X } from 'lucide-svelte';
 	import { uploadImage } from '.';
 	import NewMutltiplechois from './newMutltiplechois.svelte';
+	import NewTableQuestion from './newTableQuestion.svelte';
 	import NewTextarea from './newTextarea.svelte';
 
 	//import type { PageData } from './$types';
@@ -35,11 +36,10 @@
 
 	const options = [
 		{ component: NewMutltiplechois, type: 'Multiple choice', name: 'Mehrfachauswahl' },
-		{ component: NewTextarea, type: 'Textarea', name: 'TextFelt' }
+		{ component: NewTextarea, type: 'Textarea', name: 'TextFelt' },
+		{ component: NewTableQuestion, type: 'TableQuestion', name: 'Tabellen Frage' }
 	];
-	/*<TabsTrigger class="w-full" value="TableQuestion">Tabellen frage</TabsTrigger>
-			<TabsTrigger class="w-full" value="cloze">Lückentext</TabsTrigger>
-			<TabsTrigger class="w-full" value="Textarea">TextFelt</TabsTrigger>
+	/*<TabsTrigger class="w-full" value="cloze">Lückentext</TabsTrigger>
 			<TabsTrigger class="w-full" value="X-template">X-Vorlage</TabsTrigger>*/
 
 	let exams: Array<type_uuid_exam> = [];

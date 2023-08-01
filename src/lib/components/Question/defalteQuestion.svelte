@@ -3,11 +3,12 @@
 	import type { anyobject } from '$lib/types/types';
 	export const json_question: any = {};
 	export let question_count: number = 0;
-	export const question_count_max: number = Infinity;
-	export const selected: anyobject = {};
+	export let question_count_max: number = Infinity;
+	export let selected: anyobject = {};
 	////////////////////////////////////////////////////
-	export const showCorrectAnwer: boolean = false;
-	export const answered: anyobject = {};
+	export let showCorrectAnwer: boolean = false;
+	export let answered: anyobject = {};
+	export let layout: any;
 	////////////////////////////////////////////////////
 	export function calcPercent(ans: any) {
 		return 1;

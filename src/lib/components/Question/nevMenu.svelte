@@ -19,7 +19,6 @@
 	export let question: any;
 	export let count: number;
 	export let flag: anyobject;
-	$: console.log(flag);
 
 	const smartText: Array<AdvanstText> = [
 		{ redex: /(.*?)[$]{2}(.+?)[$]{2}(.*?)/gm, component: Katexfix }

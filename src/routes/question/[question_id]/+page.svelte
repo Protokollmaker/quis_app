@@ -1,5 +1,5 @@
 <script lang="ts">
-	import QuestionMenager from '$components/Question/QuestionMenager.svelte';
+	import QuestionMenager from '$components/question/QuestionMenager.svelte';
 	import { supabaseClient } from '$lib/func/Clients/supabase';
 	import { onMount } from 'svelte';
 	export let data;

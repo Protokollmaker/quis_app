@@ -2,7 +2,7 @@
 	import ImageSupabase from '$components/image/imageSupabase.svelte';
 	import Label from '$components/ui/label/Label.svelte';
 	import type { anyobject } from '$lib/types/types';
-	import Layout1 from './Layout1.svelte';
+	export let layout: any;
 	export let json_question: any;
 	export let question_count: number = 0;
 	export let question_count_max: number = Infinity;
@@ -16,15 +16,15 @@
 	}
 </script>
 
-<Layout1>
-	<div slot="question" class="p-3 h-full w-full flex justify-center items-center">
+<svelte:component this={layout.layout}>
+	<div slot="question" class="p-3 h-full w-full flex items-center">
 		<div>
 			<Label class="text-slate-700 text-sm">
 				<span>Frage:</span> <span>{question_count + 1}/{question_count_max}</span>
 			</Label>
 			<div class="pt-1">
 				{#if json_question.question.hasOwnProperty('text')}
-					<div class="text">{json_question.question.text}</div>
+					<div class="text" style={layout.questiontext}>{json_question.question.text}</div>
 				{/if}
 				{#if json_question.question.hasOwnProperty('filepath')}
 					<ImageSupabase
@@ -32,7 +32,7 @@
 						bucket={'Question images'}
 						bind:alt={json_question.question.alt}
 						class="w-full"
-						style="max-height: 400px; object-fit: contain;"
+						style="{layout.questionimg}object-fit: contain;"
 					/>
 				{/if}
 			</div>
@@ -52,14 +52,19 @@
 				>
 					<input
 						type="radio"
-						id={'answer' + i}
+						id={'answer' + i + question_count}
 						name="answer"
 						class="absolute hidden"
 						value={i}
 						bind:group={selected.selected}
 					/>
 					<div>
-						<label class="answer flex" for={'answer' + i} id={'answer' + i + 'label'}>
+						<label
+							class="answer flex"
+							style={layout.anwerserdistens}
+							for={'answer' + i + question_count}
+							id={'answer' + i + 'label'}
+						>
 							<div
 								class="number flex items-center justify-center {selected.selected == i
 									? 'selected'
@@ -68,7 +73,7 @@
 								{i + 1}
 							</div>
 							{#if answer.hasOwnProperty('text')}
-								<div class="pr-5 pl-5">{answer.text}</div>
+								<div class="pr-5 pl-5" style={layout.anwersertext}>{answer.text}</div>
 							{/if}
 							{#if answer.hasOwnProperty('filepath')}
 								<div class="img mx-5">
@@ -76,7 +81,7 @@
 										bind:image_src={answer.filepath}
 										bucket={'Question images'}
 										bind:alt={answer.alt}
-										style="max-height: 12vh; height: 12vh;object-fit: contain;"
+										style="object-fit: contain; {layout.anwerserimg}"
 									/>
 								</div>
 							{/if}
@@ -89,12 +94,9 @@
 	<div slot="head-right" class="h-full"><slot name="head-right" /></div>
 	<div slot="fooder-right" class="h-full"><slot name="fooder-right" /></div>
 	<div slot="fooder-left" class="h-full"><slot name="fooder-left" /></div>
-</Layout1>
+</svelte:component>
 
 <style>
-	.answer {
-		padding: 2%;
-	}
 	.answer .number {
 		min-width: 25px;
 		height: 25px;
