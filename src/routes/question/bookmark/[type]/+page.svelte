@@ -3,7 +3,7 @@
 	import type { PageData } from './$types';
 
 	import { browser } from '$app/environment';
-	import QuestionMenager from '$components/question/QuestionMenager.svelte';
+	import QuestionMenager from '$components/Question/QuestionMenager.svelte';
 	import Button from '$components/ui/button/Button.svelte';
 	import { supabaseClient } from '$lib/func/Clients/supabase';
 	import {

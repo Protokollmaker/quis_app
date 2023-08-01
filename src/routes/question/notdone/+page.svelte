@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import QuestionMenager from '$components/question/QuestionMenager.svelte';
+	import QuestionMenager from '$components/Question/QuestionMenager.svelte';
 	import { supabaseClient } from '$lib/func/Clients/supabase';
 	import { addValue, getQuestionIDs, questionData } from '$lib/stores/questionPercent';
 	import { createQuestionsStore, nextQuestion, prevQuestion } from '$lib/stores/questionStore';
