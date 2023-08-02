@@ -16,6 +16,7 @@
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 	import Filter from './Filter.svelte';
+	import NavMenu from './navMenu.svelte';
 	import PercentBatch from './percentBatch.svelte';
 	export let data: PageData;
 	let tags: any = null;
@@ -46,11 +47,26 @@
 	});
 
 	$: load(offset, tags);
+	///////////////////////////////////////////////////////////////////////
+	let questionIDs: Array<string> = [];
+	function QuestionIDs(questions: any){
+		let array: Array<string> = [];
+		for (let question of questions) {
+			array.push(question.id)
+		}
+		return array;
+	}
+	$: questionIDs = QuestionIDs(questions);
+	
 </script>
 
 <section>
 	<div class="flex px-4 py-4 w-screen bg-white" style="justify-content: space-between;">
-		<span class="text-2xl">Alle fragen</span>
+		<div class="flex gap-2 justify-start items-center">
+			<NavMenu bind:questionIDs={questionIDs}></NavMenu>
+			<h1 class="text-2xl">Alle fragen</h1>
+		</div>
+		
 		<Filter bind:aktivTags={tags} />
 		<div class="inline">
 			<Button

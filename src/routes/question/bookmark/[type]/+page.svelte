@@ -53,6 +53,7 @@
 			bind:count={questioncount}
 			bind:answered={$questionstore.current.anwerser}
 			bind:first_answer={first_anwnser_correct}
+			max_question_count={get(questionBookmarks).length}
 		/>
 	{:else}
 		Schaue ob du Eingelogt bist oder fragen gebookmarkt hast {data.data.Bookmarktype}<Button

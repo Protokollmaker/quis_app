@@ -72,7 +72,7 @@
 		ShowPrevButton: false,
 		alwaysShowAnwerser: data.data.showSolustion
 	};
-	let numbers = Array.from(Array(23).keys());
+	let numbers = Array.from(Array(questionsID.length).keys());
 </script>
 
 <section class="small">
