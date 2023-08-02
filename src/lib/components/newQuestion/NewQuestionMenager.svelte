@@ -10,6 +10,7 @@
 	import { supabaseClient } from '$lib/func/Clients/supabase';
 	import { Plus, X } from 'lucide-svelte';
 	import { uploadImage } from '.';
+	//import NewGapInsert from './newGapInsert.svelte';
 	import NewMutltiplechois from './newMutltiplechois.svelte';
 	import NewTableQuestion from './newTableQuestion.svelte';
 	import NewTextarea from './newTextarea.svelte';
@@ -37,9 +38,11 @@
 	const options = [
 		{ component: NewMutltiplechois, type: 'Multiple choice', name: 'Mehrfachauswahl' },
 		{ component: NewTextarea, type: 'Textarea', name: 'TextFelt' },
+
 		{ component: NewTableQuestion, type: 'TableQuestion', name: 'Tabellen Frage' }
 	];
 	/*<TabsTrigger class="w-full" value="cloze">Lückentext</TabsTrigger>
+	{ component: NewGapInsert, type: 'GapInsert', name: 'Lücken' },
 			<TabsTrigger class="w-full" value="X-template">X-Vorlage</TabsTrigger>*/
 
 	let exams: Array<type_uuid_exam> = [];
