@@ -51,8 +51,9 @@
 		<QuestionMenager
 			bind:question={$questionstore.current.question}
 			bind:count={questioncount}
-			bind:answered={$questionstore.current.anwerser}
+			bind:answered={$questionstore.current.extra.anwerser}
 			bind:first_answer={first_anwnser_correct}
+			bind:conntrolls={$questionstore.current.controlls}
 			max_question_count={get(questionBookmarks).length}
 		/>
 	{:else}

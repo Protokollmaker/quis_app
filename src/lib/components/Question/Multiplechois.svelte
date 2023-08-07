@@ -1,6 +1,7 @@
 <script lang="ts">
 	import ImageSupabase from '$components/image/imageSupabase.svelte';
 	import Label from '$components/ui/label/Label.svelte';
+	import type { conntroll } from '$lib/stores/questionStore';
 	import type { anyobject } from '$lib/types/types';
 	export let layout: any;
 	export let json_question: any;
@@ -8,7 +9,7 @@
 	export let question_count_max: number = Infinity;
 	export let selected: anyobject;
 	////////////////////////////////////////////////////
-	export let showCorrectAnwer = false;
+	export let conntrolls: conntroll;
 	export let answered: anyobject = {};
 	////////////////////////////////////////////////////
 	export function calcPercent(ans: any) {
@@ -44,11 +45,13 @@
 			{#each json_question.answers.answers as answer, i}
 				<div
 					style="box-sizing: border-box;"
-					class="{showCorrectAnwer &&
+					class="{conntrolls.showAnswerser &&
 					answered.selected == i &&
 					json_question.validation.validation != i
 						? 'wrong'
-						: ''}{showCorrectAnwer && json_question.validation.validation == i ? 'correct' : ''}"
+						: ''}{conntrolls.showAnswerser && json_question.validation.validation == i
+						? 'correct'
+						: ''}"
 				>
 					<input
 						type="radio"
@@ -57,6 +60,7 @@
 						class="absolute hidden"
 						value={i}
 						bind:group={selected.selected}
+						disabled={conntrolls.lockInput}
 					/>
 					<div>
 						<label

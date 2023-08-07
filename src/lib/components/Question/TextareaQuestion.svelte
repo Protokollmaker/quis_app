@@ -7,6 +7,7 @@
 	import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '$components/ui/collapsible';
 	import Label from '$components/ui/label/Label.svelte';
 	import Textarea from '$components/ui/textarea/Textarea.svelte';
+	import type { conntroll } from '$lib/stores/questionStore';
 	import type { anyobject } from '$lib/types/types';
 	import PercentBatch from '../../../routes/question/percentBatch.svelte';
 
@@ -15,7 +16,7 @@
 	export let question_count_max: number = Infinity;
 	export let selected: anyobject = {};
 	////////////////////////////////////////////////////
-	export let showCorrectAnwer: boolean = false;
+	export let conntrolls: conntroll;
 	export let answered: anyobject = {};
 	////////////////////////////////////////////////////
 	export let layout: any;
@@ -127,9 +128,10 @@
 							placeholder="Schreibe hier diene Antwort herein"
 							class="h-full"
 							bind:value={selected['textbox' + i]}
+							disabled={conntrolls.lockInput}
 						/>
 					</div>
-					{#if showCorrectAnwer}
+					{#if conntrolls.showAnswerser}
 						<div class="w-full" style="white-space: pre-line;">
 							{json_question.validation[i].text}
 						</div>

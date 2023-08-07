@@ -6,9 +6,10 @@
 		questionBookmarks,
 		rmBookmark
 	} from '$lib/stores/bookmarksQuestion';
+	import type { conntroll } from '$lib/stores/questionStore';
 	import type { anyobject } from '$lib/types/types';
 	import { BookmarkMinus, BookmarkPlus, Edit } from 'lucide-svelte';
-	import { emptyObject, mergeObject } from '.';
+	import { mergeObject } from '.';
 	import Layout1 from './Layout1.svelte';
 	import Multiplechois from './Multiplechois.svelte';
 	import TabelQuestion from './TabelQuestion.svelte';
@@ -23,14 +24,13 @@
 	// output number of question alrady anwerde
 	export let count: number = 0;
 	export let max_question_count: number = Infinity;
-	// input/output is not null if question was alrady answered
-	export let answered: anyobject = {};
+
 	export let layout = {
 		layout: Layout1,
 		questiontext: '',
 		anwersertext: '',
 		questionimg: 'max-height: 400px;',
-		anwerserimg: 'max-height: 12vh; height: 12vh;',
+		anwerserimg: 'max-height: 10vh; height: 10vh;',
 		anwerserdistens: 'padding: 2%;'
 	};
 	$: answered == null ? {} : answered;
@@ -57,7 +57,14 @@
 		},
 		flags
 	);
-
+	// input/output is not null if question was alrady answered
+	export let answered: anyobject = {};
+	export let conntrolls: conntroll = {
+		showAnswerser: false,
+		delivered: false,
+		lockInput: false,
+		percent: 0
+	};
 	const questions = [
 		{ type: 'default', component: DefalteQuestion },
 		{ type: 'Multiple choice', component: Multiplechois },
@@ -71,10 +78,8 @@
 		return options[result].component;
 	}
 
-	let anwerringquestion = {};
-	let showCorrectAnwer = !emptyObject(answered);
-	$: showCorrectAnwer =
-		(flag.AutoSolutiononNextButton && !emptyObject(answered)) || flag.alwaysShowAnwerser;
+	let showCorrectAnwer = flag.alwaysShowAnwerser || conntrolls.delivered;
+	$: showCorrectAnwer = flag.alwaysShowAnwerser || conntrolls.delivered;
 	let child: any;
 </script>
 
@@ -84,10 +89,10 @@
 			<svelte:component
 				this={getComponent(questions, question.Type)}
 				bind:layout
-				bind:selected={anwerringquestion}
+				bind:selected={answered}
 				bind:json_question={question}
 				bind:question_count={count}
-				bind:showCorrectAnwer
+				bind:conntrolls
 				bind:answered
 				bind:this={child}
 				bind:question_count_max={max_question_count}
@@ -100,11 +105,10 @@
 						bind:flag
 						bind:count
 						bind:answered
-						bind:anwerringquestion
 						bind:first_answer
 						bind:child
 						bind:question
-						bind:showCorrectAnwer
+						bind:question_conntroll={conntrolls}
 					/>
 				</div>
 				<div slot="fooder-left" class="flex items-center h-full text-muted-foreground">

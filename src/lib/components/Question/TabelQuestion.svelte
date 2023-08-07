@@ -12,11 +12,12 @@
 		TableRow
 	} from '$components/ui/table';
 	import TableCell from '$components/ui/table/TableCell.svelte';
+	import type { conntroll } from '$lib/stores/questionStore';
 	// input/output saves currend selection of the question
 	export let selected: any;
 	export let answered: any;
 	// input show correct anwerser
-	export let showCorrectAnwer: boolean;
+	export let conntrolls: conntroll;
 	// input cout of question that are don
 	export let question_count;
 	export let question_count_max;
@@ -139,11 +140,14 @@
 									style={checkboxIsCorrectDisplayMaped(
 										answered,
 										'checkbox' + i + '-' + j,
-										showCorrectAnwer
+										conntrolls.showAnswerser
 									)}
 								>
 									<div class="flex items-center justify-end">
-										<Checkbox bind:checked={selected['checkbox' + i + '-' + j]} />
+										<Checkbox
+											bind:checked={selected['checkbox' + i + '-' + j]}
+											disabled={conntrolls.lockInput}
+										/>
 									</div>
 								</TableCell>
 							{/each}
