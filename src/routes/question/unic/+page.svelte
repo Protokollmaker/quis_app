@@ -45,7 +45,8 @@
 		<QuestionMenager
 			bind:question={$questionstore.current.question}
 			bind:count={questioncount}
-			bind:answered={$questionstore.current.anwerser}
+			bind:answered={$questionstore.current.extra.anwerser}
+			bind:conntrolls={$questionstore.current.controlls}
 			bind:first_answer={first_anwnser_correct}
 		/>
 	{:else}
