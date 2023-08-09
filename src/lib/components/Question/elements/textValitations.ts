@@ -30,5 +30,6 @@ export function text_Valitation(validatepattons: type_Text_Valitation, text: str
             percent += validatepatton.percent;
         }
     }
+    if (percent >= 100) return 1;
     return percent / 100;
 }

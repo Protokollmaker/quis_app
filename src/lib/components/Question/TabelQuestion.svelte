@@ -15,7 +15,6 @@
 	import type { conntroll } from '$lib/stores/questionStore';
 	// input/output saves currend selection of the question
 	export let selected: any;
-	export let answered: any;
 	// input show correct anwerser
 	export let conntrolls: conntroll;
 	// input cout of question that are don
@@ -138,7 +137,7 @@
 								<TableCell
 									class="text-right"
 									style={checkboxIsCorrectDisplayMaped(
-										answered,
+										selected,
 										'checkbox' + i + '-' + j,
 										conntrolls.showAnswerser
 									)}

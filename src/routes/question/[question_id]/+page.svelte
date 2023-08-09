@@ -27,6 +27,7 @@
 			bind:count={question_num}
 			bind:answered={anwerser}
 			bind:first_answer
+			max_question_count={1}
 		/>
 	{/if}
 </section>

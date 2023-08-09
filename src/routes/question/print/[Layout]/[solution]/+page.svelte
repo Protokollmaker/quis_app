@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
-	import Layout1 from '$components/Question/Layout1.svelte';
-	import Layout2 from '$components/Question/Layout2.svelte';
-	import Layout3 from '$components/Question/Layout3.svelte';
 	import QuestionMenager from '$components/Question/QuestionMenager.svelte';
+	import Layout1 from '$components/Question/utils/Layout1.svelte';
+	import Layout2 from '$components/Question/utils/Layout2.svelte';
+	import Layout3 from '$components/Question/utils/Layout3.svelte';
 	import { supabaseClient } from '$lib/func/Clients/supabase';
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';

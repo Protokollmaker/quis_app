@@ -10,13 +10,14 @@
 	import type { anyobject } from '$lib/types/types';
 	import { BookmarkMinus, BookmarkPlus, Edit } from 'lucide-svelte';
 	import { mergeObject } from '.';
-	import Layout1 from './Layout1.svelte';
 	import Multiplechois from './Multiplechois.svelte';
 	import TabelQuestion from './TabelQuestion.svelte';
 	import TextareaQuestion from './TextareaQuestion.svelte';
+	import ClozeArrayQuestion from './clozeArrayQuestion.svelte';
 	import DefalteQuestion from './defalteQuestion.svelte';
 	import NavButton from './navButton.svelte';
 	import NavMenu from './nevMenu.svelte';
+	import Layout1 from './utils/Layout1.svelte';
 	// this is hier to mange the display of questions
 
 	// input json form database
@@ -43,7 +44,6 @@
 		ShowPrevButton?: boolean;
 		AutoSolutiononNextButton?: boolean;
 		ShowExplenation?: boolean;
-		numOfPrevAnwerser?: number;
 		alwaysShowAnwerser?: boolean;
 	} = {};
 	let flag = mergeObject(
@@ -52,7 +52,6 @@
 			ShowPrevButton: true,
 			AutoSolutiononNextButton: true,
 			ShowExplenation: true,
-			numOfPrevAnwerser: 10,
 			alwaysShowAnwerser: false
 		},
 		flags
@@ -69,7 +68,8 @@
 		{ type: 'default', component: DefalteQuestion },
 		{ type: 'Multiple choice', component: Multiplechois },
 		{ type: 'TableQuestion', component: TabelQuestion },
-		{ type: 'Textarea', component: TextareaQuestion }
+		{ type: 'Textarea', component: TextareaQuestion },
+		{ type: 'clozeArray', component: ClozeArrayQuestion }
 	];
 
 	function getComponent(options: typeof questions, type: string) {
@@ -78,8 +78,7 @@
 		return options[result].component;
 	}
 
-	let showCorrectAnwer = flag.alwaysShowAnwerser || conntrolls.delivered;
-	$: showCorrectAnwer = flag.alwaysShowAnwerser || conntrolls.delivered;
+	$: conntrolls.showAnswerser = flag.alwaysShowAnwerser || conntrolls.delivered;
 	let child: any;
 </script>
 
@@ -93,7 +92,6 @@
 				bind:json_question={question}
 				bind:question_count={count}
 				bind:conntrolls
-				bind:answered
 				bind:this={child}
 				bind:question_count_max={max_question_count}
 			>

@@ -34,14 +34,16 @@
 				on:click={() => {
 					if (!question_conntroll.delivered) {
 						//
+						const percent = child.calcPercent(answered);
+						console.log(percent);
 						question_conntroll.delivered = true && flag.AutoSolutiononNextButton;
 						question_conntroll.lockInput = true && flag.AutoSolutiononNextButton;
 						question_conntroll.showAnswerser = true && flag.AutoSolutiononNextButton;
-						question_conntroll.percent = child.calcPercent(answered);
+						question_conntroll.percent = percent;
 						//
 						first_answer = {
 							count: count,
-							percent: child.calcPercent(answered),
+							percent: percent,
 							id: question.id
 						};
 					}
@@ -55,15 +57,16 @@
 						if (disabelNextButton) return;
 						if (!question_conntroll.delivered) {
 							//
+							const percent = child.calcPercent(answered);
 							question_conntroll.delivered = true && flag.AutoSolutiononNextButton;
 							question_conntroll.lockInput = true && flag.AutoSolutiononNextButton;
 							question_conntroll.showAnswerser = true && flag.AutoSolutiononNextButton;
-							question_conntroll.percent = child.calcPercent(answered);
+							question_conntroll.percent = percent;
 							//
 							disabelNextButton = true;
 							first_answer = {
 								count: count,
-								percent: child.calcPercent(answered),
+								percent: percent,
 								id: question.id
 							};
 							setTimeout(() => {

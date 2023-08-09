@@ -4,7 +4,7 @@
 	import { Button } from '$components/ui/button';
 	import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '$components/ui/collapsible';
 	import { FileLineChart, MoreVertical, MoveDiagonal } from 'lucide-svelte';
-    let openMenu = false;
+	let openMenu = false;
 	export let questionIDs: Array<string> = [];
 </script>
 
@@ -15,16 +15,22 @@
 				<MoreVertical />
 			</Button>
 		</CollapsibleTrigger>
-		<CollapsibleContent class="absolute left-5 pr-20 mt-2 border rounded-md bg-slate-50">
-			<PrintQuestion variant="link" bind:questionIDs={questionIDs} className="text-primary hover:underline underline-offset-4" name="Diese Seite Drucken"/><br/>
-			<Button variant="link" 
+		<CollapsibleContent class="absolute left-5 pr-20 mt-2 border rounded-md bg-slate-50 z-10">
+			<PrintQuestion
+				variant="link"
+				bind:questionIDs
+				className="text-primary hover:underline underline-offset-4"
+				name="Diese Seite Drucken"
+			/><br />
+			<Button
+				variant="link"
 				on:click={() => {
-				goto('/question/inarray?questionsID='+JSON.stringify(questionIDs));
+					goto('/question/inarray?questionsID=' + JSON.stringify(questionIDs));
 				}}
-				>
-				<MoveDiagonal class="h-4 my-2 mr-2"/>
+			>
+				<MoveDiagonal class="h-4 my-2 mr-2" />
 				Diese Seite Beantworten
-			</Button><br/>
+			</Button><br />
 			<Button
 				class=""
 				variant="link"
@@ -40,5 +46,4 @@
 </section>
 
 <style>
-
 </style>

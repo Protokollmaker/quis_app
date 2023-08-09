@@ -6,8 +6,7 @@
 	export let question_count_max: number = Infinity;
 	export let selected: anyobject = {};
 	////////////////////////////////////////////////////
-	export let showCorrectAnwer: boolean = false;
-	export let answered: anyobject = {};
+	export let conntrolls: any;
 	export let layout: any;
 	////////////////////////////////////////////////////
 	export function calcPercent(ans: any) {

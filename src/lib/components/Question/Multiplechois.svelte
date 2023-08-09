@@ -10,7 +10,6 @@
 	export let selected: anyobject;
 	////////////////////////////////////////////////////
 	export let conntrolls: conntroll;
-	export let answered: anyobject = {};
 	////////////////////////////////////////////////////
 	export function calcPercent(ans: any) {
 		return json_question.validation.validation == ans.selected ? 1 : 0;
@@ -46,7 +45,7 @@
 				<div
 					style="box-sizing: border-box;"
 					class="{conntrolls.showAnswerser &&
-					answered.selected == i &&
+					selected.selected == i &&
 					json_question.validation.validation != i
 						? 'wrong'
 						: ''}{conntrolls.showAnswerser && json_question.validation.validation == i
