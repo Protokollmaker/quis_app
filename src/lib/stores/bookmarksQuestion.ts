@@ -53,3 +53,11 @@ export function getBookmarkIds(t_obj: Array<Bookmark>) {
     }
     return array;
 }
+
+export function getBookmarkNames(t_obj: Array<Bookmark>): Array<string> {
+    const set = new Set<string>();
+    for (const obj of t_obj) {
+        set.add(obj.type);
+    }
+    return [...set];
+}

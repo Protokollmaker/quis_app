@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { goto } from '$app/navigation';
+	import Button from '$components/ui/button/Button.svelte';
 	import { supabaseClient } from '$lib/func/Clients/supabase';
 	import type { PageData } from './$types';
 
@@ -14,19 +16,30 @@
 	};
 </script>
 
-<main>
-	<h1>SvelteKit & Supabase Auth</h1>
+<main class="p-2">
+	<h1>Wellkommen zu Elektrikerfragen</h1>
 	{#if data.session}
-		<p>Welcome, {data.session.user.email}</p>
-		<form action="/logout" method="POST" use:enhance={submitLogout}>
-			<button type="submit" class="btn btn-primary">Logout</button>
-			<a href="/user">Gehe zum Persönliche daten</a>
-		</form>
+		<p>Angemeldet als, {data.session.user.email}</p>
+		<div class="flex gap-2">
+			<form action="/logout" method="POST" use:enhance={submitLogout}>
+				<Button type="submit" class="btn btn-primary" variant="boarder">Logout</Button>
+			</form>
+			<Button
+				on:click={() => {
+					goto('/user');
+				}}
+				class="">Gehe zum Persönliche daten</Button
+			>
+		</div>
 	{:else}
-		<p>Let's learn how to register and login users!</p>
+		<p>Du must dich neu einlogen</p>
 		<div class="auth-buttons">
-			<a href="/login" class="btn btn-primary">Login</a>
-			<!--<a href="/register" class="btn btn-secondary">Register</a>-->
+			<Button
+				on:click={() => {
+					goto('/login');
+				}}
+				class="">Login</Button
+			>
 		</div>
 	{/if}
 </main>
