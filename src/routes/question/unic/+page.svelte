@@ -20,7 +20,10 @@
 	}
 
 	function load(n: number) {
-		if (!browser) return 0;
+		if (!browser) return n;
+		if (n < 0) {
+			return 0;
+		}
 		if (n > lastquestioncount) {
 			nextQuestion(questionstore, defaltFill, 10, async (n: number) => {
 				const res = await supabaseClient.rpc('helper_random_question_not_in_array', {
@@ -36,8 +39,9 @@
 			prevQuestion(questionstore, defaltFill);
 		}
 		lastquestioncount = n;
+		return n;
 	}
-	$: load(questioncount);
+	$: questioncount = load(questioncount);
 </script>
 
 <section>

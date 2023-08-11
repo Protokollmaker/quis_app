@@ -18,5 +18,8 @@
         "titleBar.inactiveBackground": "#ff3d0099",
         "titleBar.inactiveForeground": "#e7e7e799"
     },
-    "peacock.color": "#ff3d00"
+    "peacock.color": "#ff3d00",
+    "editor.minimap.renderCharacters": false,
+    "editor.minimap.scale": 1,
+    "editor.minimap.size": "proportional"
 }

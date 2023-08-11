@@ -1,7 +1,7 @@
 <script lang="ts">
 	// @ts-nocheck
 	import { goto } from '$app/navigation';
-	import Katexfix from '$components/smartText/Katexfix.svelte';
+	import { smartTextKatex } from '$components/smartText/smartText';
 	import SmartText from '$components/smartText/smartText.svelte';
 	import { Button, buttonVariants } from '$components/ui/button';
 	import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '$components/ui/collapsible';
@@ -20,9 +20,7 @@
 	export let count: number;
 	export let flag: anyobject;
 
-	const smartText: Array<AdvanstText> = [
-		{ redex: /(.*?)[$]{2}(.+?)[$]{2}(.*?)/gm, component: Katexfix }
-	];
+	const smartText: Array<any> = [smartTextKatex];
 </script>
 
 <section class="flex justify-end">

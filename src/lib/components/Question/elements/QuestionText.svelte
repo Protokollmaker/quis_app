@@ -7,7 +7,7 @@
 	import { text_Valitation, type type_Text_Valitations } from './textValitations';
 	export let selected: any;
 	export let conntrolls: conntroll;
-	export const index: number | string = 0;
+	export let index: number | string = 0;
 	// form question in db
 	export let answers: { text: string };
 	export let validations: type_Text_Valitations;

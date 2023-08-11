@@ -24,7 +24,10 @@
 	console.log('mount');
 
 	function load(n: number) {
-		if (!browser) return 0;
+		if (!browser) return n;
+		if (n < 0) {
+			return 0;
+		}
 		if (n > lastquestioncount) {
 			nextQuestion(questionstore, defaltFill, 10, async (n: number) => {
 				let t_array = getArrayOrderdpercentAsc(get(questionData));
@@ -39,8 +42,9 @@
 			prevQuestion(questionstore, defaltFill);
 		}
 		lastquestioncount = n;
+		return n;
 	}
-	$: load(questioncount);
+	$: questioncount = load(questioncount);
 </script>
 
 <section>

@@ -1,8 +1,11 @@
 <script lang="ts">
 	import ImageSupabase from '$components/image/imageSupabase.svelte';
+	import { smartTextKatex } from '$components/smartText/smartText';
+	import SmartText from '$components/smartText/smartText.svelte';
 	import Label from '$components/ui/label/Label.svelte';
 	import type { conntroll } from '$lib/stores/questionStore';
 	import type { anyobject } from '$lib/types/types';
+	const smartText: Array<any> = [smartTextKatex];
 	export let layout: any;
 	export let json_question: any;
 	export let question_count: number = 0;
@@ -24,7 +27,9 @@
 			</Label>
 			<div class="pt-1">
 				{#if json_question.question.hasOwnProperty('text')}
-					<div class="text" style={layout.questiontext}>{json_question.question.text}</div>
+					<div class="text" style={layout.questiontext}>
+						<SmartText bind:text={json_question.question.text} option={smartText} class="pr-1" />
+					</div>
 				{/if}
 				{#if json_question.question.hasOwnProperty('filepath')}
 					<ImageSupabase
@@ -76,7 +81,9 @@
 								{i + 1}
 							</div>
 							{#if answer.hasOwnProperty('text')}
-								<div class="pr-5 pl-5" style={layout.anwersertext}>{answer.text}</div>
+								<div class="pr-5 pl-5" style={layout.anwersertext}>
+									<SmartText bind:text={answer.text} option={smartText} class="pr-1" />
+								</div>
 							{/if}
 							{#if answer.hasOwnProperty('filepath')}
 								<div class="img mx-5">
