@@ -17,7 +17,7 @@
 </script>
 
 <main class="p-2">
-	<h1>Wellkommen zu Elektrikerfragen</h1>
+	<h1>Willkommen zu Elektrikerfragen</h1>
 	{#if data.session}
 		<p>Angemeldet als, {data.session.user.email}</p>
 		<div class="flex gap-2">
