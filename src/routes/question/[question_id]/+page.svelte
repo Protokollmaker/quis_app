@@ -8,6 +8,10 @@
 	let first_answer: any;
 	let question_num: number = 0;
 	onMount(async () => {
+		// todo Backend auth so the sidie don't get loaded on login
+		if (!data.session) {
+			goto('/');
+		}
 		const res = await supabaseClient
 			.from('Questions')
 			.select()
