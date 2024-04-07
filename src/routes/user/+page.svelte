@@ -121,7 +121,7 @@
 		</div>
 		<div class="flex items-center underline p-1">
 			<Combine class="p-1" /><a class="text-slate-800" href="/question/unic"
-				>Zuflällige Fragen aber ausgeschlossen fragen die du auf der seite bearbeitet hast
+				>Zuflällige Fragen aber ohne Dopplung
 			</a>
 		</div>
 		<div class="flex items-center underline p-1">
@@ -131,7 +131,7 @@
 			<BookPlus class="p-1" /><a class="text-slate-800" href="/group/new">Neue Gruppe</a>
 		</div>
 		<div class="flex items-center underline p-1">
-			<ExternalLink class="p-1" /><a class="text-slate-800" href="/">Zur Statseite</a>
+			<ExternalLink class="p-1" /><a class="text-slate-800" href="/">Logout</a>
 		</div>
 	</div>
 </section>
